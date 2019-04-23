@@ -1,0 +1,13 @@
+m,0 m,0 m,0 m,0 m,0 m,0 m,0 m,0
+m,0 .,0 .,0 .,0 m,0 m,0 .,0 m,0
+m,0 .,0 .,0 .,0 .,0 .,0 .,0 m,0
+m,0 m,0 m,0 m,0 m,0 m,0 m,0 m,0
+
+m mur
+p porte
+. espace
+t tonneau
+
+,
+
+0-0 zone number
