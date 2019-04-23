@@ -6,13 +6,13 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 17:58:15 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/15 10:53:32 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/23 14:00:36 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LIBFT_H
 # define FT_LIBFT_H
-# define BUFF_SIZE 1
+# define BUFF_SIZE 30
 
 # include <string.h>
 
@@ -29,6 +29,13 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
+
+typedef enum		e_bool
+{
+	true,
+	false
+}					t_bool;
+
 int					ft_sqrt_high(int nb);
 int					get_next_line(int fd, char **line);
 int					ft_sqrt(int nb);
@@ -104,5 +111,5 @@ void				ft_free_tab_str(char **tab);
 char				*ft_lutoa(unsigned long n);
 int					ft_longlen(long nb);
 long				ft_abs(long nb);
-short				switch_bool(short v);
+t_bool				switch_bool(t_bool v);
 #endif

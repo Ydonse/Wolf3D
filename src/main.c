@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/23 12:05:57 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/23 18:00:29 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_main	*initialize_main(void)
 		exit(-1);
 	if (!(s->sdl = (t_sdl *)malloc(sizeof(t_sdl))))
 		exit(-1);
+	s->width = 0;
+	s->height = 0;
 	return (s);
 }
 
@@ -36,15 +38,30 @@ int	main (int argc, char **argv)
 	t_main	*s;
 
 	s = initialize_main();
+	parse_map(s, argv[1]);
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		ft_error_sdl("Échec de l'initialisation de la SDL");
-	if (!(s->sdl->pwindow = SDL_CreateWindow("Ma première application SDL2", 100,
+	if (!(s->sdl->pwindow = SDL_CreateWindow("Wolf3D", 100,
 		100, WIDTH, HEIGHT, SDL_WINDOW_SHOWN)))
 		ft_error_sdl("Échec de creation de la fenetre");
 	if (!(s->sdl->prenderer = SDL_CreateRenderer(s->sdl->pwindow,-1,
 		SDL_RENDERER_ACCELERATED)))
 		ft_error_sdl("Échec de chargement du renderer");
-
+	int i = 0;
+	int j = 0;
+	while (i < s->height)
+	{
+		while (j < s->width)
+		{
+			ft_putchar(s->map[i][j].type);
+			ft_putchar(s->map[i][j].zone);
+			ft_putchar(' ');
+			j++;
+		}
+		i++;
+		ft_putchar('\n');
+		j = 0;
+	}
 	while (SDL_WaitEvent(&(s->sdl->event)))
 	{
 		if (s->sdl->event.type == SDL_QUIT)

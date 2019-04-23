@@ -6,11 +6,13 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 10:49:11 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/15 11:04:36 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/23 17:37:13 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-short	switch_bool(short v)
+#include "libft.h"
+
+t_bool	switch_bool(t_bool v)
 {
 	if (v == 1)
 		v = 0;

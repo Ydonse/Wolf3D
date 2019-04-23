@@ -6,7 +6,7 @@
 #    By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/23 10:03:18 by ydonse            #+#    #+#              #
-#    Updated: 2019/04/23 11:44:59 by malluin          ###   ########.fr        #
+#    Updated: 2019/04/23 17:39:02 by ydonse           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = wolf3d
 
 SRC_PATH = src
 
-SRC_NAME = main.c
+SRC_NAME = main.c parsing.c errors.c
 
 CPPFLAGS = -I libft/includes/ -I /usr/local/include/ -MMD
 
@@ -24,7 +24,7 @@ LDLIBS = -framework OpenGL -framework AppKit
 
 CC = gcc
 
-CFLAGS = -Werror -Wall -Wextra
+CFLAGS = -g -Wall -Wextra #-Werror
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
@@ -34,8 +34,8 @@ HEADER_PATH = includes/
 HEADER_NAME = wolf3d.h
 
 ID = $(shell id -un)
-SDLFLAGS =  $(SDLINCL) -L/Users/$(ID)/.brew/Cellar/sdl2/2.0.9/lib -lSDL2 #-L/Users/malluin/.brew/Cellar/SDL2_image/2.0.4/lib -lSDL2
-SDLINCL = -I /Users/$(ID)/.brew/Cellar/sdl2/2.0.9/include #-I /Users/malluin/.brew/Cellar/SDL2_image/2.0.4/include
+SDLFLAGS =  $(SDLINCL) -L/Users/$(ID)/.brew/Cellar/sdl2/2.0.9_1/lib -lSDL2
+SDLINCL = -I /Users/$(ID)/.brew/Cellar/sdl2/2.0.9_1/include
 
 OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
@@ -49,7 +49,7 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(SDLFLAGS) $(LDLIBS) $^ -o $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c | $(OBJ_PATH)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -I $(HEADER_PATH) -o $@ -c $<
+	$(CC) $(CFLAGS) $(CPPFLAGS) -I $(HEADER_PATH) $(SDLINCL) -o $@ -c $<
 
 $(OBJ_PATH):
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
