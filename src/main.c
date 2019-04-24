@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/24 13:36:21 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/24 18:05:24 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,29 @@ t_main	*initialize_main(void)
 	return (s);
 }
 
-int	main (int argc, char **argv)
+void	event_handler(t_main *s)
 {
-	(void)argc;
-	(void)argv;
+	while (SDL_WaitEvent(&(s->sdl->event)))
+	{
+		if (s->sdl->event.type == SDL_QUIT)
+			break ;
+		else if (s->sdl->event.type == SDL_KEYDOWN)
+		{
+			if (s->sdl->event.key.keysym.sym == SDLK_ESCAPE)
+				break;
+		}
+	}
+
+}
+
+int	main (int ac, char **av)
+{
 	t_main	*s;
 
+	if (ac <= 1)
+		return (1);
 	s = initialize_main();
-	parse_map(s, argv[1]);
+	parse_map(s, av[1]);
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		ft_error_sdl("Échec de l'initialisation de la SDL");
 	if (!(s->sdl->pwindow = SDL_CreateWindow("Wolf3D", 100,
@@ -48,29 +63,7 @@ int	main (int argc, char **argv)
 	if (!(s->sdl->prenderer = SDL_CreateRenderer(s->sdl->pwindow,-1,
 		SDL_RENDERER_ACCELERATED)))
 		ft_error_sdl("Échec de chargement du renderer");
-	int i = 0;
-	int j = 0;
-	while (i < s->height)
-	{
-		while (j < s->width)
-		{
-			ft_putchar(s->map[i][j].type);
-			ft_putchar(s->map[i][j].zone);
-			ft_putchar(' ');
-			j++;
-		}
-		i++;
-		ft_putchar('\n');
-		j = 0;
-	}
-	while (SDL_WaitEvent(&(s->sdl->event)))
-	{
-		if (s->sdl->event.type == SDL_QUIT)
-			break ;
-		else if (s->sdl->event.type == SDL_KEYDOWN)
-		{
-			;
-		}
-	}
+	ft_print_map(s);
+	event_handler(s);
 	return (1);
 }
