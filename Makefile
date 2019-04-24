@@ -6,7 +6,7 @@
 #    By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/23 10:03:18 by ydonse            #+#    #+#              #
-#    Updated: 2019/04/23 17:39:02 by ydonse           ###   ########.fr        #
+#    Updated: 2019/04/24 13:06:18 by ydonse           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = wolf3d
 
 SRC_PATH = src
 
-SRC_NAME = main.c parsing.c errors.c
+SRC_NAME = main.c parsing.c errors.c walls_checking.c
 
 CPPFLAGS = -I libft/includes/ -I /usr/local/include/ -MMD
 

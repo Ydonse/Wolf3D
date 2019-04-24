@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/23 18:00:29 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/24 13:36:21 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_main	*initialize_main(void)
 		exit(-1);
 	s->width = 0;
 	s->height = 0;
+	s->map = NULL;
 	return (s);
 }
 
