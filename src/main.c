@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 14:33:00 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/25 16:13:02 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,25 +85,21 @@ void	draw_rect(t_sdl *sdl, t_texture *text, t_position orig, t_position dest)
 		{
 			coord.x = i;
 			coord.y = j++;
-			set_pixel(sdl, text, 0xFFFF00BB, coord);
+			set_pixel(sdl, text, text->color_tmp, coord);
 		}
 		i++;
 	}
-	SDL_SetRenderTarget(sdl->prenderer, text->texture);
-	SDL_UpdateTexture(text->texture, NULL, text->content, WIDTH
-		* sizeof(Uint32));
-	SDL_SetRenderTarget(sdl->prenderer, NULL);
-	SDL_RenderCopy(sdl->prenderer, text->texture, NULL, NULL);
-	SDL_RenderPresent(sdl->prenderer);
+	// SDL_SetRenderTarget(sdl->prenderer, text->texture);
+	// SDL_UpdateTexture(text->texture, NULL, text->content, WIDTH
+	// 	* sizeof(Uint32));
+	// SDL_SetRenderTarget(sdl->prenderer, NULL);
+	// SDL_RenderCopy(sdl->prenderer, text->texture, NULL, NULL);
+	// SDL_RenderPresent(sdl->prenderer);
 }
 
 
 void	event_handler(t_main *s)
 {
-	t_position orig = {100 ,100};
-	t_position dest = {500 ,500};
-
-	draw_rect(s->sdl, s->sdl->map, orig, dest);
 	while (SDL_WaitEvent(&(s->sdl->event)))
 	{
 		if (s->sdl->event.type == SDL_QUIT)
@@ -112,9 +108,18 @@ void	event_handler(t_main *s)
 		{
 			if (s->sdl->event.key.keysym.sym == SDLK_ESCAPE)
 				break;
+			else if (s->sdl->event.key.keysym.sym == SDLK_m)
+			{
+				draw_minimap(s);
+			}
 		}
+		SDL_SetRenderTarget(s->sdl->prenderer, s->sdl->map->texture);
+		SDL_UpdateTexture(s->sdl->map->texture, NULL, s->sdl->map->content, WIDTH
+			* sizeof(Uint32));
+		SDL_SetRenderTarget(s->sdl->prenderer, NULL);
+		SDL_RenderCopy(s->sdl->prenderer, s->sdl->map->texture, NULL, NULL);
+		SDL_RenderPresent(s->sdl->prenderer);
 	}
-
 }
 
 int	main (int ac, char **av)

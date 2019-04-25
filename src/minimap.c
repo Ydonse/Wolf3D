@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 12:29:15 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/25 16:14:39 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,43 @@
 
 void	draw_minimap(t_main *s)
 {
-	// SDL_Texture *texture;
-	// texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,500,500);
-	// SDL_RenderPresent(s->sdl->prenderer);
-	;
+	int o = 50;
+	t_position orig = {50 ,50};
+	t_position dest = {750 ,750};
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	// draw_rect(s->sdl, s->sdl->map, orig, dest);
+	while (i < s->height)
+	{
+		while (j < s->width)
+		{
+			if (s->map[i][j].type == 'm')
+			{
+				ft_putstr("true ");
+				orig.x = SPACE * j;
+				orig.y = SPACE * i;
+				dest.x = orig.x + SPACE;
+				dest.y = orig.y + SPACE;
+				s->sdl->map->color_tmp = 0xFFFFFFFF;
+				draw_rect(s->sdl, s->sdl->map, orig, dest);
+			}
+			else if (s->map[i][j].type == '.')
+			{
+				ft_putstr("true ");
+				orig.x = SPACE * j;
+				orig.y = SPACE * i;
+				dest.x = orig.x + SPACE;
+				dest.y = orig.y + SPACE;
+				s->sdl->map->color_tmp = 0x00000000;
+				draw_rect(s->sdl, s->sdl->map, orig, dest);
+			}
+			j++;
+		}
+		ft_putchar('\n');
+		j = 0;
+		i++;
+	}
 }
