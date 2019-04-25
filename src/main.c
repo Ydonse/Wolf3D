@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 17:21:27 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/25 18:21:27 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,52 +16,6 @@ void	ft_error_sdl(char *str)
 {
 	printf("%s (%s)\n", str, SDL_GetError());
 	exit (-1);
-}
-
-t_main	*initialize_main(void)
-{
-	t_main	*s;
-
-	if (!(s = (t_main *)malloc(sizeof(t_main))))
-		exit(-1);
-	if (!(s->sdl = (t_sdl *)malloc(sizeof(t_sdl))))
-		exit(-1);
-	if (!(s->sdl->minimap = (SDL_Surface *)malloc(sizeof(SDL_Surface))))
-		exit(-1);
-	s->width = 0;
-	s->height = 0;
-	s->map = NULL;
-	s->move_speed = 0.1;
-	return (s);
-}
-
-t_texture	*initialize_texture(t_sdl *sdl, int width, int height)
-{
-	t_texture	*text;
-
-	if (!(text = (t_texture *)malloc(sizeof(t_texture))))
-		return (NULL);
-	if (!(text->content = (Uint32 *)malloc(width * height * sizeof(Uint32))))
-		return (NULL);
-	if (!(text->texture = SDL_CreateTexture(sdl->prenderer,
-			SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height)))
-		return (NULL);
-	text->color_tmp = 0x000000FF;
-	return (text);
-}
-
-void	initialize_sdl(t_sdl *sdl)
-{
-	if (SDL_Init(SDL_INIT_VIDEO) != 0)
-		ft_error_sdl("Échec de l'initialisation de la SDL");
-	if (!(sdl->pwindow = SDL_CreateWindow("Wolf3D", 100,
-		100, WIDTH, HEIGHT, SDL_WINDOW_SHOWN)))
-		ft_error_sdl("Échec de creation de la fenetre");
-	if (!(sdl->prenderer = SDL_CreateRenderer(sdl->pwindow, -1,
-		SDL_RENDERER_ACCELERATED)))
-		ft_error_sdl("Échec de chargement du renderer");
-	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))
-		exit(-1);
 }
 
 void	set_pixel(t_sdl *sdl, t_texture *text, Uint32 color, t_position coord)
@@ -101,15 +55,37 @@ void	draw_player(t_main *s, t_sdl *sdl)
 {
 	t_position	orig;
 	t_position	dest;
-	int			ifloor;
 
-	// floor = (int) floor(s->player_pos.x);
-	orig.x = (s->player_pos.x - 0.125) * SPACE + sdl->x_o;
-	dest.x = (s->player_pos.x + 0.125) * SPACE + sdl->x_o;
-	orig.y = (s->player_pos.y - 0.125) * SPACE + sdl->y_o;
-	dest.y = (s->player_pos.y + 0.125) * SPACE + sdl->y_o;
+	orig.x = (s->player_pos.x - PLAYER_SIZE / 2) * SPACE + sdl->x_o;
+	dest.x = (s->player_pos.x + PLAYER_SIZE / 2) * SPACE + sdl->x_o;
+	orig.y = (s->player_pos.y - PLAYER_SIZE / 2) * SPACE + sdl->y_o;
+	dest.y = (s->player_pos.y + PLAYER_SIZE / 2) * SPACE + sdl->y_o;
 	sdl->map->color_tmp = 0xFF0000FF;
 	draw_rect(sdl, sdl->map, orig, dest);
+}
+
+int		check_collisions(t_main *s, t_sdl *sdl, t_dpos target)
+{
+	t_dpos		corners[4];
+	int			i;
+
+	i = 0;
+	corners[0].x = target.x - PLAYER_SIZE / 2;
+	corners[0].y = target.y - PLAYER_SIZE / 2;
+	corners[1].x = target.x + PLAYER_SIZE / 2;
+	corners[1].y = target.y - PLAYER_SIZE / 2;
+	corners[2].x = target.x - PLAYER_SIZE / 2;
+	corners[2].y = target.y + PLAYER_SIZE / 2;
+	corners[3].x = target.x + PLAYER_SIZE / 2;
+	corners[3].y = target.y + PLAYER_SIZE / 2;
+	while (i < 4)
+	{
+		if (corners[i].x < 0 || corners[i].y < 0
+			|| corners[i].x > s->width || corners[i].y > s->height)
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 
@@ -119,13 +95,14 @@ void	move_player(t_main *s, t_sdl *sdl, double dir_x, double dir_y)
 
 	target.x = s->player_pos.x + dir_x;
 	target.y = s->player_pos.y + dir_y;
+	if (check_collisions(s, sdl, target) == 0)
+		return ;
 	target.x = target.x < 0 ? 0 : target.x;
 	target.x = target.x > s->width ? s->width: target.x;
 	target.y = target.y < 0 ? 0 : target.y;
 	target.y = target.y > s->height ? s->height : target.y;
 	s->player_pos.x = target.x;
 	s->player_pos.y = target.y;
-	draw_player(s, sdl);
 }
 
 void	event_handler(t_main *s)
@@ -134,8 +111,8 @@ void	event_handler(t_main *s)
 	t_position orig = {0,0};
 	t_position dest = {WIDTH,HEIGHT};
 
-
 	draw_minimap(s);
+	draw_player(s, s->sdl);
 	while (SDL_WaitEvent(&(s->sdl->event)))
 	{
 
@@ -150,8 +127,10 @@ void	event_handler(t_main *s)
 			if (s->sdl->event.key.keysym.sym == SDLK_ESCAPE)
 				break;
 			if (keys[LEFT] || keys[RIGHT] || keys[UP] || keys[DOWN])
-				move_player(s, s->sdl, s->move_speed * (keys[RIGHT]
-				- keys[LEFT]), s->move_speed * (keys[DOWN] - keys[UP]));
+				move_player(s, s->sdl,
+					s->move_speed * (keys[RIGHT] - keys[LEFT]) * (1 + 0.4 * (keys[SPRINT] == 1)),
+				 	s->move_speed * (keys[DOWN] - keys[UP]) * (1 + 0.4 * (keys[SPRINT] == 1)));
+			draw_player(s, s->sdl);
 			// else if (s->sdl->event.key.keysym.sym == SDLK_m)
 			// {
 			// 	draw_minimap(s);

@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 17:15:04 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/25 18:21:16 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@
 # define MAX_AREA 0
 # define OBJ "mp.tj"
 
+# define PLAYER_SIZE 0.25
+
 # define LEFT	SDL_SCANCODE_LEFT
 # define RIGHT	SDL_SCANCODE_RIGHT
 # define UP		SDL_SCANCODE_UP
 # define DOWN	SDL_SCANCODE_DOWN
-
+# define SPRINT	SDL_SCANCODE_LSHIFT
 
 typedef struct		s_position {
 	short			x;
@@ -91,4 +93,12 @@ void				draw_rect(t_sdl *sdl, t_texture *text, t_position orig,
 					t_position dest);
 
 void				ft_print_map(t_main	*s);
+
+void				ft_error_sdl(char *str);
+
+//INITIALIZE
+t_main				*initialize_main(void);
+t_texture			*initialize_texture(t_sdl *sdl, int width, int height);
+void				initialize_sdl(t_sdl *sdl);
+
 #endif
