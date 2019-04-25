@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/24 17:58:49 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/25 10:33:00 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct		s_sdl
 	SDL_Window		*pwindow;
 	SDL_Renderer	*prenderer;
 	SDL_Event		event;
+	SDL_Surface 	*minimap;
 }					t_sdl;
 
 typedef struct		s_main
@@ -66,6 +67,7 @@ typedef struct		s_main
 void				handle_error(t_main *s, int error_nb);
 int					parse_map(t_main *s, char *file);
 int					check_next_case(t_main *s, int x, int y);
+void				draw_minimap(t_main *s);
 
 void				ft_print_map(t_main	*s);
 #endif

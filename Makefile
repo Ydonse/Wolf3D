@@ -6,7 +6,7 @@
 #    By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/23 10:03:18 by ydonse            #+#    #+#              #
-#    Updated: 2019/04/24 17:59:40 by malluin          ###   ########.fr        #
+#    Updated: 2019/04/25 10:22:31 by ydonse           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC_NAME =	main.c \
 			parsing.c \
 			errors.c \
 			walls_checking.c \
+			minimap.c \
 			debug.c
 
 CPPFLAGS = -I libft/includes/ -I /usr/local/include/ -MMD

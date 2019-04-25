@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/24 18:05:24 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/25 10:28:32 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_main	*initialize_main(void)
 	if (!(s = (t_main *)malloc(sizeof(t_main))))
 		exit(-1);
 	if (!(s->sdl = (t_sdl *)malloc(sizeof(t_sdl))))
+		exit(-1);
+	if (!(s->sdl->minimap = (SDL_Surface *)malloc(sizeof(SDL_Surface))))
 		exit(-1);
 	s->width = 0;
 	s->height = 0;
