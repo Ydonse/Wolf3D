@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 16:09:25 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/25 16:16:43 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,11 @@ void	draw_rect(t_sdl *sdl, t_texture *text, t_position orig, t_position dest)
 	SDL_SetRenderTarget(sdl->prenderer, NULL);
 	SDL_RenderCopy(sdl->prenderer, text->texture, NULL, NULL);
 	SDL_RenderPresent(sdl->prenderer);
+}
+
+void	draw_player(t_main *s, t_sdl *sdl)
+{
+
 }
 
 

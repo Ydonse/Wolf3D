@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 15:47:09 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/25 16:16:14 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 # define WIDTH 800
 # define HEIGHT 800
+# define SPACE 60
 # define MIN_WIDTH 3
 # define MIN_HEIGHT 3
 # define FILE_ERROR 1
@@ -84,6 +85,8 @@ void				handle_error(t_main *s, int error_nb);
 int					parse_map(t_main *s, char *file);
 int					check_next_case(t_main *s, int x, int y);
 void				draw_minimap(t_main *s);
+void				draw_rect(t_sdl *sdl, t_texture *text, t_position orig,
+					t_position dest);
 
 void				ft_print_map(t_main	*s);
 #endif
