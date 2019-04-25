@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 17:08:41 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/25 17:21:27 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,10 @@ void	draw_player(t_main *s, t_sdl *sdl)
 	int			ifloor;
 
 	// floor = (int) floor(s->player_pos.x);
-	orig.x = (s->player_pos.x - 0.125) * SPACE;
-	dest.x = (s->player_pos.x + 0.125) * SPACE;
-	orig.y = (s->player_pos.y - 0.125) * SPACE;
-	dest.y = (s->player_pos.y + 0.125) * SPACE;
+	orig.x = (s->player_pos.x - 0.125) * SPACE + sdl->x_o;
+	dest.x = (s->player_pos.x + 0.125) * SPACE + sdl->x_o;
+	orig.y = (s->player_pos.y - 0.125) * SPACE + sdl->y_o;
+	dest.y = (s->player_pos.y + 0.125) * SPACE + sdl->y_o;
 	sdl->map->color_tmp = 0xFF0000FF;
 	draw_rect(sdl, sdl->map, orig, dest);
 }
@@ -177,7 +177,8 @@ int	main (int ac, char **av)
 	parse_map(s, av[1]);
 	initialize_sdl(s->sdl);
 	ft_print_map(s);
-
+	s->sdl->x_o = WIDTH / 2 - ((SPACE * s->width) / 2);
+	s->sdl->y_o = HEIGHT / 2 - ((SPACE * s->height) / 2);
 	s->player_pos.x = (double) s->start_position.x + 0.5;
 	s->player_pos.y = (double) s->start_position.y + 0.5;
 	event_handler(s);

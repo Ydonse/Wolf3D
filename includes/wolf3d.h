@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 16:16:14 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/25 17:15:04 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ typedef struct		s_sdl {
 	SDL_Event		event;
 	SDL_Surface 	*minimap;
 	t_texture		*map;
+	int				x_o;
+	int				y_o;
 }					t_sdl;
 
 typedef struct		s_main {
