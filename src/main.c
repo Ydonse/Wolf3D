@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 10:28:32 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/25 14:33:00 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,76 @@ t_main	*initialize_main(void)
 	return (s);
 }
 
+t_texture	*initialize_texture(t_sdl *sdl, int width, int height)
+{
+	t_texture	*text;
+
+	if (!(text = (t_texture *)malloc(sizeof(t_texture))))
+		return (NULL);
+	if (!(text->content = (Uint32 *)malloc(width * height * sizeof(Uint32))))
+		return (NULL);
+	if (!(text->texture = SDL_CreateTexture(sdl->prenderer,
+			SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height)))
+		return (NULL);
+	text->color_tmp = 0x000000FF;
+	return (text);
+}
+
+void	initialize_sdl(t_sdl *sdl)
+{
+	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+		ft_error_sdl("Échec de l'initialisation de la SDL");
+	if (!(sdl->pwindow = SDL_CreateWindow("Wolf3D", 100,
+		100, WIDTH, HEIGHT, SDL_WINDOW_SHOWN)))
+		ft_error_sdl("Échec de creation de la fenetre");
+	if (!(sdl->prenderer = SDL_CreateRenderer(sdl->pwindow, -1,
+		SDL_RENDERER_ACCELERATED)))
+		ft_error_sdl("Échec de chargement du renderer");
+	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))
+		exit(-1);
+}
+
+void	set_pixel(t_sdl *sdl, t_texture *text, Uint32 color, t_position coord)
+{
+	if (coord.x < WIDTH && coord.y < HEIGHT)
+	{
+		text->content[coord.x + coord.y * WIDTH] = color;
+	}
+}
+
+void	draw_rect(t_sdl *sdl, t_texture *text, t_position orig, t_position dest)
+{
+	int		i;
+	int		j;
+	t_position	coord;
+
+	i = orig.x;
+	while (i < dest.x)
+	{
+		j = orig.y;
+		while (j < dest.y)
+		{
+			coord.x = i;
+			coord.y = j++;
+			set_pixel(sdl, text, 0xFFFF00BB, coord);
+		}
+		i++;
+	}
+	SDL_SetRenderTarget(sdl->prenderer, text->texture);
+	SDL_UpdateTexture(text->texture, NULL, text->content, WIDTH
+		* sizeof(Uint32));
+	SDL_SetRenderTarget(sdl->prenderer, NULL);
+	SDL_RenderCopy(sdl->prenderer, text->texture, NULL, NULL);
+	SDL_RenderPresent(sdl->prenderer);
+}
+
+
 void	event_handler(t_main *s)
 {
+	t_position orig = {100 ,100};
+	t_position dest = {500 ,500};
+
+	draw_rect(s->sdl, s->sdl->map, orig, dest);
 	while (SDL_WaitEvent(&(s->sdl->event)))
 	{
 		if (s->sdl->event.type == SDL_QUIT)
@@ -57,14 +125,7 @@ int	main (int ac, char **av)
 		return (1);
 	s = initialize_main();
 	parse_map(s, av[1]);
-	if (SDL_Init(SDL_INIT_VIDEO) != 0)
-		ft_error_sdl("Échec de l'initialisation de la SDL");
-	if (!(s->sdl->pwindow = SDL_CreateWindow("Wolf3D", 100,
-		100, WIDTH, HEIGHT, SDL_WINDOW_SHOWN)))
-		ft_error_sdl("Échec de creation de la fenetre");
-	if (!(s->sdl->prenderer = SDL_CreateRenderer(s->sdl->pwindow,-1,
-		SDL_RENDERER_ACCELERATED)))
-		ft_error_sdl("Échec de chargement du renderer");
+	initialize_sdl(s->sdl);
 	ft_print_map(s);
 	event_handler(s);
 	return (1);
