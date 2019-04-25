@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 16:27:24 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/25 17:02:54 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,35 @@
 
 void	draw_minimap(t_main *s)
 {
-	int o = 50;
-	t_position orig = {50 ,50};
-	t_position dest = {750 ,750};
-	// t_position orig = {WIDTH / 2 - (SPACE * s->width) ,HEIGHT / 2 - (SPACE * s->height)};
-	// t_position dest = {750 ,750};
+	int x_o = WIDTH / 2 - ((SPACE * s->width) / 2);
+	int y_o = HEIGHT / 2 - ((SPACE * s->height) / 2);
+	t_position orig;
+	t_position dest;
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	// s->sdl->map->color_tmp = 0x2222FFFF;
-	// draw_rect(s->sdl, s->sdl->map, orig, dest);
 	while (i < s->height)
 	{
 		while (j < s->width)
 		{
+			orig.x = SPACE * j + x_o;
+			orig.y = SPACE * i + y_o;
+			dest.x = orig.x + SPACE;
+			dest.y = orig.y + SPACE;
 			if (s->map[i][j].type == 'm')
 			{
-				ft_putstr("true ");
-				orig.x = SPACE * j;
-				orig.y = SPACE * i;
-				dest.x = orig.x + SPACE;
-				dest.y = orig.y + SPACE;
 				s->sdl->map->color_tmp = 0xFFFFFFFF;
 				draw_rect(s->sdl, s->sdl->map, orig, dest);
 			}
 			else if (s->map[i][j].type == '.')
 			{
-				ft_putstr("true ");
-				orig.x = SPACE * j;
-				orig.y = SPACE * i;
-				dest.x = orig.x + SPACE;
-				dest.y = orig.y + SPACE;
+				s->sdl->map->color_tmp = 0x00000000;
+				draw_rect(s->sdl, s->sdl->map, orig, dest);
+			}
+			else if (s->map[i][j].type == 'j')
+			{
 				s->sdl->map->color_tmp = 0x00000000;
 				draw_rect(s->sdl, s->sdl->map, orig, dest);
 			}
