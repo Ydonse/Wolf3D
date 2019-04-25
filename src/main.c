@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 16:13:02 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/25 16:16:43 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_main	*initialize_main(void)
 	s->width = 0;
 	s->height = 0;
 	s->map = NULL;
+	s->move_speed = 0.1;
 	return (s);
 }
 
@@ -85,41 +86,63 @@ void	draw_rect(t_sdl *sdl, t_texture *text, t_position orig, t_position dest)
 		{
 			coord.x = i;
 			coord.y = j++;
-			set_pixel(sdl, text, text->color_tmp, coord);
+			set_pixel(sdl, text, 0xFFFF00BB, coord);
 		}
 		i++;
 	}
-	// SDL_SetRenderTarget(sdl->prenderer, text->texture);
-	// SDL_UpdateTexture(text->texture, NULL, text->content, WIDTH
-	// 	* sizeof(Uint32));
-	// SDL_SetRenderTarget(sdl->prenderer, NULL);
-	// SDL_RenderCopy(sdl->prenderer, text->texture, NULL, NULL);
-	// SDL_RenderPresent(sdl->prenderer);
+	SDL_SetRenderTarget(sdl->prenderer, text->texture);
+	SDL_UpdateTexture(text->texture, NULL, text->content, WIDTH
+		* sizeof(Uint32));
+	SDL_SetRenderTarget(sdl->prenderer, NULL);
+	SDL_RenderCopy(sdl->prenderer, text->texture, NULL, NULL);
+	SDL_RenderPresent(sdl->prenderer);
+}
+
+void	draw_player(t_main *s, t_sdl *sdl)
+{
+
 }
 
 
+void	move_player(t_main *s, t_sdl *sdl, double dir_x, double dir_y)
+{
+	t_dpos	target;
+
+	target.x = s->player_pos.x + dir_x;
+	target.y = s->player_pos.y + dir_y;
+	target.x = target.x < 0 ? 0 : target.x;
+	target.x = target.x > s->width - 1 ? s->width - 1 : target.x;
+	target.y = target.y < 0 ? 0 : target.y;
+	target.y = target.y > s->height - 1 ? s->height - 1 : target.y;
+	s->player_pos.x = target.x;
+	s->player_pos.y = target.y;
+}
+
 void	event_handler(t_main *s)
 {
+	t_position orig = {100 ,100};
+	t_position dest = {500 ,500};
+
+	draw_rect(s->sdl, s->sdl->map, orig, dest);
+
+	const Uint8 *keys;
+
 	while (SDL_WaitEvent(&(s->sdl->event)))
 	{
+		keys = SDL_GetKeyboardState(NULL);
 		if (s->sdl->event.type == SDL_QUIT)
 			break ;
 		else if (s->sdl->event.type == SDL_KEYDOWN)
 		{
 			if (s->sdl->event.key.keysym.sym == SDLK_ESCAPE)
 				break;
-			else if (s->sdl->event.key.keysym.sym == SDLK_m)
-			{
-				draw_minimap(s);
-			}
+			if (keys[LEFT] || keys[RIGHT] || keys[UP] || keys[DOWN])
+				move_player(s, s->sdl, s->move_speed * (keys[RIGHT]
+				- keys[LEFT]), s->move_speed * (keys[DOWN] - keys[UP]));
 		}
-		SDL_SetRenderTarget(s->sdl->prenderer, s->sdl->map->texture);
-		SDL_UpdateTexture(s->sdl->map->texture, NULL, s->sdl->map->content, WIDTH
-			* sizeof(Uint32));
-		SDL_SetRenderTarget(s->sdl->prenderer, NULL);
-		SDL_RenderCopy(s->sdl->prenderer, s->sdl->map->texture, NULL, NULL);
-		SDL_RenderPresent(s->sdl->prenderer);
+		printf("Player x:%f y:%f\n", s->player_pos.x, s->player_pos.y);
 	}
+
 }
 
 int	main (int ac, char **av)
@@ -132,6 +155,9 @@ int	main (int ac, char **av)
 	parse_map(s, av[1]);
 	initialize_sdl(s->sdl);
 	ft_print_map(s);
+
+	s->player_pos.x = (double) s->player_pos.x;
+	s->player_pos.y = (double) s->player_pos.y;
 	event_handler(s);
 	return (1);
 }
