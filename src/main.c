@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 16:16:43 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/25 16:35:45 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,10 @@ void	draw_rect(t_sdl *sdl, t_texture *text, t_position orig, t_position dest)
 		{
 			coord.x = i;
 			coord.y = j++;
-			set_pixel(sdl, text, 0xFFFF00BB, coord);
+			set_pixel(sdl, text, text->color_tmp, coord);
 		}
 		i++;
 	}
-	SDL_SetRenderTarget(sdl->prenderer, text->texture);
-	SDL_UpdateTexture(text->texture, NULL, text->content, WIDTH
-		* sizeof(Uint32));
-	SDL_SetRenderTarget(sdl->prenderer, NULL);
-	SDL_RenderCopy(sdl->prenderer, text->texture, NULL, NULL);
-	SDL_RenderPresent(sdl->prenderer);
 }
 
 void	draw_player(t_main *s, t_sdl *sdl)
@@ -123,7 +117,7 @@ void	event_handler(t_main *s)
 	t_position orig = {100 ,100};
 	t_position dest = {500 ,500};
 
-	draw_rect(s->sdl, s->sdl->map, orig, dest);
+	// draw_rect(s->sdl, s->sdl->map, orig, dest);
 
 	const Uint8 *keys;
 
@@ -139,10 +133,19 @@ void	event_handler(t_main *s)
 			if (keys[LEFT] || keys[RIGHT] || keys[UP] || keys[DOWN])
 				move_player(s, s->sdl, s->move_speed * (keys[RIGHT]
 				- keys[LEFT]), s->move_speed * (keys[DOWN] - keys[UP]));
+			else if (s->sdl->event.key.keysym.sym == SDLK_m)
+			{
+				draw_minimap(s);
+			}
+		}
+			SDL_SetRenderTarget(s->sdl->prenderer, s->sdl->map->texture);
+			SDL_UpdateTexture(s->sdl->map->texture, NULL, s->sdl->map->content, WIDTH
+				* sizeof(Uint32));
+			SDL_SetRenderTarget(s->sdl->prenderer, NULL);
+			SDL_RenderCopy(s->sdl->prenderer, s->sdl->map->texture, NULL, NULL);
+			SDL_RenderPresent(s->sdl->prenderer);
 		}
 		printf("Player x:%f y:%f\n", s->player_pos.x, s->player_pos.y);
-	}
-
 }
 
 int	main (int ac, char **av)
