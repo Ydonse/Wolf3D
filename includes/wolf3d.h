@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 14:30:57 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/25 15:47:09 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,21 @@
 # define MAX_AREA 0
 # define OBJ "mp.tj"
 
+# define LEFT	SDL_SCANCODE_LEFT
+# define RIGHT	SDL_SCANCODE_RIGHT
+# define UP		SDL_SCANCODE_UP
+# define DOWN	SDL_SCANCODE_DOWN
+
+
 typedef struct		s_position {
 	short			x;
 	short			y;
 }					t_position;
+
+typedef struct		s_dpos {
+	double			x;
+	double			y;
+}					t_dpos;
 
 typedef struct		s_case {
 	char			type;
@@ -64,7 +75,9 @@ typedef struct		s_main {
 	int				width;
 	int				height;
 	char			*parsing_line;
-	t_position		player_position;
+	t_position		start_position;
+	t_dpos			player_pos;
+	double			move_speed;
 }					t_main;
 
 void				handle_error(t_main *s, int error_nb);

@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 12:58:00 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/24 17:55:37 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/25 14:42:45 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int		fill_map(t_main *s, char **tab, int i)
 		s->map[i][k].type = tab[k][0];
 		if (s->map[i][k].type == 'j')
 		{
-			s->player_position.x = k;
-			s->player_position.y = i;
+			s->start_position.x = k;
+			s->start_position.y = i;
 			player++;
 		}
 		s->map[i][k].zone = tab[k][2];
@@ -116,7 +116,7 @@ int		parse_map(t_main *s, char *file)
 		i = fill_map(s, ft_strsplit(s->parsing_line, ' '), i);
 		ft_strdel(&(s->parsing_line));
 	}
-	if (!check_walls(s, s->player_position.x, s->player_position.y))
+	if (!check_walls(s, s->start_position.x, s->start_position.y))
 		handle_error(s, WALL_ERROR);
 	return (1);
 }
