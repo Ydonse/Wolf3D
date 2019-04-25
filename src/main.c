@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 16:35:45 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/25 17:08:41 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ void	draw_rect(t_sdl *sdl, t_texture *text, t_position orig, t_position dest)
 	int		j;
 	t_position	coord;
 
+	orig.x = orig.x < 0 ? 0 : orig.x;
+	orig.y = orig.y < 0 ? 0 : orig.y;
+	dest.x = dest.x > WIDTH ? WIDTH : dest.x;
+	dest.y = dest.y > HEIGHT ? HEIGHT : dest.y;
+
 	i = orig.x;
 	while (i < dest.x)
 	{
@@ -94,7 +99,17 @@ void	draw_rect(t_sdl *sdl, t_texture *text, t_position orig, t_position dest)
 
 void	draw_player(t_main *s, t_sdl *sdl)
 {
+	t_position	orig;
+	t_position	dest;
+	int			ifloor;
 
+	// floor = (int) floor(s->player_pos.x);
+	orig.x = (s->player_pos.x - 0.125) * SPACE;
+	dest.x = (s->player_pos.x + 0.125) * SPACE;
+	orig.y = (s->player_pos.y - 0.125) * SPACE;
+	dest.y = (s->player_pos.y + 0.125) * SPACE;
+	sdl->map->color_tmp = 0xFF0000FF;
+	draw_rect(sdl, sdl->map, orig, dest);
 }
 
 
@@ -105,47 +120,51 @@ void	move_player(t_main *s, t_sdl *sdl, double dir_x, double dir_y)
 	target.x = s->player_pos.x + dir_x;
 	target.y = s->player_pos.y + dir_y;
 	target.x = target.x < 0 ? 0 : target.x;
-	target.x = target.x > s->width - 1 ? s->width - 1 : target.x;
+	target.x = target.x > s->width ? s->width: target.x;
 	target.y = target.y < 0 ? 0 : target.y;
-	target.y = target.y > s->height - 1 ? s->height - 1 : target.y;
+	target.y = target.y > s->height ? s->height : target.y;
 	s->player_pos.x = target.x;
 	s->player_pos.y = target.y;
+	draw_player(s, sdl);
 }
 
 void	event_handler(t_main *s)
 {
-	t_position orig = {100 ,100};
-	t_position dest = {500 ,500};
-
-	// draw_rect(s->sdl, s->sdl->map, orig, dest);
-
 	const Uint8 *keys;
+	t_position orig = {0,0};
+	t_position dest = {WIDTH,HEIGHT};
 
+
+	draw_minimap(s);
 	while (SDL_WaitEvent(&(s->sdl->event)))
 	{
+
 		keys = SDL_GetKeyboardState(NULL);
 		if (s->sdl->event.type == SDL_QUIT)
 			break ;
 		else if (s->sdl->event.type == SDL_KEYDOWN)
 		{
+			s->sdl->map->color_tmp = 0x000000FF;
+			draw_rect(s->sdl, s->sdl->map, orig, dest);
+			draw_minimap(s);
 			if (s->sdl->event.key.keysym.sym == SDLK_ESCAPE)
 				break;
 			if (keys[LEFT] || keys[RIGHT] || keys[UP] || keys[DOWN])
 				move_player(s, s->sdl, s->move_speed * (keys[RIGHT]
 				- keys[LEFT]), s->move_speed * (keys[DOWN] - keys[UP]));
-			else if (s->sdl->event.key.keysym.sym == SDLK_m)
-			{
-				draw_minimap(s);
-			}
+			// else if (s->sdl->event.key.keysym.sym == SDLK_m)
+			// {
+			// 	draw_minimap(s);
+			// }
 		}
-			SDL_SetRenderTarget(s->sdl->prenderer, s->sdl->map->texture);
-			SDL_UpdateTexture(s->sdl->map->texture, NULL, s->sdl->map->content, WIDTH
-				* sizeof(Uint32));
-			SDL_SetRenderTarget(s->sdl->prenderer, NULL);
-			SDL_RenderCopy(s->sdl->prenderer, s->sdl->map->texture, NULL, NULL);
-			SDL_RenderPresent(s->sdl->prenderer);
-		}
+		SDL_SetRenderTarget(s->sdl->prenderer, s->sdl->map->texture);
+		SDL_UpdateTexture(s->sdl->map->texture, NULL, s->sdl->map->content, WIDTH
+			* sizeof(Uint32));
+		SDL_SetRenderTarget(s->sdl->prenderer, NULL);
+		SDL_RenderCopy(s->sdl->prenderer, s->sdl->map->texture, NULL, NULL);
+		SDL_RenderPresent(s->sdl->prenderer);
 		printf("Player x:%f y:%f\n", s->player_pos.x, s->player_pos.y);
+	}
 }
 
 int	main (int ac, char **av)
@@ -159,8 +178,8 @@ int	main (int ac, char **av)
 	initialize_sdl(s->sdl);
 	ft_print_map(s);
 
-	s->player_pos.x = (double) s->player_pos.x;
-	s->player_pos.y = (double) s->player_pos.y;
+	s->player_pos.x = (double) s->start_position.x + 0.5;
+	s->player_pos.y = (double) s->start_position.y + 0.5;
 	event_handler(s);
 	return (1);
 }

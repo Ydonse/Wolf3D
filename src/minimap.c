@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 16:27:24 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/25 16:49:13 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	draw_minimap(t_main *s)
 		{
 			if (s->map[i][j].type == 'm')
 			{
-				ft_putstr("true ");
+				// ft_putstr("true ");
 				orig.x = SPACE * j;
 				orig.y = SPACE * i;
 				dest.x = orig.x + SPACE;
@@ -42,7 +42,7 @@ void	draw_minimap(t_main *s)
 			}
 			else if (s->map[i][j].type == '.')
 			{
-				ft_putstr("true ");
+				// ft_putstr("true ");
 				orig.x = SPACE * j;
 				orig.y = SPACE * i;
 				dest.x = orig.x + SPACE;
@@ -52,7 +52,7 @@ void	draw_minimap(t_main *s)
 			}
 			j++;
 		}
-		ft_putchar('\n');
+		// ft_putchar('\n');
 		j = 0;
 		i++;
 	}
