@@ -6,10 +6,10 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 17:19:32 by malluin          ###   ########.fr       */
-/*   Updated: 2019/04/25 18:09:35 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/26 11:15:39 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "wolf3d.h"
 
@@ -44,10 +44,8 @@ void	draw_minimap(t_main *s)
 	int i;
 	int j;
 
-	i = 0;
 	i = -1;
 	j = 0;
-	while (i < s->height)
 	while (++i < s->height)
 	{
 		while (j < s->width)
@@ -56,26 +54,8 @@ void	draw_minimap(t_main *s)
 			orig.y = SPACE * i + s->sdl->y_o;
 			dest.x = orig.x + SPACE;
 			dest.y = orig.y + SPACE;
-			if (s->map[i][j].type == 'm')
-			{
-				s->sdl->map->color_tmp = 0x9a5444FF;
-				draw_rect(s->sdl, s->sdl->map, orig, dest);
-			}
-			else if (s->map[i][j].type == '.')
-			{
-				s->sdl->map->color_tmp = 0xB0B0B0FF;
-				draw_rect(s->sdl, s->sdl->map, orig, dest);
-			}
-			else if (s->map[i][j].type == 'j')
-			{
-				s->sdl->map->color_tmp = 0xA0A0A0FF;
-				draw_rect(s->sdl, s->sdl->map, orig, dest);
-			}
-			j++;
 			get_case_color(s, orig, dest, s->map[i][j++].type);
 		}
-		// ft_putchar('\n');
 		j = 0;
-		i++;
 	}
 }
