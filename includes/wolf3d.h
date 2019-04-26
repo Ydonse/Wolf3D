@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 18:21:16 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/26 11:17:27 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct		s_main {
 	t_position		start_position;
 	t_dpos			player_pos;
 	double			move_speed;
+	char			active_map;
 }					t_main;
 
 void				handle_error(t_main *s, int error_nb);

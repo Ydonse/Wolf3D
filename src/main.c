@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 18:21:27 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/26 11:22:14 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ void	event_handler(t_main *s)
 	t_position orig = {0,0};
 	t_position dest = {WIDTH,HEIGHT};
 
-	draw_minimap(s);
-	draw_player(s, s->sdl);
+	// draw_minimap(s);
+	// draw_player(s, s->sdl);
 	while (SDL_WaitEvent(&(s->sdl->event)))
 	{
 
@@ -121,20 +121,21 @@ void	event_handler(t_main *s)
 			break ;
 		else if (s->sdl->event.type == SDL_KEYDOWN)
 		{
-			s->sdl->map->color_tmp = 0x000000FF;
-			draw_rect(s->sdl, s->sdl->map, orig, dest);
-			draw_minimap(s);
 			if (s->sdl->event.key.keysym.sym == SDLK_ESCAPE)
 				break;
-			if (keys[LEFT] || keys[RIGHT] || keys[UP] || keys[DOWN])
-				move_player(s, s->sdl,
-					s->move_speed * (keys[RIGHT] - keys[LEFT]) * (1 + 0.4 * (keys[SPRINT] == 1)),
-				 	s->move_speed * (keys[DOWN] - keys[UP]) * (1 + 0.4 * (keys[SPRINT] == 1)));
-			draw_player(s, s->sdl);
-			// else if (s->sdl->event.key.keysym.sym == SDLK_m)
-			// {
-			// 	draw_minimap(s);
-			// }
+			else if (s->sdl->event.key.keysym.sym == SDLK_m)
+				s->active_map = !s->active_map;
+			s->sdl->map->color_tmp = 0x000000FF;
+			draw_rect(s->sdl, s->sdl->map, orig, dest);
+			if (s->active_map)
+			{
+				draw_minimap(s);
+				if (keys[LEFT] || keys[RIGHT] || keys[UP] || keys[DOWN])
+					move_player(s, s->sdl,
+						s->move_speed * (keys[RIGHT] - keys[LEFT]) * (1 + 0.4 * (keys[SPRINT] == 1)),
+					 	s->move_speed * (keys[DOWN] - keys[UP]) * (1 + 0.4 * (keys[SPRINT] == 1)));
+				draw_player(s, s->sdl);
+			}
 		}
 		SDL_SetRenderTarget(s->sdl->prenderer, s->sdl->map->texture);
 		SDL_UpdateTexture(s->sdl->map->texture, NULL, s->sdl->map->content, WIDTH

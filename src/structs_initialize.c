@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/25 18:08:08 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/26 11:20:21 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_main	*initialize_main(void)
 	s->height = 0;
 	s->map = NULL;
 	s->move_speed = 0.1;
+	s->active_map = 0;
 	return (s);
 }
 
