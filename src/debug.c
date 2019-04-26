@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:58:12 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/24 18:00:17 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/26 18:20:03 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_print_map(t_main	*s)
 		{
 			ft_putchar(s->map[i][j].type);
 			ft_putchar(s->map[i][j].zone);
+			ft_putnbr(s->map[i][j].block);
 			ft_putchar(' ');
 			j++;
 		}

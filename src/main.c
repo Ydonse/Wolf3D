@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/26 11:22:14 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/26 18:45:22 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,11 @@ void	draw_player(t_main *s, t_sdl *sdl)
 	draw_rect(sdl, sdl->map, orig, dest);
 }
 
-int		check_collisions(t_main *s, t_sdl *sdl, t_dpos target)
+int		check_collisions(t_main *s, t_dpos target)
 {
 	t_dpos		corners[4];
 	int			i;
 
-	i = 0;
 	corners[0].x = target.x - PLAYER_SIZE / 2;
 	corners[0].y = target.y - PLAYER_SIZE / 2;
 	corners[1].x = target.x + PLAYER_SIZE / 2;
@@ -78,25 +77,31 @@ int		check_collisions(t_main *s, t_sdl *sdl, t_dpos target)
 	corners[2].y = target.y + PLAYER_SIZE / 2;
 	corners[3].x = target.x + PLAYER_SIZE / 2;
 	corners[3].y = target.y + PLAYER_SIZE / 2;
-	while (i < 4)
+	i = -1;
+	while (++i < 4)
 	{
 		if (corners[i].x < 0 || corners[i].y < 0
 			|| corners[i].x > s->width || corners[i].y > s->height)
 			return (0);
-		i++;
+		if (s->map[(int)corners[i].y][(int)corners[i].x].block == 1)
+			return (0);
 	}
 	return (1);
 }
 
-
-void	move_player(t_main *s, t_sdl *sdl, double dir_x, double dir_y)
+void	move_player(t_main *s, double dir_x, double dir_y)
 {
 	t_dpos	target;
 
 	target.x = s->player_pos.x + dir_x;
 	target.y = s->player_pos.y + dir_y;
-	if (check_collisions(s, sdl, target) == 0)
-		return ;
+	if (check_collisions(s, target) == 0)
+	{
+		target.x = s->player_pos.x + dir_x / 2;
+		target.y = s->player_pos.y + dir_y / 2;
+		if (check_collisions(s, target) == 0)
+			return ;
+	}
 	target.x = target.x < 0 ? 0 : target.x;
 	target.x = target.x > s->width ? s->width: target.x;
 	target.y = target.y < 0 ? 0 : target.y;
@@ -131,7 +136,7 @@ void	event_handler(t_main *s)
 			{
 				draw_minimap(s);
 				if (keys[LEFT] || keys[RIGHT] || keys[UP] || keys[DOWN])
-					move_player(s, s->sdl,
+					move_player(s,
 						s->move_speed * (keys[RIGHT] - keys[LEFT]) * (1 + 0.4 * (keys[SPRINT] == 1)),
 					 	s->move_speed * (keys[DOWN] - keys[UP]) * (1 + 0.4 * (keys[SPRINT] == 1)));
 				draw_player(s, s->sdl);
@@ -143,7 +148,7 @@ void	event_handler(t_main *s)
 		SDL_SetRenderTarget(s->sdl->prenderer, NULL);
 		SDL_RenderCopy(s->sdl->prenderer, s->sdl->map->texture, NULL, NULL);
 		SDL_RenderPresent(s->sdl->prenderer);
-		printf("Player x:%f y:%f\n", s->player_pos.x, s->player_pos.y);
+		// printf("Player x:%f y:%f\n", s->player_pos.x, s->player_pos.y);
 	}
 }
 
@@ -156,7 +161,7 @@ int	main (int ac, char **av)
 	s = initialize_main();
 	parse_map(s, av[1]);
 	initialize_sdl(s->sdl);
-	ft_print_map(s);
+	// ft_print_map(s);
 	s->sdl->x_o = WIDTH / 2 - ((SPACE * s->width) / 2);
 	s->sdl->y_o = HEIGHT / 2 - ((SPACE * s->height) / 2);
 	s->player_pos.x = (double) s->start_position.x + 0.5;

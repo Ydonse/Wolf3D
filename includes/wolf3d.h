@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/26 11:17:27 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/26 18:09:00 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct		s_dpos {
 typedef struct		s_case {
 	char			type;
 	char			zone;
+	char			block;
 	t_bool			valid;
 }					t_case;
 

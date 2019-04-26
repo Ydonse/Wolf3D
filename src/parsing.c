@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 12:58:00 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 14:42:45 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/26 18:09:56 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		fill_map(t_main *s, char **tab, int i)
 	while (tab[k])
 	{
 		s->map[i][k].type = tab[k][0];
+		s->map[i][k].block = tab[k][0] == 'j' || tab[k][0] == '.' ? 0 : 1;
 		if (s->map[i][k].type == 'j')
 		{
 			s->start_position.x = k;
