@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/29 12:04:14 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/29 14:24:13 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void				draw_minimap(t_main *s);
 void				draw_player(t_main *s, t_sdl *sdl);
 void				draw_rect(t_sdl *sdl, t_texture *text, t_position orig,
 					t_position dest);
+void				set_pixel(t_sdl *sdl, t_texture *text, Uint32 color, t_position coord);
 void				update_image(t_main *s);
 int					check_collisions(t_main *s, t_dpos target);
 
@@ -128,10 +129,18 @@ void				ft_error_sdl(char *str);
 //INITIALIZE
 t_main				*initialize_main(void);
 t_texture			*initialize_texture(t_sdl *sdl, int width, int height);
-void				initialize_sdl(t_sdl *sdl);
+void				initialize_sdl(t_main *s, t_sdl *sdl);
 
 //EVENTS
 
 void	event_handler(t_main *s);
 void	move_player(t_main *s, double dir_x, double dir_y);
+
+
+
+
+int		raycast(t_main *s, double r_angle);
+void	set_pixel_debug(t_sdl *sdl, t_dpos coord);
+void	draw_debug_rect(t_sdl *sdl, t_texture *text, t_dpos orig);
+
 #endif

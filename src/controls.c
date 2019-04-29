@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/29 11:57:42 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/29 13:54:31 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,17 @@ void	event_handler(t_main *s)
 				{
 					draw_minimap(s);
 					draw_player(s, s->sdl);
+					raycast(s, s->p_angle);
+					
 				}
 			}
 			if (keys[LEFT_AR] || keys[RIGHT_AR])
+			{
 				s->p_angle = (s->p_angle + (keys[LEFT_AR] - keys[RIGHT_AR]) * ROTATE_SPEED + 360) % 360;
+				draw_minimap(s);
+				draw_player(s, s->sdl);
+				raycast(s, s->p_angle);
+				}
 			printf("%d\n", s->p_angle);
 		}
 		update_image(s);

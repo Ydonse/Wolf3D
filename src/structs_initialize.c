@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/29 11:57:13 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/29 13:50:23 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_texture	*initialize_texture(t_sdl *sdl, int width, int height)
 	return (text);
 }
 
-void	initialize_sdl(t_sdl *sdl)
+void	initialize_sdl(t_main *s, t_sdl *sdl)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		ft_error_sdl("Échec de l'initialisation de la SDL");
@@ -60,4 +60,6 @@ void	initialize_sdl(t_sdl *sdl)
 		ft_error_sdl("Échec de chargement du renderer");
 	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))
 		exit(-1);
+	sdl->x_o = WIDTH / 2 - ((SPACE * s->width) / 2);
+	sdl->y_o = HEIGHT / 2 - ((SPACE * s->height) / 2);
 }

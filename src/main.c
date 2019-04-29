@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/29 12:04:47 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/29 15:09:39 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_error_sdl(char *str)
 
 void	set_pixel(t_sdl *sdl, t_texture *text, Uint32 color, t_position coord)
 {
-	if (coord.x < WIDTH && coord.y < HEIGHT)
+	if (coord.x > 0 && coord.x < WIDTH && coord.y > 0 && coord.y < HEIGHT)
 	{
 		text->content[coord.x + coord.y * WIDTH] = color;
 	}
@@ -97,9 +97,8 @@ int	main (int ac, char **av)
 		return (1);
 	s = initialize_main();
 	parse_map(s, av[1]);
-	initialize_sdl(s->sdl);
-	s->sdl->x_o = WIDTH / 2 - ((SPACE * s->width) / 2);
-	s->sdl->y_o = HEIGHT / 2 - ((SPACE * s->height) / 2);
+	initialize_sdl(s, s->sdl);
+
 	s->player_pos.x = (double) s->start_position.x + 0.5;
 	s->player_pos.y = (double) s->start_position.y + 0.5;
 	event_handler(s);
