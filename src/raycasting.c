@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 11:55:41 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/29 16:52:02 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/29 17:22:45 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,24 @@
 double	to_rad(double angle)
 {
 	return (angle * PI / 180.0);
+}
+
+int		check_entity(t_main *s, t_dpos point, double r_angle, char type)
+{
+	if (point.x < 0 || point.x >= s->width || point.y < 0
+		|| point.y >= s->height)
+		return (-1);
+	if (r_angle > 180 && r_angle < 360)
+	{
+		if (s->map[(int)point.y][(int)point.x].type == type)
+			return (1);
+	}
+	else if (r_angle > 0 && r_angle < 180)
+	{
+		if (s->map[(int)point.y - 1][(int)point.x].type == type)
+			return (1);
+	}
+	return (0);
 }
 
 int		raycast_hor(t_main *s, t_dpos collision, double r_angle)
@@ -30,19 +48,22 @@ int		raycast_hor(t_main *s, t_dpos collision, double r_angle)
 	collision.y = (int) s->player_pos.y + (sens == 1);
 	collision.x = (s->player_pos.y - collision.y) / tan(to_rad(r_angle)) + s->player_pos.x;
 	draw_debug_rect(s->sdl, s->sdl->map, 0x00000FF, collision);
+	if (check_entity(s, collision, r_angle, 'm') == 1)
+		return (1);
 	while (1)
 	{
 		xa = 1.0 / tan(to_rad(r_angle));
 		b.y = collision.y + sens;
-		// printf("%d\n\n", s->height);
-		if (b.y < 0 || b.y > (double)s->height)
+		if (b.y < 0 || b.y > (double)s->height || b.x < 0 || b.x > (double)s->width)
 			break;
-		// printf("b.y = %f, width / space = %d\n", b.y, WIDTH / SPACE);
 		b.x = collision.x + xa * -sens;
+		printf("%f %f\n", b.x, b.y);
 		draw_debug_rect(s->sdl, s->sdl->map, 0xFF0000FF, b);
+		if (check_entity(s, b, r_angle, 'm') == 1)
+			return (1);
 		sens = sens < 0 ? sens - 1 : sens + 1;
 	}
-
+	return (0);
 }
 
 int		raycast_ver(t_main *s, t_dpos collision, double r_angle)
