@@ -6,7 +6,7 @@
 #    By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/23 10:03:18 by ydonse            #+#    #+#              #
-#    Updated: 2019/04/25 18:08:26 by malluin          ###   ########.fr        #
+#    Updated: 2019/04/29 10:21:40 by ydonse           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,10 @@ SRC_NAME =	main.c \
 			walls_checking.c \
 			minimap.c \
 			debug.c \
-			structs_initialize.c
+			structs_initialize.c \
+			actions.c \
+			controls.c \
+			image.c
 
 CPPFLAGS = -I libft/includes/ -I /usr/local/include/ -MMD
 

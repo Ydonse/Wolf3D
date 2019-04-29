@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/26 18:09:00 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/29 10:21:26 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,11 @@ void				handle_error(t_main *s, int error_nb);
 int					parse_map(t_main *s, char *file);
 int					check_next_case(t_main *s, int x, int y);
 void				draw_minimap(t_main *s);
+void				draw_player(t_main *s, t_sdl *sdl);
 void				draw_rect(t_sdl *sdl, t_texture *text, t_position orig,
 					t_position dest);
+void				update_image(t_main *s);
+int					check_collisions(t_main *s, t_dpos target);
 
 void				ft_print_map(t_main	*s);
 
@@ -103,4 +106,8 @@ t_main				*initialize_main(void);
 t_texture			*initialize_texture(t_sdl *sdl, int width, int height);
 void				initialize_sdl(t_sdl *sdl);
 
+//EVENTS
+
+void	event_handler(t_main *s);
+void	move_player(t_main *s, double dir_x, double dir_y);
 #endif

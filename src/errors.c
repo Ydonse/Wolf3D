@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:50:10 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/24 15:15:21 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/25 18:12:25 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	display_error(int error_nb)
 	else if (error_nb == MALLOC_ERROR)
 		ft_putstr("Error : Malloc error\n");
 	else if (error_nb == PLAYER_ERROR)
-		ft_putstr("Error : Only one player position accepted.\n");
+		ft_putstr("Error : One player position needed.\n");
 	else if (error_nb == WALL_ERROR)
 		ft_putstr("Error : Map must be limited by walls !\n");
 }

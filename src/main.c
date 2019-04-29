@@ -6,11 +6,13 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/26 18:45:22 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/29 10:25:54 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+
+
 
 void	ft_error_sdl(char *str)
 {
@@ -89,69 +91,6 @@ int		check_collisions(t_main *s, t_dpos target)
 	return (1);
 }
 
-void	move_player(t_main *s, double dir_x, double dir_y)
-{
-	t_dpos	target;
-
-	target.x = s->player_pos.x + dir_x;
-	target.y = s->player_pos.y + dir_y;
-	if (check_collisions(s, target) == 0)
-	{
-		target.x = s->player_pos.x + dir_x / 2;
-		target.y = s->player_pos.y + dir_y / 2;
-		if (check_collisions(s, target) == 0)
-			return ;
-	}
-	target.x = target.x < 0 ? 0 : target.x;
-	target.x = target.x > s->width ? s->width: target.x;
-	target.y = target.y < 0 ? 0 : target.y;
-	target.y = target.y > s->height ? s->height : target.y;
-	s->player_pos.x = target.x;
-	s->player_pos.y = target.y;
-}
-
-void	event_handler(t_main *s)
-{
-	const Uint8 *keys;
-	t_position orig = {0,0};
-	t_position dest = {WIDTH,HEIGHT};
-
-	// draw_minimap(s);
-	// draw_player(s, s->sdl);
-	while (SDL_WaitEvent(&(s->sdl->event)))
-	{
-
-		keys = SDL_GetKeyboardState(NULL);
-		if (s->sdl->event.type == SDL_QUIT)
-			break ;
-		else if (s->sdl->event.type == SDL_KEYDOWN)
-		{
-			if (s->sdl->event.key.keysym.sym == SDLK_ESCAPE)
-				break;
-			else if (s->sdl->event.key.keysym.sym == SDLK_m)
-				s->active_map = !s->active_map;
-			s->sdl->map->color_tmp = 0x000000FF;
-			draw_rect(s->sdl, s->sdl->map, orig, dest);
-			if (s->active_map)
-			{
-				draw_minimap(s);
-				if (keys[LEFT] || keys[RIGHT] || keys[UP] || keys[DOWN])
-					move_player(s,
-						s->move_speed * (keys[RIGHT] - keys[LEFT]) * (1 + 0.4 * (keys[SPRINT] == 1)),
-					 	s->move_speed * (keys[DOWN] - keys[UP]) * (1 + 0.4 * (keys[SPRINT] == 1)));
-				draw_player(s, s->sdl);
-			}
-		}
-		SDL_SetRenderTarget(s->sdl->prenderer, s->sdl->map->texture);
-		SDL_UpdateTexture(s->sdl->map->texture, NULL, s->sdl->map->content, WIDTH
-			* sizeof(Uint32));
-		SDL_SetRenderTarget(s->sdl->prenderer, NULL);
-		SDL_RenderCopy(s->sdl->prenderer, s->sdl->map->texture, NULL, NULL);
-		SDL_RenderPresent(s->sdl->prenderer);
-		// printf("Player x:%f y:%f\n", s->player_pos.x, s->player_pos.y);
-	}
-}
-
 int	main (int ac, char **av)
 {
 	t_main	*s;
@@ -161,7 +100,6 @@ int	main (int ac, char **av)
 	s = initialize_main();
 	parse_map(s, av[1]);
 	initialize_sdl(s->sdl);
-	// ft_print_map(s);
 	s->sdl->x_o = WIDTH / 2 - ((SPACE * s->width) / 2);
 	s->sdl->y_o = HEIGHT / 2 - ((SPACE * s->height) / 2);
 	s->player_pos.x = (double) s->start_position.x + 0.5;
