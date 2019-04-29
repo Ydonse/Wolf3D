@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 11:55:41 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/29 16:52:02 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/29 17:15:35 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		raycast_hor(t_main *s, t_dpos collision, double r_angle)
 	if (r_angle == 0 || r_angle == 180 || r_angle == 360)
 		return (0);
 	sens = (r_angle > 0 && r_angle < 180) ? -1 : 1;
-	// sens < WIDTH / SPACE - (int)s->player_pos.x
 	collision.y = (int) s->player_pos.y + (sens == 1);
 	collision.x = (s->player_pos.y - collision.y) / tan(to_rad(r_angle)) + s->player_pos.x;
 	draw_debug_rect(s->sdl, s->sdl->map, 0x00000FF, collision);
@@ -34,10 +33,8 @@ int		raycast_hor(t_main *s, t_dpos collision, double r_angle)
 	{
 		xa = 1.0 / tan(to_rad(r_angle));
 		b.y = collision.y + sens;
-		// printf("%d\n\n", s->height);
 		if (b.y < 0 || b.y > (double)s->height)
 			break;
-		// printf("b.y = %f, width / space = %d\n", b.y, WIDTH / SPACE);
 		b.x = collision.x + xa * -sens;
 		draw_debug_rect(s->sdl, s->sdl->map, 0xFF0000FF, b);
 		sens = sens < 0 ? sens - 1 : sens + 1;
@@ -47,31 +44,28 @@ int		raycast_hor(t_main *s, t_dpos collision, double r_angle)
 
 int		raycast_ver(t_main *s, t_dpos collision, double r_angle)
 {
-	int tmp;
+	char	sens;
+	t_dpos	b;
+	double	ya;
 
-	tmp = 1;
-	if ((r_angle > 0 && r_angle < 90) || (r_angle > 270 && r_angle < 360))
+	// sens = 0;
+		if (r_angle == 0 || r_angle == 90 || r_angle == 270)
+			return (0);
+	sens = (r_angle > 0 && r_angle < 90) || (r_angle > 270 && r_angle < 360) ? 1 : -1;
+		collision.x = (int) s->player_pos.x + (sens == 1);
+		collision.y = s->player_pos.y +  (s->player_pos.x - collision.x ) * tan(to_rad(r_angle));
+		draw_debug_rect(s->sdl, s->sdl->map, SKY, collision);
+	while (1)
 	{
-		while (tmp < WIDTH / SPACE - (int)s->player_pos.y)
-		{
-			collision.x = (int) s->player_pos.x + tmp;
-			collision.y = s->player_pos.y +  (s->player_pos.x - collision.x ) * tan(to_rad(r_angle));
-			draw_debug_rect(s->sdl, s->sdl->map, SKY, collision);
-			tmp++;
-		}
-		// printf("x%f y%f\n", collision.x, collision.y);
+		ya = tan(to_rad(r_angle));
+		b.x = collision.x + sens;
+		if (b.x < 0 || b.x > (double)s->width)
+			break;
+		b.y = collision.y + ya * -sens;
+		draw_debug_rect(s->sdl, s->sdl->map, SKY, b);
+		sens = sens <= 0 ? sens - 1 : sens + 1;
 	}
-	tmp = 0;
-	if (r_angle > 90 && r_angle < 270)
-	{
-		while (tmp > 0 + (int)s->player_pos.y)
-		{
-			collision.x = (int) s->player_pos.x - tmp;
-			collision.y = s->player_pos.y + (s->player_pos.x - collision.x ) * tan(to_rad(r_angle));
-			tmp--;
-		}
-	}
-	draw_debug_rect(s->sdl, s->sdl->map, SKY, collision);
+
 	// printf("y%f, Height = %d\n", collision.y, HEIGHT);
 }
 
