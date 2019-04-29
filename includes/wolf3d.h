@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/29 14:24:13 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/29 15:17:33 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,6 @@ void	move_player(t_main *s, double dir_x, double dir_y);
 
 int		raycast(t_main *s, double r_angle);
 void	set_pixel_debug(t_sdl *sdl, t_dpos coord);
-void	draw_debug_rect(t_sdl *sdl, t_texture *text, t_dpos orig);
+void	draw_debug_rect(t_sdl *sdl, t_texture *text, Uint32 color, t_dpos orig);
 
 #endif
