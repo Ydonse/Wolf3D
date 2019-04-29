@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:58:12 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/29 15:17:25 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/29 16:15:47 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	draw_debug_rect(t_sdl *sdl, t_texture *text, Uint32 color, t_dpos orig)
 		{
 			coord.x = i;
 			coord.y = j++;
-			printf("x = %d, y = %d\n", coord.x, coord.y);
+			// printf("x = %d, y = %d\n", coord.x, coord.y);
 			set_pixel(sdl, text, color, coord);
 		}
 		i++;

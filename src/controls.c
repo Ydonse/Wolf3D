@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/29 13:54:31 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/29 16:51:02 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	event_handler(t_main *s)
 					draw_minimap(s);
 					draw_player(s, s->sdl);
 					raycast(s, s->p_angle);
-					
+
 				}
 			}
 			if (keys[LEFT_AR] || keys[RIGHT_AR])
