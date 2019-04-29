@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/29 10:21:26 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/29 11:57:07 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,38 @@
 # define SPACE 60
 # define MIN_WIDTH 3
 # define MIN_HEIGHT 3
+
 # define FILE_ERROR 1
 # define SIZE_ERROR 2
 # define SYNTAX_ERROR 3
 # define MALLOC_ERROR 4
 # define PLAYER_ERROR 5
 # define WALL_ERROR 6
+
 # define MAX_AREA 0
 # define OBJ "mp.tj"
 
 # define PLAYER_SIZE 0.25
+# define BLOCK_SIZE 64
+# define PLAYER_HEIGHT 32
+# define DEFAULT_FOV 60
+# define ROTATE_SPEED 2
 
-# define LEFT	SDL_SCANCODE_LEFT
-# define RIGHT	SDL_SCANCODE_RIGHT
-# define UP		SDL_SCANCODE_UP
-# define DOWN	SDL_SCANCODE_DOWN
+# define PROJ_WIDTH 320
+# define PROJ_HEIGHT 200
+
+#define PI 3.14159265
+
+# define LEFT_AR	SDL_SCANCODE_LEFT
+# define RIGHT_AR	SDL_SCANCODE_RIGHT
+# define UP_AR		SDL_SCANCODE_UP
+# define DOWN_AR	SDL_SCANCODE_DOWN
+
+# define LEFT	SDL_SCANCODE_A
+# define RIGHT	SDL_SCANCODE_D
+# define UP		SDL_SCANCODE_W
+# define DOWN	SDL_SCANCODE_S
+
 # define SPRINT	SDL_SCANCODE_LSHIFT
 
 typedef struct		s_position {
@@ -82,9 +99,12 @@ typedef struct		s_main {
 	int				height;
 	char			*parsing_line;
 	t_position		start_position;
-	t_dpos			player_pos;
 	double			move_speed;
+	t_dpos			player_pos;
+	short			p_angle;
 	char			active_map;
+	short			fov;
+	int				proj_distance;
 }					t_main;
 
 void				handle_error(t_main *s, int error_nb);

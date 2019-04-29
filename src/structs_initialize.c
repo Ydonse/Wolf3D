@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/26 18:22:20 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/29 11:57:13 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ t_main	*initialize_main(void)
 	s->map = NULL;
 	s->move_speed = 0.05;
 	s->active_map = 0;
+	s->fov = DEFAULT_FOV;
+	s->p_angle = 0;
+	s->proj_distance = (PROJ_WIDTH / 2) / tan((double)(s->fov / 2) * PI / 180.0);
 	return (s);
 }
 
