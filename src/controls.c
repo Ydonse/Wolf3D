@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/29 16:51:02 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/29 18:56:19 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,23 @@ int		keyboard_controls(t_main *s, int key)
 	return (1);
 }
 
+void	raycast_visualization(t_main *s)
+{
+	double	angle;
+	int		i;
+
+	i = 0;
+	angle = s->p_angle - s->fov / 2.0;
+	printf("angle debut: %f\n", angle);
+	while (i < PROJ_WIDTH)
+	{
+		raycast(s, angle);
+		angle += s->fov / (double)PROJ_WIDTH;
+		i++;
+	}
+	printf("angle fin: %f\n", angle);
+}
+
 void	event_handler(t_main *s)
 {
 	const Uint8 *keys;
@@ -54,17 +71,19 @@ void	event_handler(t_main *s)
 				{
 					draw_minimap(s);
 					draw_player(s, s->sdl);
-					raycast(s, s->p_angle);
-
+					raycast_visualization(s);
 				}
 			}
 			if (keys[LEFT_AR] || keys[RIGHT_AR])
 			{
 				s->p_angle = (s->p_angle + (keys[LEFT_AR] - keys[RIGHT_AR]) * ROTATE_SPEED + 360) % 360;
-				draw_minimap(s);
-				draw_player(s, s->sdl);
-				raycast(s, s->p_angle);
+				if (s->active_map)
+				{
+					draw_minimap(s);
+					draw_player(s, s->sdl);
+					raycast_visualization(s);
 				}
+			}
 			printf("%d\n", s->p_angle);
 		}
 		update_image(s);
