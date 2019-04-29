@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/29 11:57:07 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/29 12:04:14 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@
 # define MALLOC_ERROR 4
 # define PLAYER_ERROR 5
 # define WALL_ERROR 6
+
+# define SKY 0x69DBF5FF
+# define WALL  0x9a5444FF
+# define GROUND  0xB0B0B0FF
 
 # define MAX_AREA 0
 # define OBJ "mp.tj"
