@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 15:55:04 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 17:27:57 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,14 @@ void	event_handler(t_main *s)
 	while (game)
 	{
 		while ((SDL_PollEvent(&(s->sdl->event))) != 0)
+		{
 			if (s->sdl->event.type == SDL_QUIT)
 				game = 0;
-		keys = SDL_GetKeyboardState(NULL);
-		if (s->sdl->event.type == SDL_KEYDOWN || s->sdl->event.type == SDL_KEYUP)
-		{
 			if (s->sdl->event.type == SDL_KEYDOWN)
 				if (keyboard_controls(s, s->sdl->event.key.keysym.sym) == 0)
 					game = 0;
 		}
+		keys = SDL_GetKeyboardState(NULL);
 		if (keys[LEFT] || keys[RIGHT] || keys[UP] || keys[DOWN])
 			move_player(s, keys, keys[SPRINT]);
 		if (keys[LEFT_AR] || keys[RIGHT_AR])
