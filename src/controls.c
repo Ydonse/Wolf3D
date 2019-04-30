@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 14:08:24 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/30 14:44:55 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,7 @@ void	event_handler(t_main *s)
 			break;
 		if (keys[LEFT] || keys[RIGHT] || keys[UP] || keys[DOWN])
 		{
-			move_player(s,
-				s->move_speed * (keys[RIGHT] - keys[LEFT]) * (1 + 0.6 * (keys[SPRINT] == 1)),
-				s->move_speed * (keys[DOWN] - keys[UP]) * (1 + 0.6 * (keys[SPRINT] == 1)));
+			move_player(s, keys);
 		}
 		if (keys[LEFT_AR] || keys[RIGHT_AR])
 		{
