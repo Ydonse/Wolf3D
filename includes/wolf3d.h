@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 17:48:42 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 18:05:13 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define PLAYER_SIZE 0.25
 # define BLOCK_SIZE 64
 # define PLAYER_HEIGHT 32
-# define DEFAULT_FOV 60
+# define DEFAULT_FOV 75
 # define ROTATE_SPEED 2
 
 # define PROJ_WIDTH 800
@@ -168,7 +168,6 @@ typedef struct		s_image {
 	int				w;
 	int				h;
 }					t_image;
-#endif
 
 typedef	struct		s_win {
 	void			*mlx_ptr;

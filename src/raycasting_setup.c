@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 17:12:40 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/30 17:45:50 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 18:04:54 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	draw_wall_slice(t_main *s, double dist, int x)
 	int			bwall;
 	int			ewall;
 	t_position	pix;
+	Uint32		color;
 
 	i = 0;
 	projected_h = ((double)s->proj_distance / dist);
@@ -60,26 +61,22 @@ void	draw_wall_slice(t_main *s, double dist, int x)
 	bwall = bwall <= 0 ? 0 : bwall;
 	ewall = ewall > HEIGHT ? HEIGHT : ewall;
 	pix.x = x;
-	Uint32 color;
+	color = SKY;
 	while (i < bwall)
 	{
 		pix.y = i++;
-		color = SKY;
-		// color = darken_color(color, (int)(dist * 100.0 / 6.0));
 		set_pixel(s->sdl->game, color, pix);
 	}
+	color = WALL;
 	while (bwall < ewall)
 	{
 		pix.y = bwall++;
-		color = WALL;
-		color = darken_color(color, (int)(dist * 100.0 / 8.0));
-		set_pixel(s->sdl->game, color, pix);
+		set_pixel(s->sdl->game, darken_color(color, (int)(dist * 100.0 / 8.0)), pix);
 	}
+	color = GROUND;
 	while (ewall < HEIGHT)
 	{
 		pix.y = ewall++;
-		color = GROUND;
-		// color = darken_color(color, (int)(dist * 100.0 / 6.0));
 		set_pixel(s->sdl->game, color, pix);
 	}
 }
