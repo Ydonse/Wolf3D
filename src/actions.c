@@ -6,41 +6,44 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:43:56 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 15:29:58 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 15:43:53 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-void	move_player(t_main *s, const Uint8 *keys)
+void	move_player(t_main *s, const Uint8 *keys, char sprint)
 {
 	t_dpos	target;
+	double	speed;
+
+	speed = s->move_speed + sprint * s->move_speed * 0.5;
 
 	if (keys[UP])
 	{
-		target.x = s->player_pos.x + cos(to_rad(s->p_angle)) * s->move_speed;
-		target.y = s->player_pos.y - sin(to_rad(s->p_angle)) * s->move_speed;
+		target.x = s->player_pos.x + cos(to_rad(s->p_angle)) * speed;
+		target.y = s->player_pos.y - sin(to_rad(s->p_angle)) * speed;
 	}
 	if (keys[DOWN])
 	{
-		target.x = s->player_pos.x - cos(to_rad(s->p_angle * -1)) * s->move_speed;
-		target.y = s->player_pos.y - sin(to_rad(s->p_angle * -1)) * s->move_speed;
+		target.x = s->player_pos.x - cos(to_rad(s->p_angle * -1)) * speed;
+		target.y = s->player_pos.y - sin(to_rad(s->p_angle * -1)) * speed;
 	}
 	if (keys[LEFT])
 	{
-		target.x = s->player_pos.x + cos(to_rad(s->p_angle - 90)) * s->move_speed;
-		target.y = s->player_pos.y - sin(to_rad(s->p_angle - 90)) * s->move_speed;
+		target.x = s->player_pos.x + cos(to_rad(s->p_angle + 90)) * speed;
+		target.y = s->player_pos.y - sin(to_rad(s->p_angle + 90)) * speed;
 	}
 	if (keys[RIGHT])
 	{
-		target.x = s->player_pos.x + cos(to_rad(s->p_angle + 90)) * s->move_speed;
-		target.y = s->player_pos.y - sin(to_rad(s->p_angle + 90)) * s->move_speed;
+		target.x = s->player_pos.x + cos(to_rad(s->p_angle - 90)) * speed;
+		target.y = s->player_pos.y - sin(to_rad(s->p_angle - 90)) * speed;
 	}
 	if (check_collisions(s, target) == 0)
 	{
-		target.x = s->player_pos.x + (cos(to_rad(s->p_angle)) * s->move_speed / 2);
-		target.y =  s->player_pos.y + (cos(to_rad(s->p_angle)) * s->move_speed / 2);
-		if (check_collisions(s, target) == 0)
+		// target.x = s->player_pos.x + (cos(to_rad(s->p_angle)) * s->move_speed / 2);
+		// target.y =  s->player_pos.y + (cos(to_rad(s->p_angle)) * s->move_speed / 2);
+		// if (check_collisions(s, target) == 0)
 			return ;
 	}
 	target.x = target.x < 0 ? 0 : target.x;

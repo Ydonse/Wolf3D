@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 15:29:59 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 15:55:04 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int		keyboard_controls(t_main *s, int key)
 {
 	// t_position orig = {0,0};
 	// t_position dest = {WIDTH,HEIGHT};
-
-
 		if (key == SDLK_ESCAPE)
 			return (0);
 		else if (key == SDLK_e)
@@ -100,31 +98,32 @@ void	raycast_visualization(t_main *s)
 void	event_handler(t_main *s)
 {
 	const Uint8 *keys;
+	int			game;
+
+	game = 1;
 
 	keys = SDL_GetKeyboardState(NULL);
-	while (SDL_WaitEvent(&(s->sdl->event)))
+	while (game)
 	{
+		while ((SDL_PollEvent(&(s->sdl->event))) != 0)
+			if (s->sdl->event.type == SDL_QUIT)
+				game = 0;
+		keys = SDL_GetKeyboardState(NULL);
 		if (s->sdl->event.type == SDL_KEYDOWN || s->sdl->event.type == SDL_KEYUP)
 		{
-			keys = SDL_GetKeyboardState(NULL);
 			if (s->sdl->event.type == SDL_KEYDOWN)
 				if (keyboard_controls(s, s->sdl->event.key.keysym.sym) == 0)
-					break;
+					game = 0;
 		}
-		if (s->sdl->event.type == SDL_QUIT)
-			break ;
 		if (keys[LEFT] || keys[RIGHT] || keys[UP] || keys[DOWN])
-		{
-			move_player(s, keys);
-		}
+			move_player(s, keys, keys[SPRINT]);
 		if (keys[LEFT_AR] || keys[RIGHT_AR])
-		{
 			s->p_angle = (s->p_angle + (keys[LEFT_AR] - keys[RIGHT_AR]) * ROTATE_SPEED + 360) % 360;
-			// printf("%d\n", s->p_angle);
-		}
 		if (keys[UP_AR] || keys[DOWN_AR])
 		{
 			s->viewline = (s->viewline + (keys[UP_AR] - keys[DOWN_AR]) * ROTATE_SPEED);
+			s->viewline = (s->viewline < - HEIGHT / 2 ? - HEIGHT / 2 : s->viewline);
+			s->viewline = (s->viewline > HEIGHT * 1.5 ? HEIGHT * 1.5 : s->viewline);
 			// printf("%d\n", s->p_angle);
 		}
 		if (s->active_map)
@@ -134,7 +133,7 @@ void	event_handler(t_main *s)
 			raycast_visualization(s);
 			update_image(s, s->sdl->map);
 		}
-		if (!s->active_map)
+		else
 		{
 			raycast_visualization(s);
 			update_image(s, s->sdl->game);

@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 14:50:11 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/30 15:42:44 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void				initialize_sdl(t_main *s, t_sdl *sdl);
 //EVENTS
 
 void				event_handler(t_main *s);
-void				move_player(t_main *s, const Uint8 *keys);
+void				move_player(t_main *s, const Uint8 *keys, char sprint);
 
 
 
