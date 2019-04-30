@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 12:53:29 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 13:14:24 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ void	event_handler(t_main *s)
 					draw_minimap(s);
 					draw_player(s, s->sdl);
 					raycast_visualization(s);
-					update_image(s, s->sdl->game);
+					// update_image(s, s->sdl->game);
+					update_image(s, s->sdl->map);
 				}
 			}
 			if (keys[LEFT_AR] || keys[RIGHT_AR])
@@ -126,7 +127,8 @@ void	event_handler(t_main *s)
 					draw_minimap(s);
 					draw_player(s, s->sdl);
 					raycast_visualization(s);
-					update_image(s, s->sdl->game);
+					// update_image(s, s->sdl->game);
+					update_image(s, s->sdl->map);
 				}
 			}
 			printf("%d\n", s->p_angle);
