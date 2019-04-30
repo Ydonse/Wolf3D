@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:43:56 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 15:43:53 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 17:08:53 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,29 @@ void	move_player(t_main *s, const Uint8 *keys, char sprint)
 	double	speed;
 
 	speed = s->move_speed + sprint * s->move_speed * 0.5;
-
+	if ((keys[UP] || keys[DOWN]) && (keys[LEFT] || keys[RIGHT]))
+		speed /= 2;
+	target.x = s->player_pos.x;
+	target.y = s->player_pos.y;
 	if (keys[UP])
 	{
-		target.x = s->player_pos.x + cos(to_rad(s->p_angle)) * speed;
-		target.y = s->player_pos.y - sin(to_rad(s->p_angle)) * speed;
+		target.x += cos(to_rad(s->p_angle)) * speed;
+		target.y -= sin(to_rad(s->p_angle)) * speed;
 	}
 	if (keys[DOWN])
 	{
-		target.x = s->player_pos.x - cos(to_rad(s->p_angle * -1)) * speed;
-		target.y = s->player_pos.y - sin(to_rad(s->p_angle * -1)) * speed;
+		target.x -= cos(to_rad(s->p_angle * -1)) * speed;
+		target.y -= sin(to_rad(s->p_angle * -1)) * speed;
 	}
 	if (keys[LEFT])
 	{
-		target.x = s->player_pos.x + cos(to_rad(s->p_angle + 90)) * speed;
-		target.y = s->player_pos.y - sin(to_rad(s->p_angle + 90)) * speed;
+		target.x += cos(to_rad(s->p_angle + 90)) * speed;
+		target.y -= sin(to_rad(s->p_angle + 90)) * speed;
 	}
 	if (keys[RIGHT])
 	{
-		target.x = s->player_pos.x + cos(to_rad(s->p_angle - 90)) * speed;
-		target.y = s->player_pos.y - sin(to_rad(s->p_angle - 90)) * speed;
+		target.x += cos(to_rad(s->p_angle - 90)) * speed;
+		target.y -= sin(to_rad(s->p_angle - 90)) * speed;
 	}
 	if (check_collisions(s, target) == 0)
 	{
@@ -56,5 +59,5 @@ void	move_player(t_main *s, const Uint8 *keys, char sprint)
 
 void	open_door(t_main *s)
 {
-
+	;
 }

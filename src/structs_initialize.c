@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/30 13:51:34 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 16:26:44 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ void	initialize_sdl(t_main *s, t_sdl *sdl)
 	if (!(sdl->pwindow = SDL_CreateWindow("Wolf3D", 100,
 		100, WIDTH, HEIGHT, SDL_WINDOW_SHOWN)))
 		ft_error_sdl("Échec de creation de la fenetre");
-	if (!(sdl->prenderer = SDL_CreateRenderer(sdl->pwindow, -1,
-		SDL_RENDERER_ACCELERATED)))
+	if (!(sdl->prenderer = SDL_CreateRenderer(sdl->pwindow, -1, 0)))
 		ft_error_sdl("Échec de chargement du renderer");
 	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))
 		exit(-1);

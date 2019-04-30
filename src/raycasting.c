@@ -6,22 +6,13 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 11:55:41 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/30 14:08:05 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/30 17:43:46 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-double	norme(t_dpos player, t_dpos point)
-{
-	double x;
-	double y;
-
-	x = point.x - player.x;
-	y = point.y - player.y;
-	return (sqrtf(x * x + y * y));
-}
-int		check_entity_h(t_main *s, t_dpos point, double r_angle, char type)
+int		check_entity_h(t_main *s, t_dpos point, double r_angle, char *type)
 {
 
 	if (r_angle > 180 && r_angle < 360)
@@ -29,7 +20,7 @@ int		check_entity_h(t_main *s, t_dpos point, double r_angle, char type)
 		if (point.x < 0 || point.x >= (double)s->width || point.y < 0
 			|| point.y >= (double)s->height)
 			return (-1);
-		if (s->map[(int)point.y][(int)point.x].type == type)
+		if (ft_strchr(type, s->map[(int)point.y][(int)point.x].type) != NULL)
 		{
 			draw_debug_rect(s->sdl, s->sdl->map, 0xFF0000FF, point);
 			return (1);
@@ -40,7 +31,7 @@ int		check_entity_h(t_main *s, t_dpos point, double r_angle, char type)
 		if (point.x < 0 || point.x >= (double)s->width || point.y - 1 < 0
 			|| point.y - 1 >= (double)s->height)
 			return (-1);
-		if (s->map[(int)point.y - 1][(int)point.x].type == type)
+		if (ft_strchr(type, s->map[(int)point.y - 1][(int)point.x].type) != NULL)
 		{
 			// printf("collision angle %f %f %f\n", r_angle, point.x, point.y);
 			draw_debug_rect(s->sdl, s->sdl->map, 0xFF0000FF, point);
@@ -50,7 +41,7 @@ int		check_entity_h(t_main *s, t_dpos point, double r_angle, char type)
 	return (0);
 }
 
-int		check_entity_v(t_main *s, t_dpos point, double r_angle, char type)
+int		check_entity_v(t_main *s, t_dpos point, double r_angle, char *type)
 {
 
 	if ((r_angle >= 0 && r_angle < 90) || (r_angle > 270 && r_angle < 360))
@@ -58,7 +49,7 @@ int		check_entity_v(t_main *s, t_dpos point, double r_angle, char type)
 		if (point.x < 0 || point.x >= s->width || point.y < 0
 			|| point.y >= s->height)
 			return (-1);
-		if (s->map[(int)point.y][(int)point.x].type == type)
+		if (ft_strchr(type, s->map[(int)point.y][(int)point.x].type) != NULL)
 		{
 			draw_debug_rect(s->sdl, s->sdl->map, 0x00FF00FF, point);
 			return (1);
@@ -69,7 +60,7 @@ int		check_entity_v(t_main *s, t_dpos point, double r_angle, char type)
 		if (point.x - 1 < 0 || point.x - 1 >= s->width || point.y < 0
 			|| point.y>= s->height)
 			return (-1);
-		if (s->map[(int)point.y][(int)point.x - 1].type == type)
+		if (ft_strchr(type, s->map[(int)point.y][(int)point.x - 1].type) != NULL)
 		{
 			draw_debug_rect(s->sdl, s->sdl->map, 0x00FF00FF, point);
 			return (1);
@@ -90,7 +81,7 @@ double		raycast_hor(t_main *s, t_dpos fp, double r_angle)
 	sens = (r_angle > 0 && r_angle < 180) ? -1 : 1;
 	fp.y = (double)((int) s->player_pos.y + (sens == 1));
 	fp.x = (s->player_pos.y - fp.y) / tan(to_rad(r_angle)) + s->player_pos.x;
-	res = check_entity_h(s, fp, r_angle, 'm');
+	res = check_entity_h(s, fp, r_angle, "mp");
 	if (res == 1)
 		return (norme(s->player_pos, fp));
 	else if (res == -1)
@@ -102,7 +93,7 @@ double		raycast_hor(t_main *s, t_dpos fp, double r_angle)
 		b.x = fp.x + xa * -sens;
 		if (b.y < 0 || b.y > (double)s->height || b.x < 0 || b.x > (double)s->width)
 			break;
-		res = check_entity_h(s, b, r_angle, 'm');
+		res = check_entity_h(s, b, r_angle, "mp");
 		if (res == 1)
 			return (norme(s->player_pos, b));
 		else if (res == -1)
@@ -124,7 +115,7 @@ double		raycast_ver(t_main *s, t_dpos fp, double r_angle)
 	sens = (r_angle >= 0 && r_angle < 90) || (r_angle > 270 && r_angle < 360) ? 1 : -1;
 	fp.x = (int) s->player_pos.x + (sens == 1);
 	fp.y = s->player_pos.y +  (s->player_pos.x - fp.x ) * tan(to_rad(r_angle));
-	res = check_entity_v(s, fp, r_angle, 'm');
+	res = check_entity_v(s, fp, r_angle, "mp");
 	if (res == 1)
 		return (norme(s->player_pos, fp));
 	else if (res == -1)
@@ -137,7 +128,7 @@ double		raycast_ver(t_main *s, t_dpos fp, double r_angle)
 		if (b.y < 0 || b.y > (double)s->height || b.x < 0 || b.x > (double)s->width)
 			break;
 		// printf("%f %f\n", b.x, b.y);
-		res = check_entity_v(s, b, r_angle, 'm');
+		res = check_entity_v(s, b, r_angle, "mp");
 		if (res == 1)
 			return (norme(s->player_pos, b));
 		else if (res == -1)

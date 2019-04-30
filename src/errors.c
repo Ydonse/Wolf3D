@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:50:10 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/25 18:12:25 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/30 17:11:19 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,10 @@ void	handle_error(t_main *s, int error_nb)
 	display_error(error_nb);
 	free_program(s);
 	exit(0);
+}
+
+void	ft_error_sdl(char *str)
+{
+	printf("%s (%s)\n", str, SDL_GetError());
+	exit (-1);
 }

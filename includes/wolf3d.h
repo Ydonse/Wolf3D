@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 15:42:44 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 17:48:42 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <time.h>
 
 # define WIDTH 800
 # define HEIGHT 600
@@ -44,7 +45,7 @@
 # define BLOCK_SIZE 64
 # define PLAYER_HEIGHT 32
 # define DEFAULT_FOV 60
-# define ROTATE_SPEED 10
+# define ROTATE_SPEED 2
 
 # define PROJ_WIDTH 800
 # define PROJ_HEIGHT 600
@@ -72,6 +73,12 @@ typedef struct		s_dpos {
 	double			x;
 	double			y;
 }					t_dpos;
+
+typedef struct		s_ray {
+	double			dist;
+	char			type;
+	char			orientation;
+}					t_ray;
 
 typedef struct		s_case {
 	char			type;
@@ -120,7 +127,8 @@ void				draw_minimap(t_main *s);
 void				draw_player(t_main *s, t_sdl *sdl);
 void				draw_rect(t_sdl *sdl, t_texture *text, t_position orig,
 					t_position dest);
-void				set_pixel(t_sdl *sdl, t_texture *text, Uint32 color, t_position coord);
+
+void				set_pixel(t_texture *text, Uint32 color, t_position coord);
 void				update_image(t_main *s, t_texture *texture);
 int					check_collisions(t_main *s, t_dpos target);
 
@@ -140,11 +148,36 @@ void				move_player(t_main *s, const Uint8 *keys, char sprint);
 
 
 
-
+void				raycast_visualization(t_main *s);
 double				raycast(t_main *s, double r_angle);
 void				set_pixel_debug(t_sdl *sdl, t_dpos coord);
 void				draw_debug_rect(t_sdl *sdl, t_texture *text, Uint32 color, t_dpos orig);
 
 double				to_rad(double angle);
+double				norme(t_dpos player, t_dpos point);
+
+
+
+
+# define PARSE_BUFF_SIZE 64
+
+typedef struct		s_image {
+	int				bits_color;
+	int				bits_alpha;
+	unsigned char	*img_str;
+	int				w;
+	int				h;
+}					t_image;
+#endif
+
+typedef	struct		s_win {
+	void			*mlx_ptr;
+	void			*win_ptr;
+	void			*image_ptr;
+	char			*image_str;
+}					t_win;
+
+
+
 
 #endif
