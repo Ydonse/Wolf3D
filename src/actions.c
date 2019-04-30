@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:43:56 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 17:08:53 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 18:06:11 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,28 @@ void	move_player(t_main *s, const Uint8 *keys, char sprint)
 
 void	open_door(t_main *s)
 {
-	;
+	if ((s->p_angle < 45 && s->p_angle >= 0) || (s->p_angle < 380 && s->p_angle >= 315))
+	{
+		if (s->map[(int)s->player_pos.y][(int)s->player_pos.x + 1].type == 'p'
+		&& s->map[(int)s->player_pos.y][(int)s->player_pos.x + 1].block == 1)
+			s->map[(int)s->player_pos.y][(int)s->player_pos.x + 1].block = 0;
+	}
+	else if(s->p_angle < 135 && s->p_angle > 45)
+	{
+		if (s->map[(int)s->player_pos.y - 1][(int)s->player_pos.x].type == 'p'
+		&& s->map[(int)s->player_pos.y - 1][(int)s->player_pos.x].block == 1)
+			s->map[(int)s->player_pos.y - 1][(int)s->player_pos.x].block = 0;
+	}
+	else if(s->p_angle < 225 && s->p_angle > 135)
+	{
+		if (s->map[(int)s->player_pos.y][(int)s->player_pos.x - 1].type == 'p'
+		&& s->map[(int)s->player_pos.y][(int)s->player_pos.x - 1].block == 1)
+			s->map[(int)s->player_pos.y][(int)s->player_pos.x - 1].block = 0;
+	}
+	else if(s->p_angle < 315 && s->p_angle > 225)
+	{
+		if (s->map[(int)s->player_pos.y + 1][(int)s->player_pos.x].type == 'p'
+		&& s->map[(int)s->player_pos.y + 1][(int)s->player_pos.x].block == 1)
+			s->map[(int)s->player_pos.y + 1][(int)s->player_pos.x].block = 0;
+	}
 }
