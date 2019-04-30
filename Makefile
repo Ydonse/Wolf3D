@@ -6,7 +6,7 @@
 #    By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/23 10:03:18 by ydonse            #+#    #+#              #
-#    Updated: 2019/04/29 17:26:11 by malluin          ###   ########.fr        #
+#    Updated: 2019/04/30 13:46:45 by malluin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRC_NAME =	main.c \
 			actions.c \
 			controls.c \
 			image.c \
-			raycasting.c
+			raycasting.c \
+			utils_trig.c
 
 CPPFLAGS = -I libft/includes/ -I /usr/local/include/ -MMD
 
