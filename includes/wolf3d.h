@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 13:59:25 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/30 14:08:06 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct		s_main {
 	char			active_map;
 	short			fov;
 	int				proj_distance;
+	int				viewline;
 }					t_main;
 
 void				handle_error(t_main *s, int error_nb);

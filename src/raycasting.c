@@ -6,16 +6,11 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 11:55:41 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/30 14:03:39 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/04/30 14:08:05 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-
-double	to_rad(double angle)
-{
-	return (angle * PI / 180.0);
-}
 
 double	norme(t_dpos player, t_dpos point)
 {
@@ -161,10 +156,12 @@ double	raycast(t_main *s, double r_angle)
 	collision.x = 0;
 	collision.y = 0;
 
+	r_angle = fmod(r_angle + 360.0, 360.0);
 	disth = raycast_hor(s, collision, r_angle);
 	distv = raycast_ver(s, collision, r_angle);
+	// printf ("angle: %f H: %f V: %f\n", r_angle, disth, distv);
 
-	if (!(disth <= 0) && disth < distv)
+	if ((!(disth <= 0) && disth < distv) || distv <= 0)
 		return (disth);
 	else
 		return (distv);
