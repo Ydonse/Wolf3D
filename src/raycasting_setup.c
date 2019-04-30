@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 17:12:40 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/30 18:04:54 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 18:11:41 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,12 @@ void	draw_wall_slice(t_main *s, double dist, int x)
 		pix.y = i++;
 		set_pixel(s->sdl->game, color, pix);
 	}
-	color = WALL;
+	color = MIXSW;
 	while (bwall < ewall)
 	{
 		pix.y = bwall++;
 		set_pixel(s->sdl->game, darken_color(color, (int)(dist * 100.0 / 8.0)), pix);
+		color = WALL;
 	}
 	color = GROUND;
 	while (ewall < HEIGHT)

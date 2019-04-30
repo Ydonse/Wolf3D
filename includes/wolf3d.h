@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 18:07:15 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 18:20:42 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define WALL_ERROR 6
 
 # define SKY 0x69DBF5FF
+# define MIXSW 0x82989DFF
 # define WALL  0x9a5444FF
 # define GROUND  0xB0B0B0FF
 # define DOOR  0xBBBBBBFF
@@ -45,7 +46,7 @@
 # define PLAYER_SIZE 0.25
 # define BLOCK_SIZE 64
 # define PLAYER_HEIGHT 32
-# define DEFAULT_FOV 75
+# define DEFAULT_FOV 65
 # define ROTATE_SPEED 2
 
 # define PROJ_WIDTH 800
@@ -79,6 +80,7 @@ typedef struct		s_ray {
 	double			dist;
 	char			type;
 	char			orientation;
+	t_position		object;
 }					t_ray;
 
 typedef struct		s_case {

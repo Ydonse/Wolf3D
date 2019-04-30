@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 11:55:41 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/30 17:43:46 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 18:14:37 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int		check_entity_h(t_main *s, t_dpos point, double r_angle, char *type)
 			return (-1);
 		if (ft_strchr(type, s->map[(int)point.y][(int)point.x].type) != NULL)
 		{
+			if (s->map[(int)point.y][(int)point.x].block == 0)
+				return (0);
 			draw_debug_rect(s->sdl, s->sdl->map, 0xFF0000FF, point);
 			return (1);
 		}
@@ -33,6 +35,8 @@ int		check_entity_h(t_main *s, t_dpos point, double r_angle, char *type)
 			return (-1);
 		if (ft_strchr(type, s->map[(int)point.y - 1][(int)point.x].type) != NULL)
 		{
+			if (s->map[(int)point.y - 1][(int)point.x].block == 0)
+				return (0);
 			// printf("collision angle %f %f %f\n", r_angle, point.x, point.y);
 			draw_debug_rect(s->sdl, s->sdl->map, 0xFF0000FF, point);
 			return (1);
@@ -51,6 +55,8 @@ int		check_entity_v(t_main *s, t_dpos point, double r_angle, char *type)
 			return (-1);
 		if (ft_strchr(type, s->map[(int)point.y][(int)point.x].type) != NULL)
 		{
+			if (s->map[(int)point.y][(int)point.x].block == 0)
+				return (0);
 			draw_debug_rect(s->sdl, s->sdl->map, 0x00FF00FF, point);
 			return (1);
 		}
@@ -62,6 +68,8 @@ int		check_entity_v(t_main *s, t_dpos point, double r_angle, char *type)
 			return (-1);
 		if (ft_strchr(type, s->map[(int)point.y][(int)point.x - 1].type) != NULL)
 		{
+			if (s->map[(int)point.y][(int)point.x - 1].block == 0)
+				return (0);
 			draw_debug_rect(s->sdl, s->sdl->map, 0x00FF00FF, point);
 			return (1);
 		}
