@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/29 15:17:33 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 11:58:14 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <unistd.h>
 
 # define WIDTH 800
-# define HEIGHT 800
+# define HEIGHT 600
 # define SPACE 60
 # define MIN_WIDTH 3
 # define MIN_HEIGHT 3
@@ -44,10 +44,10 @@
 # define BLOCK_SIZE 64
 # define PLAYER_HEIGHT 32
 # define DEFAULT_FOV 60
-# define ROTATE_SPEED 2
+# define ROTATE_SPEED 10
 
-# define PROJ_WIDTH 320
-# define PROJ_HEIGHT 200
+# define PROJ_WIDTH 800
+# define PROJ_HEIGHT 600
 
 #define PI 3.14159265
 
@@ -92,6 +92,7 @@ typedef struct		s_sdl {
 	SDL_Event		event;
 	SDL_Surface 	*minimap;
 	t_texture		*map;
+	t_texture		*game;
 	int				x_o;
 	int				y_o;
 }					t_sdl;
@@ -119,7 +120,7 @@ void				draw_player(t_main *s, t_sdl *sdl);
 void				draw_rect(t_sdl *sdl, t_texture *text, t_position orig,
 					t_position dest);
 void				set_pixel(t_sdl *sdl, t_texture *text, Uint32 color, t_position coord);
-void				update_image(t_main *s);
+void				update_image(t_main *s, t_texture *texture);
 int					check_collisions(t_main *s, t_dpos target);
 
 void				ft_print_map(t_main	*s);
@@ -133,14 +134,14 @@ void				initialize_sdl(t_main *s, t_sdl *sdl);
 
 //EVENTS
 
-void	event_handler(t_main *s);
-void	move_player(t_main *s, double dir_x, double dir_y);
+void				event_handler(t_main *s);
+void				move_player(t_main *s, double dir_x, double dir_y);
 
 
 
 
-int		raycast(t_main *s, double r_angle);
-void	set_pixel_debug(t_sdl *sdl, t_dpos coord);
-void	draw_debug_rect(t_sdl *sdl, t_texture *text, Uint32 color, t_dpos orig);
+double				raycast(t_main *s, double r_angle);
+void				set_pixel_debug(t_sdl *sdl, t_dpos coord);
+void				draw_debug_rect(t_sdl *sdl, t_texture *text, Uint32 color, t_dpos orig);
 
 #endif

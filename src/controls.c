@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/29 18:56:19 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 12:53:29 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,51 @@ int		keyboard_controls(t_main *s, int key)
 	return (1);
 }
 
+void	draw_wall_slice(t_main *s, double dist, int x)
+{
+	int		projected_h;
+	t_position	pix;
+	if (dist <= 0)
+		return ;
+	// printf("dist: %f proj distance %d\n", dist, s->proj_distance);
+	projected_h = (int)((double)1.0 / dist * (double)s->proj_distance);
+	// printf("wall height: %d\n", projected_h);
+
+	int		i;
+	int		bwall;
+	int		ewall;
+
+	bwall = HEIGHT / 2 - projected_h / 2;
+	ewall = HEIGHT / 2 + projected_h / 2;
+	bwall = bwall <= 0 ? 0 : bwall;
+	ewall = ewall > HEIGHT ? HEIGHT : ewall;
+
+	i = 0;
+	pix.x = x;
+	while (i < bwall)
+	{
+		pix.y = i;
+		set_pixel(s->sdl, s->sdl->game, SKY, pix);
+		i++;
+	}
+	while (bwall < ewall)
+	{
+		pix.y = bwall;
+		set_pixel(s->sdl, s->sdl->game, WALL, pix);
+		bwall++;
+	}
+	while (ewall < HEIGHT)
+	{
+		pix.y = ewall;
+		set_pixel(s->sdl, s->sdl->game, GROUND, pix);
+		ewall++;
+	}
+}
+
 void	raycast_visualization(t_main *s)
 {
 	double	angle;
+	double	dist;
 	int		i;
 
 	i = 0;
@@ -42,7 +84,8 @@ void	raycast_visualization(t_main *s)
 	printf("angle debut: %f\n", angle);
 	while (i < PROJ_WIDTH)
 	{
-		raycast(s, angle);
+		dist = raycast(s, angle);
+		draw_wall_slice(s, dist, i);
 		angle += s->fov / (double)PROJ_WIDTH;
 		i++;
 	}
@@ -72,6 +115,7 @@ void	event_handler(t_main *s)
 					draw_minimap(s);
 					draw_player(s, s->sdl);
 					raycast_visualization(s);
+					update_image(s, s->sdl->game);
 				}
 			}
 			if (keys[LEFT_AR] || keys[RIGHT_AR])
@@ -82,11 +126,12 @@ void	event_handler(t_main *s)
 					draw_minimap(s);
 					draw_player(s, s->sdl);
 					raycast_visualization(s);
+					update_image(s, s->sdl->game);
 				}
 			}
 			printf("%d\n", s->p_angle);
 		}
-		update_image(s);
+		// update_image(s, s->sdl->map);
 		// printf("Player x:%f y:%f\n", s->player_pos.x, s->player_pos.y);
 	}
 }

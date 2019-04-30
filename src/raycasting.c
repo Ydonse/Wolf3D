@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 11:55:41 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/29 19:26:01 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 11:30:04 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ double		raycast_ver(t_main *s, t_dpos fp, double r_angle)
 	return (0);
 }
 
-int		raycast(t_main *s, double r_angle)
+double	raycast(t_main *s, double r_angle)
 {
 	t_dpos	collision;
 	double	disth;
@@ -164,7 +164,7 @@ int		raycast(t_main *s, double r_angle)
 	disth = raycast_hor(s, collision, r_angle);
 	distv = raycast_ver(s, collision, r_angle);
 
-	if (disth != 0 && disth < distv)
+	if (!(disth <= 0) && disth < distv)
 		return (disth);
 	else
 		return (distv);

@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/29 13:50:23 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 11:40:22 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	initialize_sdl(t_main *s, t_sdl *sdl)
 		SDL_RENDERER_ACCELERATED)))
 		ft_error_sdl("Échec de chargement du renderer");
 	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))
+		exit(-1);
+	if (!(sdl->game = initialize_texture(sdl, WIDTH, HEIGHT)))
 		exit(-1);
 	sdl->x_o = WIDTH / 2 - ((SPACE * s->width) / 2);
 	sdl->y_o = HEIGHT / 2 - ((SPACE * s->height) / 2);
