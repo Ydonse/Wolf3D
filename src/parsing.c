@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 12:58:00 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/26 18:09:56 by malluin          ###   ########.fr       */
+/*   Updated: 2019/04/30 10:59:06 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,27 @@ int		check_walls(t_main *s, int x, int y)
 		return (1);
 	else
 		return (0);
+}
+
+void	check_player(t_main *s, char *file)
+{
+	int		fd;
+	char	player;
+
+	player = 0;
+	if ((fd = open(file, O_RDONLY)) < 1)
+		handle_error(s, FILE_ERROR);
+	while (get_next_line(fd, &(s->parsing_line)))
+	{
+		if (ft_strchr(s->parsing_line, 'j'))
+			player = 1;
+		ft_strdel(&(s->parsing_line));
+	}
+	ft_strdel(&(s->parsing_line));
+	close(fd);
+	if (!player)
+		handle_error(s, PLAYER_ERROR);
+
 }
 
 int		fill_map(t_main *s, char **tab, int i)
@@ -108,6 +129,7 @@ int		parse_map(t_main *s, char *file)
 	if ((fd = open(file, O_RDONLY)) < 1)
 		handle_error(s, FILE_ERROR);
 	check_file(s, fd, file);
+	check_player(s, file);
 	if ((fd = open(file, O_RDONLY)) < 1)
 		handle_error(s, FILE_ERROR);
 	if (!(s->map = (t_case**)malloc(sizeof(t_case*) * s->height)))
@@ -117,6 +139,7 @@ int		parse_map(t_main *s, char *file)
 		i = fill_map(s, ft_strsplit(s->parsing_line, ' '), i);
 		ft_strdel(&(s->parsing_line));
 	}
+	close(fd);
 	if (!check_walls(s, s->start_position.x, s->start_position.y))
 		handle_error(s, WALL_ERROR);
 	return (1);
