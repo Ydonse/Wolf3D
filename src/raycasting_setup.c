@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 17:12:40 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/30 18:11:41 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/01 17:37:49 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,19 @@ void	raycast_visualization(t_main *s)
 {
 	double	angle;
 	double	dist;
-	double correc;
+	double 	correc;
 	int		i;
+	t_ray	*ray;
 
 	i = 0;
 	angle = s->p_angle + s->fov / 2.0;
-	correc = raycast(s, s->p_angle);
+	ray = raycast(s, s->p_angle);
+	correc = ray->dist;
+	free(ray);
 	while (i < PROJ_WIDTH)
 	{
-		dist = raycast(s, angle);
+		ray = raycast(s, angle);
+		dist = ray->dist;
 		if (dist <= 0)
 			printf("FAIL angle:%f val:%f\n", angle, dist);
 		dist *= cos(to_rad((double)s->p_angle - angle));
@@ -102,6 +106,7 @@ void	raycast_visualization(t_main *s)
 			draw_wall_slice(s, dist, i);
 		angle -= s->fov / (double)PROJ_WIDTH;
 		i++;
+		free(ray);
 	}
 	// printf("angle fin: %f\n", angle);
 }
