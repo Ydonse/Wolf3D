@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 17:12:13 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/02 17:44:50 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,35 @@ void	get_case_color(t_main *s, t_position orig, t_position dest, char type)
 {
 	if (type == 'm')
 	{
-		s->sdl->map->color_tmp = 0x9a5444FF;
-		draw_rect(s->sdl, s->sdl->map, orig, dest);
+		int i;
+		int j;
+		t_position	coord;
+		int perx;
+		int pery;
+
+		orig.x = orig.x < 0 ? 0 : orig.x;
+		orig.y = orig.y < 0 ? 0 : orig.y;
+		dest.x = dest.x > WIDTH ? WIDTH : dest.x;
+		dest.y = dest.y > HEIGHT ? HEIGHT : dest.y;
+		i = orig.x;
+		while (i < dest.x)
+		{
+			j = orig.y;
+			while (j < dest.y)
+			{
+				coord.x = i;
+				coord.y = j++;
+				perx = (int)(percent(coord.x - orig.x, dest.x - orig.x) * 100);
+				pery = (int)(percent(coord.y - orig.y, dest.y - orig.y) * 100);
+				// printf("percent x = %d\n", perx);
+				// printf("percent y = %d\n", pery);
+				// printf("percent y = %d\n", pery * s->wall->h / 100 - 1);
+				// printf("percent = %d\n", (int)per * (s->wall->w * s->wall->h) / 100);
+				// set_pixel(s->sdl->map, SKY, coord);
+				set_pixel(s->sdl->map, s->wall->tex[(pery * s->wall->h / 100) * s->wall->w - 1 + (perx * s->wall->w / 100) - 1], coord);
+			}
+			i++;
+		}
 	}
 	else if (type == '.')
 	{

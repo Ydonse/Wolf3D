@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 13:45:53 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/30 17:12:03 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/02 16:14:06 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,13 @@ double	norme(t_dpos player, t_dpos point)
 	x = point.x - player.x;
 	y = point.y - player.y;
 	return (sqrtf(x * x + y * y));
+}
+
+double	percent(double value, double total)
+{
+	double result;
+
+	result = value / total;
+
+	return (result);
 }

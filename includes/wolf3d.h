@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/01 17:36:33 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/02 16:22:37 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@
 
 # define SPRINT	SDL_SCANCODE_LSHIFT
 
+# define PARSE_BUFF_SIZE 64
+
 typedef struct		s_position {
 	short			x;
 	short			y;
@@ -96,6 +98,14 @@ typedef struct		s_texture {
 	Uint32			color_tmp;
 }					t_texture;
 
+typedef struct		s_image {
+	int				bits_color;
+	int				bits_alpha;
+	Uint32			*tex;
+	int				w;
+	int				h;
+}					t_image;
+
 typedef struct		s_sdl {
 	SDL_Window		*pwindow;
 	SDL_Renderer	*prenderer;
@@ -121,6 +131,7 @@ typedef struct		s_main {
 	short			fov;
 	int				proj_distance;
 	int				viewline;
+	t_image			*wall;
 }					t_main;
 
 void				handle_error(t_main *s, int error_nb);
@@ -158,26 +169,11 @@ void				draw_debug_rect(t_sdl *sdl, t_texture *text, Uint32 color, t_dpos orig);
 
 double				to_rad(double angle);
 double				norme(t_dpos player, t_dpos point);
+double				percent(double value, double total);
 
+//IMAGES
 
-
-
-# define PARSE_BUFF_SIZE 64
-
-typedef struct		s_image {
-	int				bits_color;
-	int				bits_alpha;
-	unsigned char	*img_str;
-	int				w;
-	int				h;
-}					t_image;
-
-typedef	struct		s_win {
-	void			*mlx_ptr;
-	void			*win_ptr;
-	void			*image_ptr;
-	char			*image_str;
-}					t_win;
+t_image				*load_tga(char *path);
 
 
 

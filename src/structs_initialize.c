@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/30 16:26:44 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/02 11:37:06 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	initialize_sdl(t_main *s, t_sdl *sdl)
 		exit(-1);
 	if (!(sdl->game = initialize_texture(sdl, WIDTH, HEIGHT)))
 		exit(-1);
+	s->wall = load_tga("images/wall.tga");
 	sdl->x_o = WIDTH / 2 - ((SPACE * s->width) / 2);
 	sdl->y_o = HEIGHT / 2 - ((SPACE * s->height) / 2);
 }

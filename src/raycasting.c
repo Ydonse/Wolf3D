@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 11:55:41 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/01 17:36:03 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/02 11:14:47 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,8 +188,6 @@ t_ray	*raycast(t_main *s, double r_angle)
 	vertical = raycast_ver(s, collision, r_angle);
 	if (horiz == NULL || vertical == NULL)
 		handle_error(s, MALLOC_ERROR);
-	printf ("angle: %f H: %f V: %f\n", r_angle, horiz->dist, vertical->dist);
-
 	if ((!(horiz->dist <= 0) && horiz->dist < vertical->dist) || vertical->dist <= 0)
 	{
 		free(vertical);

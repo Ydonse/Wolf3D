@@ -6,7 +6,7 @@
 #    By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/23 10:03:18 by ydonse            #+#    #+#              #
-#    Updated: 2019/04/30 17:13:23 by malluin          ###   ########.fr        #
+#    Updated: 2019/05/02 10:17:35 by ydonse           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRC_NAME =	main.c \
 			raycasting.c \
 			raycasting_setup.c \
 			utils_trig.c \
-			collisions.c 
+			collisions.c \
+			parser_tga.c
 
 CPPFLAGS = -I libft/includes/ -I /usr/local/include/ -MMD
 
