@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/03 16:18:21 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/03 17:02:59 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct		s_ray {
 	char			type;
 	char			orientation;
 	t_position		object;
+	short			res;
 }					t_ray;
 
 typedef struct		s_case {
@@ -164,7 +165,7 @@ void				move_player(t_main *s, const Uint8 *keys, char sprint);
 
 
 void				raycast_visualization(t_main *s);
-t_ray				*raycast(t_main *s, double r_angle);
+t_ray				raycast(t_main *s, double r_angle);
 void				set_pixel_debug(t_sdl *sdl, t_dpos coord);
 void				draw_debug_rect(t_sdl *sdl, t_texture *text, Uint32 color, t_dpos orig);
 
