@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/03 16:23:10 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/03 17:59:40 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		keyboard_controls(t_main *s, int key)
 void	handle_keys(t_main *s)
 {
 	const Uint8 *keys;
-	
+
 	keys = SDL_GetKeyboardState(NULL);
 	if (keys[LEFT] || keys[RIGHT] || keys[UP] || keys[DOWN])
 		move_player(s, keys, keys[SPRINT]);

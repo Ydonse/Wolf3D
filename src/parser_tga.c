@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 16:40:18 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/02 14:13:08 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/03 17:57:42 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_image	*load_tga(char *path)
 	if ((ret = read(fd, str, 18)) == 0)
 		return (0);
 	get_info_header(image, str);
-	print_header(image, str);
+	// print_header(image, str);
 	idx = 0;
 	while ((ret = read(fd, str, PARSE_BUFF_SIZE)) != 0)
 	{

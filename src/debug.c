@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:58:12 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/03 16:18:13 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/03 18:07:22 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_print_map(t_main	*s)
 
 void	set_pixel_debug(t_sdl *sdl, t_dpos coord)
 {
-	if (coord.x < WIDTH && coord.y < HEIGHT)
+	if (coord.x >=0 && coord.x < WIDTH && coord.y >= 0 && coord.y < HEIGHT)
 	{
 		sdl->map->content[(int)(sdl->x_o + coord.x * SPACE + (sdl->y_o + coord.y * SPACE) * WIDTH)] = 0x000000FF;
 	}

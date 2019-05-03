@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 17:16:19 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/03 18:04:53 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void update_image(t_main *s, t_texture *texture)
 
 void	set_pixel(t_texture *text, Uint32 color, t_position coord)
 {
-	if (coord.x > 0 && coord.x < WIDTH && coord.y > 0 && coord.y < HEIGHT)
+	if (coord.x >= 0 && coord.x < WIDTH && coord.y >= 0 && coord.y < HEIGHT)
 	{
 		text->content[coord.x + coord.y * WIDTH] = color;
 	}
@@ -41,7 +41,6 @@ void	draw_rect(t_sdl *sdl, t_texture *text, t_position orig, t_position dest)
 	orig.y = orig.y < 0 ? 0 : orig.y;
 	dest.x = dest.x > WIDTH ? WIDTH : dest.x;
 	dest.y = dest.y > HEIGHT ? HEIGHT : dest.y;
-
 	i = orig.x;
 	while (i < dest.x)
 	{

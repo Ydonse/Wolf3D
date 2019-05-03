@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/03 17:12:53 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/03 18:26:36 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,40 @@ void	get_case_color(t_main *s, t_position orig, t_position dest, char type)
 	}
 }
 
+void	draw_black(t_main *s)
+{
+	t_position xy;
+
+	xy.x = -1;
+	while (xy.x++ < WIDTH)
+	{
+		xy.y = -1;
+		while (xy.y++ < s->sdl->y_o)
+			set_pixel(s->sdl->map, 0x000000FF, xy);
+	}
+	xy.x = -1;
+	while (xy.x++ < s->sdl->x_o)
+	{
+		xy.y = -1;
+		while (xy.y++ < HEIGHT)
+			set_pixel(s->sdl->map, 0x000000FF, xy);
+	}
+	xy.y = -1;
+	while (xy.x++ < WIDTH)
+	{
+		xy.y = HEIGHT - s->sdl->y_o - 1;
+		while (xy.y++ < HEIGHT)
+			set_pixel(s->sdl->map, 0x000000FF, xy);
+	}
+	xy.x = WIDTH - s->sdl->x_o - 1;
+	while (xy.x++ < WIDTH)
+	{
+		xy.y = -1;
+		while (xy.y++ < HEIGHT)
+			set_pixel(s->sdl->map, 0x000000FF, xy);
+	}
+}
+
 void	draw_minimap(t_main *s)
 {
 	t_position orig;
@@ -86,5 +120,6 @@ void	draw_minimap(t_main *s)
 	}
 	draw_player(s, s->sdl);
 	raycast_visualization(s);
+	draw_black(s);
 	update_image(s, s->sdl->map);
 }
