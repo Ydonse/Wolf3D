@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/03 17:02:59 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/03 18:46:43 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct		s_ray {
 	char			type;
 	char			orientation;
 	t_position		object;
+	t_dpos			dpos;
 	short			res;
 }					t_ray;
 

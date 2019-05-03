@@ -6,24 +6,26 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 11:55:41 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/03 18:33:45 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/03 18:48:03 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-t_ray	fill_ray(t_main *s, double x, double y, t_ray ray)
+t_ray	fill_ray(t_main *s, t_dpos pos, t_position bpos, t_ray ray)
 {
-	if (x < 0 || x >= (double)s->width || y < 0
-		|| y >= (double)s->height)
+	if (pos.x < 0 || pos.x >= (double)s->width || pos.y < 0
+		|| pos.y >= (double)s->height)
 	{
 		ray.res = -1;
 		return (ray);
 	}
-	ray.type = s->map[(int)y][(int)x].type;
-	ray.object.x = (int)x;
-	ray.object.y = (int)y;
-	if (s->map[(int)y][(int)x].block == 0)
+	ray.type = s->map[bpos.y][bpos.x].type;
+	ray.dpos.x = pos.x;
+	ray.dpos.y = pos.y;
+	ray.object.x = bpos.x;
+	ray.object.y = bpos.y;
+	if (s->map[bpos.y][bpos.x].block == 0)
 		return (ray);
 	ray.res = 1;
 	return (ray);
@@ -31,38 +33,42 @@ t_ray	fill_ray(t_main *s, double x, double y, t_ray ray)
 
 t_ray	check_entity_h(t_main *s, t_dpos point, double r_angle, t_ray ray)
 {
+	t_position	block_pos;
+
 	ray.type = 0;
 	ray.res = 0;
 	if (r_angle > 180 && r_angle < 360)
 	{
-		ray = fill_ray(s, point.x, point.y, ray);
-		if (ray.res == 1)
-			draw_debug_rect(s->sdl, s->sdl->map, 0xFF0000FF, point);
+		block_pos.x = (int)point.x;
+		block_pos.y = (int)point.y;
+		ray = fill_ray(s, point, block_pos, ray);
 	}
 	else if (r_angle > 0 && r_angle < 180)
 	{
-		ray = fill_ray(s, point.x, point.y - 1, ray);
-		if (ray.res == 1)
-			draw_debug_rect(s->sdl, s->sdl->map, 0xFF0000FF, point);
+		block_pos.x = (int)point.x;
+		block_pos.y = (int)(point.y - 1);
+		ray = fill_ray(s, point, block_pos, ray);
 	}
 	return (ray);
 }
 
 t_ray		check_entity_v(t_main *s, t_dpos point, double r_angle, t_ray ray)
 {
+	t_position	block_pos;
+
 	ray.type = 0;
 	ray.res = 0;
 	if ((r_angle >= 0 && r_angle < 90) || (r_angle > 270 && r_angle < 360))
 	{
-		ray = fill_ray(s, point.x, point.y, ray);
-		if (ray.res == 1)
-			draw_debug_rect(s->sdl, s->sdl->map, 0x00FF00FF, point);
+		block_pos.x = (int)point.x;
+		block_pos.y = (int)point.y;
+		ray = fill_ray(s, point, block_pos, ray);
 	}
 	else if (r_angle > 90 && r_angle < 270)
 	{
-		ray = fill_ray(s, point.x - 1, point.y, ray);
-		if (ray.res == 1)
-			draw_debug_rect(s->sdl, s->sdl->map, 0x00FF00FF, point);
+		block_pos.x = (int)(point.x - 1);
+		block_pos.y = (int)point.y;
+		ray = fill_ray(s, point, block_pos, ray);
 	}
 	return (ray);
 }
@@ -168,7 +174,13 @@ t_ray	raycast(t_main *s, double r_angle)
 	horiz = raycast_hor(s, collision, r_angle, horiz);
 	vertical = raycast_ver(s, collision, r_angle, vertical);
 	if ((!(horiz.dist <= 0) && horiz.dist < vertical.dist) || vertical.dist <= 0)
+	{
+		draw_debug_rect(s->sdl, s->sdl->map, 0xf47742FF, horiz.dpos);
 		return (horiz);
+	}
 	else
+	{
+		draw_debug_rect(s->sdl, s->sdl->map, 0xFF0000FF, vertical.dpos);
 		return (vertical);
+	}
 }
