@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:43:56 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 18:06:11 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/03 15:59:38 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,26 @@ void	open_door(t_main *s)
 		if (s->map[(int)s->player_pos.y + 1][(int)s->player_pos.x].type == 'p'
 		&& s->map[(int)s->player_pos.y + 1][(int)s->player_pos.x].block == 1)
 			s->map[(int)s->player_pos.y + 1][(int)s->player_pos.x].block = 0;
+	}
+}
+
+void	turn_camera(t_main *s, const Uint8 *keys, char command)
+{
+	if (command)
+	{
+		s->p_angle -= (s->sdl->event.motion.xrel) / 10;
+		s->p_angle = (s->p_angle + 360) % 360;
+		s->viewline -= (s->sdl->event.motion.yrel);
+		s->sdl->event.type = 0;
+	}
+	if (keys[LEFT_AR] || keys[RIGHT_AR])
+		s->p_angle = (s->p_angle + (keys[LEFT_AR] - keys[RIGHT_AR])
+		* ROTATE_SPEED + 360) % 360;
+	if (keys[UP_AR] || keys[DOWN_AR])
+	{
+		s->viewline = (s->viewline + (keys[UP_AR] - keys[DOWN_AR])
+		* ROTATE_SPEED * 5);
+		s->viewline = (s->viewline < - HEIGHT / 2 ? - HEIGHT / 2 : s->viewline);
+		s->viewline = (s->viewline > HEIGHT * 1.5 ? HEIGHT * 1.5 : s->viewline);
 	}
 }

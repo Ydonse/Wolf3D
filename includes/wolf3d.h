@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/02 16:22:37 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/03 16:18:21 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ void				initialize_sdl(t_main *s, t_sdl *sdl);
 //EVENTS
 
 void				event_handler(t_main *s);
+void				turn_camera(t_main *s, const Uint8 *keys, char command);
 void				move_player(t_main *s, const Uint8 *keys, char sprint);
 
 

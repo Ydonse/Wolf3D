@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/02 17:44:50 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/03 16:08:24 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,6 @@ void	draw_minimap(t_main *s)
 		j = 0;
 	}
 	draw_player(s, s->sdl);
+	raycast_visualization(s);
+	update_image(s, s->sdl->map);
 }

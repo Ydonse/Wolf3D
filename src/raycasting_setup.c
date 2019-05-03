@@ -6,24 +6,11 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 17:12:40 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/02 14:34:29 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/03 16:03:46 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-
-int		keyboard_controls(t_main *s, int key)
-{
-	// t_position orig = {0,0};
-	// t_position dest = {WIDTH,HEIGHT};
-		if (key == SDLK_ESCAPE)
-			return (0);
-		else if (key == SDLK_e)
-			open_door(s);
-		else if (key == SDLK_m)
-			s->active_map = !s->active_map;
-	return (1);
-}
 
 Uint32	darken_color(Uint32 color, int perc)
 {
