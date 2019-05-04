@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 11:55:41 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/03 18:48:03 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/04 21:20:02 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,64 @@ t_ray		check_entity_v(t_main *s, t_dpos point, double r_angle, t_ray ray)
 	return (ray);
 }
 
+t_ray	get_raycast_dist_v(t_main *s, t_ray ray, double r_a, t_dpos fp)
+{
+	t_dpos	b;
+	double	ya;
+	char	sens;
+
+	sens = (r_a >= 0 && r_a < 90) || (r_a > 270 && r_a < 360) ? 1 : -1;
+	while (1)
+	{
+		ya = tan(to_rad(r_a));
+		b.x = fp.x + sens;
+		b.y = fp.y + ya * -sens;
+		if (b.y < 0 || b.y > (double)s->height
+		|| b.x < 0 || b.x > (double)s->width)
+			break;
+		ray = check_entity_v(s, b, r_a, ray);
+		if (ray.res == 1)
+		{
+			ray.dist = norme(s->player_pos, b);
+			return (ray);
+		}
+		else if (ray.res == -1)
+			break;
+		sens = sens <= 0 ? sens - 1 : sens + 1;
+	}
+	ray.dist = 0;
+	return (ray);
+}
+
+t_ray	get_raycast_dist_h(t_main *s, t_ray ray, double r_angle, t_dpos fp)
+{
+	t_dpos	b;
+	double	xa;
+	char	sens;
+
+	sens = (r_angle > 0 && r_angle < 180) ? -1 : 1;
+	while (1)
+	{
+		xa = 1.0 / tan(to_rad(r_angle));
+		b.y = fp.y + sens;
+		b.x = fp.x + xa * -sens;
+		if (b.y < 0 || b.y > (double)s->height || b.x < 0
+		|| b.x > (double)s->width)
+			break;
+		ray = check_entity_h(s, b, r_angle, ray);
+		if (ray.res == 1)
+		{
+			ray.dist = norme(s->player_pos, b);
+			return (ray);
+		}
+		else if (ray.res == -1)
+			break;
+		sens = sens < 0 ? sens - 1 : sens + 1;
+	}
+	ray.dist = 0;
+	return (ray);
+}
+
 t_ray	raycast_hor(t_main *s, t_dpos fp, double r_angle, t_ray ray)
 {
 	char	sens;
@@ -95,32 +153,33 @@ t_ray	raycast_hor(t_main *s, t_dpos fp, double r_angle, t_ray ray)
 	}
 	else if (ray.res == -1)
 		return (ray);
-	while (1)
-	{
-		xa = 1.0 / tan(to_rad(r_angle));
-		b.y = fp.y + sens;
-		b.x = fp.x + xa * -sens;
-		if (b.y < 0 || b.y > (double)s->height || b.x < 0 || b.x > (double)s->width)
-			break;
-		ray = check_entity_h(s, b, r_angle, ray);
-		if (ray.res == 1)
-		{
-			ray.dist = norme(s->player_pos, b);
-			return (ray);
-		}
-		else if (ray.res == -1)
-			break;
-		sens = sens < 0 ? sens - 1 : sens + 1;
-	}
-	ray.dist = 0;
+	ray = get_raycast_dist_h(s, ray, r_angle, fp);
+	// while (1)
+	// {
+	// 	xa = 1.0 / tan(to_rad(r_angle));
+	// 	b.y = fp.y + sens;
+	// 	b.x = fp.x + xa * -sens;
+	// 	if (b.y < 0 || b.y > (double)s->height || b.x < 0 || b.x > (double)s->width)
+	// 		break;
+	// 	ray = check_entity_h(s, b, r_angle, ray);
+	// 	if (ray.res == 1)
+	// 	{
+	// 		ray.dist = norme(s->player_pos, b);
+	// 		return (ray);
+	// 	}
+	// 	else if (ray.res == -1)
+	// 		break;
+	// 	sens = sens < 0 ? sens - 1 : sens + 1;
+	// }
+	// ray.dist = 0;
 	return (ray);
 }
 
 t_ray	raycast_ver(t_main *s, t_dpos fp, double r_angle, t_ray ray)
 {
 	char	sens;
-	t_dpos	b;
-	double	ya;
+	// t_dpos	b;
+	// double	ya;
 
 	if (r_angle == 90 || r_angle == 270)
 	{
@@ -138,25 +197,24 @@ t_ray	raycast_ver(t_main *s, t_dpos fp, double r_angle, t_ray ray)
 	}
 	else if (ray.res == -1)
 		return (ray);
-	while (1)
-	{
-		ya = tan(to_rad(r_angle));
-		b.x = fp.x + sens;
-		b.y = fp.y + ya * -sens;
-		if (b.y < 0 || b.y > (double)s->height || b.x < 0 || b.x > (double)s->width)
-			break;
-		// printf("%f %f\n", b.x, b.y);
-		ray = check_entity_v(s, b, r_angle, ray);
-		if (ray.res == 1)
-		{
-			ray.dist = norme(s->player_pos, b);
-			return (ray);
-		}
-		else if (ray.res == -1)
-			break;
-		sens = sens <= 0 ? sens - 1 : sens + 1;
-	}
-	ray.dist = 0;
+	ray = get_raycast_dist_v(s, ray, r_angle, fp);
+	// while (1)
+	// {
+	// 	ya = tan(to_rad(r_angle));
+	// 	b.x = fp.x + sens;
+	// 	b.y = fp.y + ya * -sens;
+	// 	if (b.y < 0 || b.y > (double)s->height || b.x < 0 || b.x > (double)s->width)
+	// 		break;
+	// 	ray = check_entity_v(s, b, r_angle, ray);
+	// 	if (ray.res == 1)
+	// 	{
+	// 		ray.dist = norme(s->player_pos, b);
+	// 		return (ray);
+	// 	}
+	// 	else if (ray.res == -1)
+	// 		break;
+	// 	sens = sens <= 0 ? sens - 1 : sens + 1;
+	// }
 	return (ray);
 }
 
