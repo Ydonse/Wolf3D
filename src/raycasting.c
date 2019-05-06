@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 11:55:41 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/04 21:20:02 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/06 18:28:06 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ t_ray	check_entity_h(t_main *s, t_dpos point, double r_angle, t_ray ray)
 		block_pos.x = (int)point.x;
 		block_pos.y = (int)point.y;
 		ray = fill_ray(s, point, block_pos, ray);
+		ray.orientation = 'N';
 	}
 	else if (r_angle > 0 && r_angle < 180)
 	{
 		block_pos.x = (int)point.x;
 		block_pos.y = (int)(point.y - 1);
 		ray = fill_ray(s, point, block_pos, ray);
+		ray.orientation = 'S';
 	}
 	return (ray);
 }
@@ -63,12 +65,14 @@ t_ray		check_entity_v(t_main *s, t_dpos point, double r_angle, t_ray ray)
 		block_pos.x = (int)point.x;
 		block_pos.y = (int)point.y;
 		ray = fill_ray(s, point, block_pos, ray);
+		ray.orientation = 'W';
 	}
 	else if (r_angle > 90 && r_angle < 270)
 	{
 		block_pos.x = (int)(point.x - 1);
 		block_pos.y = (int)point.y;
 		ray = fill_ray(s, point, block_pos, ray);
+		ray.orientation = 'E';
 	}
 	return (ray);
 }
@@ -154,32 +158,12 @@ t_ray	raycast_hor(t_main *s, t_dpos fp, double r_angle, t_ray ray)
 	else if (ray.res == -1)
 		return (ray);
 	ray = get_raycast_dist_h(s, ray, r_angle, fp);
-	// while (1)
-	// {
-	// 	xa = 1.0 / tan(to_rad(r_angle));
-	// 	b.y = fp.y + sens;
-	// 	b.x = fp.x + xa * -sens;
-	// 	if (b.y < 0 || b.y > (double)s->height || b.x < 0 || b.x > (double)s->width)
-	// 		break;
-	// 	ray = check_entity_h(s, b, r_angle, ray);
-	// 	if (ray.res == 1)
-	// 	{
-	// 		ray.dist = norme(s->player_pos, b);
-	// 		return (ray);
-	// 	}
-	// 	else if (ray.res == -1)
-	// 		break;
-	// 	sens = sens < 0 ? sens - 1 : sens + 1;
-	// }
-	// ray.dist = 0;
 	return (ray);
 }
 
 t_ray	raycast_ver(t_main *s, t_dpos fp, double r_angle, t_ray ray)
 {
 	char	sens;
-	// t_dpos	b;
-	// double	ya;
 
 	if (r_angle == 90 || r_angle == 270)
 	{
@@ -198,23 +182,6 @@ t_ray	raycast_ver(t_main *s, t_dpos fp, double r_angle, t_ray ray)
 	else if (ray.res == -1)
 		return (ray);
 	ray = get_raycast_dist_v(s, ray, r_angle, fp);
-	// while (1)
-	// {
-	// 	ya = tan(to_rad(r_angle));
-	// 	b.x = fp.x + sens;
-	// 	b.y = fp.y + ya * -sens;
-	// 	if (b.y < 0 || b.y > (double)s->height || b.x < 0 || b.x > (double)s->width)
-	// 		break;
-	// 	ray = check_entity_v(s, b, r_angle, ray);
-	// 	if (ray.res == 1)
-	// 	{
-	// 		ray.dist = norme(s->player_pos, b);
-	// 		return (ray);
-	// 	}
-	// 	else if (ray.res == -1)
-	// 		break;
-	// 	sens = sens <= 0 ? sens - 1 : sens + 1;
-	// }
 	return (ray);
 }
 
