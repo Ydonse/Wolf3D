@@ -6,7 +6,7 @@
 #    By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/23 10:03:18 by ydonse            #+#    #+#              #
-#    Updated: 2019/05/06 14:41:15 by ydonse           ###   ########.fr        #
+#    Updated: 2019/05/06 17:37:41 by malluin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,8 @@ HEADER_NAME = wolf3d.h
 
 ID = $(shell id -un)
 
-SDLINCL = -I /Users/$(ID)/.brew/Cellar/sdl2/2.0.9_1/include
+SDLINCL = -I /Users/$(ID)/.brew/Cellar/sdl2/2.0.9_1/include/SDL2 \
+		  -I /Users/$(ID)/.brew/Cellar/sdl2/2.0.9_1/include
 
 MIXINCL = -I /Users/$(ID)/.brew/Cellar/sdl2_mixer/2.0.4/include
 
@@ -68,7 +69,7 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(SDLFLAGS) $(MIXFLAGS) $(MIXINCL) $(LDLIBS) $^ -o $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c | $(OBJ_PATH)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(MIXFLAGS) -I $(HEADER_PATH) $(SDLINCL) $(MIXINCL) -o $@ -c $<
+	$(CC) $(CFLAGS) $(CPPFLAGS) -I $(HEADER_PATH) $(SDLINCL) $(MIXINCL) -o $@ -c $<
 
 $(OBJ_PATH):
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
