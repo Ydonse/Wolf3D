@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/03 18:46:43 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/06 14:47:18 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define WOLF3D_H
 # include "libft.h"
 # include <SDL2/SDL.h>
+# include <SDL2/SDL_mixer.h>
 # include <fcntl.h>
 # include <errno.h>
 # include <math.h>
@@ -68,6 +69,11 @@
 
 # define PARSE_BUFF_SIZE 64
 
+typedef	struct 		s_sounds
+{
+	Mix_Chunk		*shot;
+}					t_sounds;
+
 typedef struct		s_position {
 	short			x;
 	short			y;
@@ -117,6 +123,7 @@ typedef struct		s_sdl {
 	t_texture		*game;
 	int				x_o;
 	int				y_o;
+	t_sounds		sounds;
 }					t_sdl;
 
 typedef struct		s_main {
@@ -177,6 +184,9 @@ double				percent(double value, double total);
 //IMAGES
 
 t_image				*load_tga(char *path);
+
+//SOUNDS
+void				create_sounds(t_sdl *sdl);
 
 
 

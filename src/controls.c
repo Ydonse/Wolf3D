@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/03 17:59:40 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:40:58 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	event_handler(t_main *s)
 	int			game;
 	time_t		fps;
 
+
 	game = 1;
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	fps = clock();
@@ -55,14 +56,15 @@ void	event_handler(t_main *s)
 	{
 		while ((SDL_PollEvent(&(s->sdl->event))) != 0)
 		{
-			if (s->sdl->event.type == SDL_QUIT)
+			if (s->sdl->event.type == SDL_QUIT && s->sdl->event.type == SDL_MOUSEBUTTONDOWN)
 				game = 0;
-			if (s->sdl->event.type == SDL_KEYDOWN)
-				if (keyboard_controls(s, s->sdl->event.key.keysym.sym) == 0)
+			if (s->sdl->event.type == SDL_MOUSEBUTTONDOWN)
+				 Mix_PlayChannel(1, s->sdl->sounds.shot, 0);
+			if (s->sdl->event.type == SDL_KEYDOWN && keyboard_controls(s, s->sdl->event.key.keysym.sym) == 0)
 					game = 0;
 		}
 		handle_keys(s);
-		// printf("FPS: %f\n", 1.0 / ((clock() - fps) / 1000000.0));
+		printf("FPS: %f\n", 1.0 / ((clock() - fps) / 1000000.0));
 		fps = clock();
 	}
 }
