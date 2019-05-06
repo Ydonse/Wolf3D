@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 16:40:18 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/03 17:57:42 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/06 18:08:57 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,9 @@ t_image	*load_tga(char *path)
 		i = 0;
 		while (i < ret)
 		{
-			// if (i % 32 == 0)
-				// printf("I = %d\n", i);
 			image->tex[idx] = (str[i] << 24) + (str[i + 1] << 16) + (str[i + 2] << 8) + str[i + 3];
-			// printf("B%hhu G%hhu R%hhu A:%hhu  ", image->tex[i + 3],
-			// image->tex[i + 2], image->tex[i + 1], image->tex[i]);
 			i += (image->bits_color / 32) * 4;
 			idx += (image->bits_color / 32);
-
-			// printf("B%3d G%3d R%3d A:%d \n", image->tex[0 + 3],
-			// image->tex[0 + 2], image->tex[0 + 1], image->tex[0]);
-			// if (i % (image->w * 4) == 0)
-			// 	printf(" |%d|\n", i);
 		}
 	}
 	return (image);

@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/06 15:06:48 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/06 16:22:39 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int	main (int ac, char **av)
 	s->player_pos.y = (double) s->start_position.y + 0.5;
 	event_handler(s);
 	Mix_CloseAudio();
-	// SDL_Quit();
+	SDL_Quit();
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/06 14:46:05 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/06 17:57:07 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ t_main	*initialize_main(void)
 	if (!(s = (t_main *)malloc(sizeof(t_main))))
 		exit(-1);
 	if (!(s->sdl = (t_sdl *)malloc(sizeof(t_sdl))))
-		exit(-1);
-	if (!(s->sdl->minimap = (SDL_Surface *)malloc(sizeof(SDL_Surface))))
 		exit(-1);
 	s->width = 0;
 	s->height = 0;
@@ -58,11 +56,18 @@ void	initialize_sdl(t_main *s, t_sdl *sdl)
 		ft_error_sdl("Échec de creation de la fenetre");
 	if (!(sdl->prenderer = SDL_CreateRenderer(sdl->pwindow, -1, 0)))
 		ft_error_sdl("Échec de chargement du renderer");
+	s->wall = load_tga("images/wall.tga");
+	s->interface = load_tga("images/interface.tga");
 	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))
 		exit(-1);
 	if (!(sdl->game = initialize_texture(sdl, WIDTH, HEIGHT)))
 		exit(-1);
-	s->wall = load_tga("images/wall.tga");
+	if (!(sdl->ui = initialize_texture(sdl, s->interface->w, s->interface->h)))
+		exit(-1);
+	ft_memcpy(sdl->ui->content, s->interface->tex, s->interface->h * s->interface->w);
+	if (!(s->sdl->minimap = (SDL_Surface *)malloc(sizeof(SDL_Surface))))
+		exit(-1);
+
 	sdl->x_o = WIDTH / 2 - ((SPACE * s->width) / 2);
 	sdl->y_o = HEIGHT / 2 - ((SPACE * s->height) / 2);
 	create_sounds(sdl);

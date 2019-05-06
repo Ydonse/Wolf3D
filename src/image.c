@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/03 18:33:32 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/06 17:29:34 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,31 @@ void	draw_player(t_main *s, t_sdl *sdl)
 	dest.y = (s->player_pos.y + PLAYER_SIZE / 2) * SPACE + sdl->y_o;
 	sdl->map->color_tmp = 0xFF0000FF;
 	draw_rect(sdl, sdl->map, orig, dest);
+}
+
+// void	fill_texture(t_main *s, t_image *image, t_texture *texture)
+// {
+// 	int i;
+// 	int j;
+//
+// 	i = 0;
+// 	j = 0;
+// 	while (i < image->h)
+// 	{
+// 		while (j < image->w)
+// 		{
+// 			texture->te
+// 		}
+// 	}
+// }
+
+void	draw_interface(t_main *s)
+{
+	t_position	orig;
+	t_position	dest;
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
 }

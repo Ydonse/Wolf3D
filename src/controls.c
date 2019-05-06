@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/06 15:40:58 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/06 18:15:17 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	handle_keys(t_main *s)
 	{
 		raycast_visualization(s);
 		update_image(s, s->sdl->game);
+		// update_image(s, s->sdl->ui);
 	}
 }
 
