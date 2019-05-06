@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/06 17:57:07 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/06 19:22:13 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ void	initialize_sdl(t_main *s, t_sdl *sdl)
 		ft_error_sdl("Échec de creation de la fenetre");
 	if (!(sdl->prenderer = SDL_CreateRenderer(sdl->pwindow, -1, 0)))
 		ft_error_sdl("Échec de chargement du renderer");
+	// a proteger
 	s->wall = load_tga("images/wall.tga");
+	s->door = load_tga("images/door.tga");
 	s->interface = load_tga("images/interface.tga");
 	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))
 		exit(-1);

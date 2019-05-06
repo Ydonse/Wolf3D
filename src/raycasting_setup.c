@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 17:12:40 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/06 19:07:49 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/06 19:23:24 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ void	draw_tex_slice(t_main *s, t_ray ray, t_position *pix, int ewall, double dis
 	while (pix->y < ewall)
 	{
 		pery = (double)(pix->y - b) / (double)(ewall - b);
-		color = s->wall->tex[(int)(pery * s->wall->h) * s->wall->w
+		if (ray.type == 'p')
+			color = s->door->tex[(int)(pery * s->door->h) * s->door->w
+			+ (int)(perx * s->door->w)];
+		else
+			color = s->wall->tex[(int)(pery * s->wall->h) * s->wall->w
 			+ (int)(perx * s->wall->w)];
 		set_pixel(s->sdl->game, darken_color(color, (dist * 100.0 / 8.0)), *pix);
 		pix->y++;
@@ -74,7 +78,6 @@ void	draw_wall_slice(t_main *s, t_ray ray, double dist, int x)
 	color = SKY;
 	while (++(pix.y) < bwall)
 		set_pixel(s->sdl->game, color, pix);
-
 	draw_tex_slice(s, ray, &pix, ewall, dist, bwall);
 	ewall = ewall > HEIGHT ? HEIGHT : ewall;
 	color = GROUND;
