@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 16:26:14 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:54:34 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@ void	get_case_color(t_main *s, t_position orig, t_position dest, char type)
 		dest.x = dest.x > WIDTH ? WIDTH : dest.x;
 		dest.y = dest.y > HEIGHT ? HEIGHT : dest.y;
 		i = orig.x;
-		wall = s->areas[0].wall_s;
+		wall = s->areas[0].wall_n;
 		while (i < dest.x)
 		{
 			j = orig.y;
+			coord.x = i;
+			perx = (int)(percent(coord.x - orig.x, dest.x - orig.x) * 100);
 			while (j < dest.y)
 			{
-				coord.x = i;
 				coord.y = j++;
-				perx = (int)(percent(coord.x - orig.x, dest.x - orig.x) * 100);
 				pery = (int)(percent(coord.y - orig.y, dest.y - orig.y) * 100);
-				pix_tex = (pery * wall->h / 100) * wall->w + (perx * wall->w / 100);
+				pix_tex = (int)(pery * wall->h / 100.0) * wall->w + (int)(perx * wall->w / 100.0);
 				if (pix_tex >= 0 && pix_tex < (wall->h * wall->w))
 					set_pixel(s->sdl->map, wall->tex[pix_tex], coord);
 			}
@@ -63,6 +63,38 @@ void	get_case_color(t_main *s, t_position orig, t_position dest, char type)
 		draw_rect(s->sdl, s->sdl->map, orig, dest);
 	}
 }
+//
+// if (type == 'm')
+// {
+// 	int i;
+// 	int j;
+// 	t_position	coord;
+// 	double perx;
+// 	double pery;
+// 	t_image *wall;
+//
+// 	int		pix_tex;
+//
+// 	orig.x = orig.x < 0 ? 0 : orig.x;
+// 	orig.y = orig.y < 0 ? 0 : orig.y;
+// 	dest.x = dest.x > WIDTH ? WIDTH : dest.x;
+// 	dest.y = dest.y > HEIGHT ? HEIGHT : dest.y;
+// 	i = orig.x;
+// 	wall = s->areas[0].wall_s;
+// 	while (i < dest.x)
+// 	{
+// 		j = orig.y;
+// 		coord.x = i;
+// 		perx = (double)(coord.x - orig.x) / (double)(dest.x - orig.x) * 100.0;
+// 		while (j < dest.y)
+// 		{
+// 			coord.y = j++;
+// 			pery = (double)(coord.y - orig.y) / (double)(dest.y - orig.y) * 100.0;
+// 			pix_tex = (int)(pery * (double)wall->h / 100.0 * (double)wall->w + (perx * (double)wall->w / 100.0));
+// 			if (pix_tex >= 0 && pix_tex < (wall->h * wall->w))
+// 				set_pixel(s->sdl->map, wall->tex[pix_tex], coord);
+// 		}
+// 		i++;
 
 void	draw_black(t_main *s)
 {

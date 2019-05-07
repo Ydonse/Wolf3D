@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 16:21:19 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/07 16:37:28 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	draw_interface (t_main *s)
 	while (i < WIDTH)
 	{
 		j = orig.y;
+		coord.x = i;
+		perx = (double)coord.x / (double)WIDTH;
 		while (j < HEIGHT)
 		{
-			coord.x = i;
 			coord.y = j++;
-			perx = (percent(coord.x - orig.x, WIDTH - orig.x) * 100);
-			pery = (percent(coord.y - orig.y, HEIGHT - orig.y) * 100);
+			pery = (percent(coord.y - orig.y, HEIGHT - orig.y));
 			// set_pixel(s->sdl->game, s->interface->tex[s->interface->h * s->interface->w - 1 + (s->interface->w) - 1], coord);
-			set_pixel(s->sdl->game, s->interface->tex[(int)(pery * s->interface->h / 100 * s->interface->w) + (int)(perx * s->interface->w / 100)], coord);
+			set_pixel(s->sdl->game, s->interface->tex[(int)(pery * (double)s->interface->h * s->interface->w + (perx * (double)s->interface->w))], coord);
 		}
 		i++;
 	}
