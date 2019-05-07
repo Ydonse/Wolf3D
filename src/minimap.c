@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/06 18:36:45 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 13:28:03 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	get_case_color(t_main *s, t_position orig, t_position dest, char type)
 				coord.y = j++;
 				perx = (int)(percent(coord.x - orig.x, dest.x - orig.x) * 100);
 				pery = (int)(percent(coord.y - orig.y, dest.y - orig.y) * 100);
-				set_pixel(s->sdl->map, s->wall->tex[(pery * s->wall->h / 100) * s->wall->w - 1 + (perx * s->wall->w / 100) - 1], coord);
+				set_pixel(s->sdl->map, s->areas[s->map[i][j].zone]->wall_s->tex[(pery * s->wall->h / 100) * s->wall->w - 1 + (perx * s->wall->w / 100) - 1], coord);
 			}
 			i++;
 		}

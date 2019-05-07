@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/07 13:47:37 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 13:53:47 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,26 @@ t_texture	*initialize_texture(t_sdl *sdl, int width, int height)
 	return (text);
 }
 
+void	load_images(t_main *s)
+{
+	s->areas[0].wall_n = load_tga("images/zone_0/wall_n");
+	s->areas[0].wall_s = load_tga("images/zone_0/wall_s");
+	s->areas[0].wall_e = load_tga("images/zone_0/wall_e");
+	s->areas[0].wall_w = load_tga("images/zone_0/wall_w");
+	s->areas[1].wall_n = load_tga("images/zone_1/wall_n");
+	s->areas[1].wall_s = load_tga("images/zone_1/wall_s");
+	s->areas[1].wall_e = load_tga("images/zone_1/wall_e");
+	s->areas[1].wall_w = load_tga("images/zone_1/wall_w");
+	s->areas[2].wall_n = load_tga("images/zone_2/wall_n");
+	s->areas[2].wall_s = load_tga("images/zone_2/wall_s");
+	s->areas[2].wall_e = load_tga("images/zone_2/wall_e");
+	s->areas[2].wall_w = load_tga("images/zone_2/wall_w");
+	s->areas[3].wall_n = load_tga("images/zone_3/wall_n");
+	s->areas[3].wall_s = load_tga("images/zone_3/wall_s");
+	s->areas[3].wall_e = load_tga("images/zone_3/wall_e");
+	s->areas[3].wall_w = load_tga("images/zone_3/wall_w");
+}
+
 void	initialize_sdl(t_main *s, t_sdl *sdl)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -57,8 +77,7 @@ void	initialize_sdl(t_main *s, t_sdl *sdl)
 	if (!(sdl->prenderer = SDL_CreateRenderer(sdl->pwindow, -1, 0)))
 		ft_error_sdl("Échec de chargement du renderer");
 	// a proteger
-	s->wall = load_tga("images/wall.tga");
-	s->paint = load_tga("images/paint.tga");
+	load_images(s);
 	s->door = load_tga("images/door.tga");
 	s->interface = load_tga("images/interface.tga");
 	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))

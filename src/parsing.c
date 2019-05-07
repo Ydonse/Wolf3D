@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 12:58:00 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/06 17:46:08 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 13:42:02 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		fill_map(t_main *s, char **tab, int i)
 			s->start_position.y = i;
 			player++;
 		}
-		s->map[i][k].zone = tab[k][2];
+		s->map[i][k].zone = tab[k][2] - '0';
 		s->map[i][k++].valid = 0;
 	}
 	ft_free_tab_str(tab);
