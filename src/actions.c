@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:43:56 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/03 15:59:38 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/07 11:30:11 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,31 +57,40 @@ void	move_player(t_main *s, const Uint8 *keys, char sprint)
 	s->player_pos.y = target.y;
 }
 
+int		check_door(t_case **map, int x, int y)
+{
+	if (map[y][x].type == 'p' && map[y][x].block == 1)
+		return (1);
+	else
+		return (0);
+}
+
 void	open_door(t_main *s)
 {
-	if ((s->p_angle < 45 && s->p_angle >= 0) || (s->p_angle < 380 && s->p_angle >= 315))
-	{
-		if (s->map[(int)s->player_pos.y][(int)s->player_pos.x + 1].type == 'p'
-		&& s->map[(int)s->player_pos.y][(int)s->player_pos.x + 1].block == 1)
+	if (((s->p_angle < 45 && s->p_angle >= 0)
+		|| (s->p_angle < 380 && s->p_angle>= 315))
+		&& check_door(s->map, (int)s->player_pos.x + 1, (int)s->player_pos.y))
+		{
 			s->map[(int)s->player_pos.y][(int)s->player_pos.x + 1].block = 0;
-	}
-	else if(s->p_angle < 135 && s->p_angle > 45)
+			 Mix_PlayChannel(2, s->sdl->sounds.door, 0);
+		}
+	else if ((s->p_angle < 135 && s->p_angle > 45)
+	&& check_door(s->map, (int)s->player_pos.x, (int)s->player_pos.y - 1))
 	{
-		if (s->map[(int)s->player_pos.y - 1][(int)s->player_pos.x].type == 'p'
-		&& s->map[(int)s->player_pos.y - 1][(int)s->player_pos.x].block == 1)
-			s->map[(int)s->player_pos.y - 1][(int)s->player_pos.x].block = 0;
+		s->map[(int)s->player_pos.y - 1][(int)s->player_pos.x].block = 0;
+		Mix_PlayChannel(2, s->sdl->sounds.door, 0);
 	}
-	else if(s->p_angle < 225 && s->p_angle > 135)
+	else if ((s->p_angle < 225 && s->p_angle > 135)
+	&& check_door(s->map, (int)s->player_pos.x - 1, (int)s->player_pos.y))
 	{
-		if (s->map[(int)s->player_pos.y][(int)s->player_pos.x - 1].type == 'p'
-		&& s->map[(int)s->player_pos.y][(int)s->player_pos.x - 1].block == 1)
-			s->map[(int)s->player_pos.y][(int)s->player_pos.x - 1].block = 0;
+		s->map[(int)s->player_pos.y][(int)s->player_pos.x - 1].block = 0;
+		Mix_PlayChannel(2, s->sdl->sounds.door, 0);
 	}
-	else if(s->p_angle < 315 && s->p_angle > 225)
+	else if ((s->p_angle < 315 && s->p_angle > 225)
+	&& check_door(s->map, (int)s->player_pos.x, (int)s->player_pos.y + 1))
 	{
-		if (s->map[(int)s->player_pos.y + 1][(int)s->player_pos.x].type == 'p'
-		&& s->map[(int)s->player_pos.y + 1][(int)s->player_pos.x].block == 1)
-			s->map[(int)s->player_pos.y + 1][(int)s->player_pos.x].block = 0;
+		s->map[(int)s->player_pos.y + 1][(int)s->player_pos.x].block = 0;
+		Mix_PlayChannel(2, s->sdl->sounds.door, 0);
 	}
 }
 
