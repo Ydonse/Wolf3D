@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 17:12:40 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/07 14:09:17 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:04:20 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	draw_wall_slice(t_main *s, t_ray ray, double dist, int x)
 
 	dist = dist <= 0.01 ? 0.01 : dist;
 	projected_h = ((double)s->proj_distance / dist);
+	// dist = dist > 8 ? dist - (dist - 8) * 0.8 : dist;
 	sl.bwall = s->viewline - projected_h / 2;
 	sl.ewall = s->viewline + projected_h / 2;
 	sl.pix.x = x;
@@ -99,6 +100,21 @@ void	draw_wall_slice(t_main *s, t_ray ray, double dist, int x)
 	}
 }
 
+void	draw_ground_sky(t_main *s, int x)
+{
+	int			projected_h;
+	t_position	pix;
+
+	pix.x = x;
+	pix.y = -1;
+	while (++pix.y < s->viewline)
+		set_pixel(s->sdl->game, SKY, pix);
+	set_pixel(s->sdl->game, GROUND, pix);
+	while (++pix.y < HEIGHT)
+		set_pixel(s->sdl->game, GROUND, pix);
+
+}
+
 void	raycast_visualization(t_main *s)
 {
 	double	angle;
@@ -118,8 +134,9 @@ void	raycast_visualization(t_main *s)
 		dist *= cos(to_rad((double)s->p_angle - angle));
 		if (dist > 0 && s->active_map == 0)
 			draw_wall_slice(s, ray, dist, i);
+		else
+			draw_ground_sky(s, i);
 		angle -= s->fov / (double)PROJ_WIDTH;
 		i++;
 	}
-	// printf("angle fin: %f\n", angle);
 }

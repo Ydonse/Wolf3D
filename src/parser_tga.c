@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 16:40:18 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/07 12:13:59 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/07 14:21:33 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_image	*load_tga(char *path)
 		i = 0;
 		while (i < ret)
 		{
-			image->tex[idx] = (str[i] << 8) + (str[i + 1] << 16) + (str[i + 2] << 24) + (str[i + 3]);
+			image->tex[idx] = (str[i] << 8) + (str[i + 1] << 16) + (str[i + 2] << 24);
 			i += (image->bits_color / 32) * 4;
 			idx += (image->bits_color / 32);
 		}

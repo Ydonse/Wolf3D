@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 17:10:35 by malluin           #+#    #+#             */
-/*   Updated: 2019/04/30 17:10:50 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:00:11 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int		check_collisions(t_main *s, t_dpos target)
 	i = -1;
 	while (++i < 4)
 	{
-		if (corners[i].x < 0 || corners[i].y < 0
-			|| corners[i].x > s->width || corners[i].y > s->height)
+		if (corners[i].x <= 0 || corners[i].y <= 0
+			|| corners[i].x >= s->width || corners[i].y >= s->height)
 			return (0);
 		if (s->map[(int)corners[i].y][(int)corners[i].x].block == 1)
 			return (0);
