@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/06 19:28:36 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 11:39:20 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	event_handler(t_main *s)
 
 	game = 1;
 	SDL_SetRelativeMouseMode(SDL_TRUE);
-	// fps = clock();
+	fps = clock();
 	while (game)
 	{
 		while ((SDL_PollEvent(&(s->sdl->event))) != 0)
@@ -65,7 +65,7 @@ void	event_handler(t_main *s)
 					game = 0;
 		}
 		handle_keys(s);
-		// printf("FPS: %f\n", 1.0 / ((clock() - fps) / 1000000.0));
-		// fps = clock();
+		printf("FPS: %f\n", 1.0 / ((clock() - fps) / 1000000.0));
+		fps = clock();
 	}
 }

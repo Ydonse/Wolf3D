@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/06 19:21:40 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 11:34:03 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,13 @@ typedef struct		s_image {
 	int				w;
 	int				h;
 }					t_image;
+
+typedef struct		s_slice {
+	int				bwall;
+	int				ewall;
+	t_position		pix;
+	Uint32			color;
+}					t_slice;
 
 typedef struct		s_sdl {
 	SDL_Window		*pwindow;

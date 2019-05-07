@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 17:12:40 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/06 19:23:24 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 11:41:43 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,60 +32,54 @@ Uint32	darken_color(Uint32 color, double perc)
 	return (color);
 }
 
-void	draw_tex_slice(t_main *s, t_ray ray, t_position *pix, int ewall, double dist, int b)
+void	draw_tex_slice(t_main *s, t_ray ray, t_slice sl, double dist)
 {
-	Uint32		color;
 	double		pery;
 	double		perx;
 
-	color = MIXSW;
 	if (ray.orientation == 'N' || ray.orientation == 'S')
 		perx = (ray.dpos.x - (int)ray.dpos.x);
 	else if (ray.orientation == 'E' || ray.orientation == 'W')
 		perx = (ray.dpos.y - (int)ray.dpos.y);
 	else
 		return;
-	while (pix->y < ewall)
+	while (sl.pix.y < sl.ewall)
 	{
-		pery = (double)(pix->y - b) / (double)(ewall - b);
+		pery = (double)(sl.pix.y - sl.bwall) / (double)(sl.ewall - sl.bwall);
 		if (ray.type == 'p')
-			color = s->door->tex[(int)(pery * s->door->h) * s->door->w
+			sl.color = s->door->tex[(int)(pery * s->door->h) * s->door->w
 			+ (int)(perx * s->door->w)];
 		else
-			color = s->wall->tex[(int)(pery * s->wall->h) * s->wall->w
+			sl.color = s->wall->tex[(int)(pery * s->wall->h) * s->wall->w
 			+ (int)(perx * s->wall->w)];
-		set_pixel(s->sdl->game, darken_color(color, (dist * 100.0 / 8.0)), *pix);
-		pix->y++;
-		color = WALL;
+		set_pixel(s->sdl->game, darken_color(sl.color, (dist * 12.5)), sl.pix);
+		sl.pix.y++;
 	}
 }
 
 void	draw_wall_slice(t_main *s, t_ray ray, double dist, int x)
 {
 	int			projected_h;
-	int			bwall;
-	int			ewall;
-	t_position	pix;
-	Uint32		color;
+	t_slice		sl;
 
 	dist = dist <= 0.01 ? 0.01 : dist;
 	projected_h = ((double)s->proj_distance / dist);
-	bwall = s->viewline - projected_h / 2;
-	ewall = s->viewline + projected_h / 2;
-	// bwall = bwall <= 0 ? 0 : bwall;
-	pix.x = x;
-	pix.y = -1;
-	color = SKY;
-	while (++(pix.y) < bwall)
-		set_pixel(s->sdl->game, color, pix);
-	draw_tex_slice(s, ray, &pix, ewall, dist, bwall);
-	ewall = ewall > HEIGHT ? HEIGHT : ewall;
-	color = GROUND;
-	while (ewall < HEIGHT)
+	sl.bwall = s->viewline - projected_h / 2;
+	sl.ewall = s->viewline + projected_h / 2;
+	// sl.bwall = sl.bwall <= 0 ? 0 : sl.bwall;
+	sl.pix.x = x;
+	sl.pix.y = -1;
+	sl.color = SKY;
+	while (++(sl.pix.y) < sl.bwall)
+		set_pixel(s->sdl->game, sl.color, sl.pix);
+	draw_tex_slice(s, ray, sl, dist);
+	sl.ewall = sl.ewall > HEIGHT ? HEIGHT : sl.ewall;
+	sl.color = GROUND;
+	while (sl.ewall < HEIGHT)
 	{
-		pix.y = ewall++;
+		sl.pix.y = sl.ewall++;
 		dist *= 0.987;
-		set_pixel(s->sdl->game, darken_color(color, (dist * 100.0 / 8.0)), pix);
+		set_pixel(s->sdl->game, darken_color(sl.color, (dist * 12.5)), sl.pix);
 	}
 }
 
