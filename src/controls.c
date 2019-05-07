@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 11:39:20 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 18:43:54 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ void	event_handler(t_main *s)
 	game = 1;
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	fps = clock();
+	draw_interface(s);
 	while (game)
 	{
 		while ((SDL_PollEvent(&(s->sdl->event))) != 0)
 		{
-			if (s->sdl->event.type == SDL_QUIT && s->sdl->event.type == SDL_MOUSEBUTTONDOWN)
+			if (s->sdl->event.type == SDL_QUIT)
 				game = 0;
 			if (s->sdl->event.type == SDL_MOUSEBUTTONDOWN)
 				 Mix_PlayChannel(1, s->sdl->sounds.shot, 0);
