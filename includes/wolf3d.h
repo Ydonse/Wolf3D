@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 11:42:26 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 13:45:41 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define GROUND  0xB0B0B0FF
 # define DOOR  0xBBBBBBFF
 
-# define MAX_AREA 0
+# define MAX_AREA 3
 # define OBJ "mp.tj"
 
 # define PLAYER_SIZE 0.25
@@ -91,12 +91,13 @@ typedef struct		s_ray {
 	char			orientation;
 	t_position		object;
 	t_dpos			dpos;
+	int				zone;
 	short			res;
 }					t_ray;
 
 typedef struct		s_case {
 	char			type;
-	char			zone;
+	int				zone;
 	char			block;
 	t_bool			valid;
 }					t_case;
@@ -120,7 +121,14 @@ typedef struct		s_slice {
 	int				ewall;
 	t_position		pix;
 	Uint32			color;
-}					t_slice;
+}
+				t_slice;
+typedef struct		s_area {
+	t_image			*wall_e;
+	t_image			*wall_w;
+	t_image			*wall_n;
+	t_image			*wall_s;
+}					t_area;
 
 typedef struct		s_sdl {
 	SDL_Window		*pwindow;
@@ -149,9 +157,9 @@ typedef struct		s_main {
 	short			fov;
 	int				proj_distance;
 	int				viewline;
-	t_image			*wall;
 	t_image			*door;
 	t_image			*interface;
+	t_area			areas[MAX_AREA];
 }					t_main;
 
 void				handle_error(t_main *s, int error_nb);
@@ -195,6 +203,7 @@ double				percent(double value, double total);
 //IMAGES
 
 t_image				*load_tga(char *path);
+void				load_images(t_main *s);
 
 //SOUNDS
 void				create_sounds(t_sdl *sdl);

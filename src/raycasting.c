@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 11:55:41 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/06 18:28:06 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 13:47:16 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_ray	fill_ray(t_main *s, t_dpos pos, t_position bpos, t_ray ray)
 		return (ray);
 	}
 	ray.type = s->map[bpos.y][bpos.x].type;
+	ray.zone = s->map[bpos.y][bpos.x].zone;
 	ray.dpos.x = pos.x;
 	ray.dpos.y = pos.y;
 	ray.object.x = bpos.x;

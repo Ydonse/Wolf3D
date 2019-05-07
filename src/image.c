@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/06 17:29:34 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/07 13:38:45 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,26 @@ void	set_pixel(t_texture *text, Uint32 color, t_position coord)
 	{
 		text->content[coord.x + coord.y * WIDTH] = color;
 	}
+}
+
+void	load_images(t_main *s)
+{
+	s->areas[0].wall_n = load_tga("images/zone_0/wall_n");
+	s->areas[0].wall_s = load_tga("images/zone_0/wall_s");
+	s->areas[0].wall_e = load_tga("images/zone_0/wall_e");
+	s->areas[0].wall_w = load_tga("images/zone_0/wall_w");
+	s->areas[1].wall_n = load_tga("images/zone_1/wall_n");
+	s->areas[1].wall_s = load_tga("images/zone_1/wall_s");
+	s->areas[1].wall_e = load_tga("images/zone_1/wall_e");
+	s->areas[1].wall_w = load_tga("images/zone_1/wall_w");
+	s->areas[2].wall_n = load_tga("images/zone_2/wall_n");
+	s->areas[2].wall_s = load_tga("images/zone_2/wall_s");
+	s->areas[2].wall_e = load_tga("images/zone_2/wall_e");
+	s->areas[2].wall_w = load_tga("images/zone_2/wall_w");
+	s->areas[3].wall_n = load_tga("images/zone_3/wall_n");
+	s->areas[3].wall_s = load_tga("images/zone_3/wall_s");
+	s->areas[3].wall_e = load_tga("images/zone_3/wall_e");
+	s->areas[3].wall_w = load_tga("images/zone_3/wall_w");
 }
 
 void	draw_rect(t_sdl *sdl, t_texture *text, t_position orig, t_position dest)
