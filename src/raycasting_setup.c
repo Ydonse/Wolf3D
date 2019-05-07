@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 17:12:40 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/07 13:49:10 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 14:09:17 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,14 @@ t_image	*choose_texture(t_main *s, t_ray ray)
 		return (s->door);
 	else
 	{
-		if (ray.orientation != 'N')
-			return (s->wall);
+		if (ray.orientation == 'N')
+			return (s->areas[ray.zone].wall_n);
+		else if (ray.orientation == 'W')
+			return (s->areas[ray.zone].wall_w);
+		else if (ray.orientation == 'E')
+			return (s->areas[ray.zone].wall_e);
 		else
-			return (s->paint);
+			return (s->areas[ray.zone].wall_s);
 	}
 }
 

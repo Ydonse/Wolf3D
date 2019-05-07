@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/07 13:53:47 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 14:09:05 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,22 @@ t_texture	*initialize_texture(t_sdl *sdl, int width, int height)
 
 void	load_images(t_main *s)
 {
-	s->areas[0].wall_n = load_tga("images/zone_0/wall_n");
-	s->areas[0].wall_s = load_tga("images/zone_0/wall_s");
-	s->areas[0].wall_e = load_tga("images/zone_0/wall_e");
-	s->areas[0].wall_w = load_tga("images/zone_0/wall_w");
-	s->areas[1].wall_n = load_tga("images/zone_1/wall_n");
-	s->areas[1].wall_s = load_tga("images/zone_1/wall_s");
-	s->areas[1].wall_e = load_tga("images/zone_1/wall_e");
-	s->areas[1].wall_w = load_tga("images/zone_1/wall_w");
-	s->areas[2].wall_n = load_tga("images/zone_2/wall_n");
-	s->areas[2].wall_s = load_tga("images/zone_2/wall_s");
-	s->areas[2].wall_e = load_tga("images/zone_2/wall_e");
-	s->areas[2].wall_w = load_tga("images/zone_2/wall_w");
-	s->areas[3].wall_n = load_tga("images/zone_3/wall_n");
-	s->areas[3].wall_s = load_tga("images/zone_3/wall_s");
-	s->areas[3].wall_e = load_tga("images/zone_3/wall_e");
-	s->areas[3].wall_w = load_tga("images/zone_3/wall_w");
+	s->areas[0].wall_n = load_tga("images/zone_0/wall_n.tga");
+	s->areas[0].wall_s = load_tga("images/zone_0/wall_s.tga");
+	s->areas[0].wall_e = load_tga("images/zone_0/wall_e.tga");
+	s->areas[0].wall_w = load_tga("images/zone_0/wall_w.tga");
+	s->areas[1].wall_n = load_tga("images/zone_1/wall_n.tga");
+	s->areas[1].wall_s = load_tga("images/zone_1/wall_s.tga");
+	s->areas[1].wall_e = load_tga("images/zone_1/wall_e.tga");
+	s->areas[1].wall_w = load_tga("images/zone_1/wall_w.tga");
+	s->areas[2].wall_n = load_tga("images/zone_2/wall_n.tga");
+	s->areas[2].wall_s = load_tga("images/zone_2/wall_s.tga");
+	s->areas[2].wall_e = load_tga("images/zone_2/wall_e.tga");
+	s->areas[2].wall_w = load_tga("images/zone_2/wall_w.tga");
+	s->areas[3].wall_n = load_tga("images/zone_3/wall_n.tga");
+	s->areas[3].wall_s = load_tga("images/zone_3/wall_s.tga");
+	s->areas[3].wall_e = load_tga("images/zone_3/wall_e.tga");
+	s->areas[3].wall_w = load_tga("images/zone_3/wall_w.tga");
 }
 
 void	initialize_sdl(t_main *s, t_sdl *sdl)
