@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 17:18:54 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 18:25:01 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,44 @@ void	draw_interface (t_main *s)
 			pery = (percent(coord.y - orig.y, HEIGHT - orig.y));
 			// set_pixel(s->sdl->game, s->interface->tex[s->interface->h * s->interface->w - 1 + (s->interface->w) - 1], coord);
 			set_pixel(s->sdl->game, s->interface->tex[(int)(pery * (double)s->interface->h * s->interface->w + (perx * (double)s->interface->w))], coord);
+		}
+		i++;
+	}
+}
+
+void	draw_weapon (t_main *s)
+{
+	t_position coord;
+	int i;
+	int j;
+	t_position orig;
+	double perx;
+	double pery;
+	t_position dest;
+	int		pix_tex;
+
+	orig.x = WIDTH / 2 - (s->weapon->w / 2);
+	orig.y = HEIGHT - s->interface->h - s->weapon->h;
+	dest.x = WIDTH / 2 + (s->weapon->w / 2);
+	dest.y = HEIGHT - s->interface->h;
+	coord.y = 0;
+	coord.x = 0;
+	i = orig.x;
+	j = 0;
+	while (i < dest.x)
+	{
+		j = orig.y;
+		coord.x = i;
+		perx = (int)(percent(coord.x - orig.x, dest.x - orig.x) * 100);
+		while (j < dest.y)
+		{
+			coord.y = j++;
+			pery = (int)(percent(coord.y - orig.y, dest.y - orig.y) * 100);
+			pix_tex = (int)(pery * s->weapon->h / 100.0) * s->weapon->w + (int)(perx * s->weapon->w / 100.0);
+
+			// set_pixel(s->sdl->game, s->interface->tex[s->interface->h * s->interface->w - 1 + (s->interface->w) - 1], coord);
+			if (s->weapon->tex[pix_tex] != 0x97ff8800)
+				set_pixel(s->sdl->game, s->weapon->tex[pix_tex], coord);
 		}
 		i++;
 	}

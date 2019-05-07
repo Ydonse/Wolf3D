@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 17:12:40 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/07 18:20:37 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 18:25:04 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void	raycast_visualization(t_main *s)
 		angle -= s->fov / (double)PROJ_WIDTH;
 		i++;
 	}
+	draw_weapon(s);
 	draw_interface(s);
 	// printf("angle fin: %f\n", angle);
 }
