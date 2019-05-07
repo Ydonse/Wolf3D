@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 16:08:16 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/07 16:21:19 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	draw_interface (t_main *s)
 	int i;
 	int j;
 	t_position orig;
-	int perx;
-	int pery;
+	double perx;
+	double pery;
 
 	orig.x = 0;
 	orig.y = HEIGHT - s->interface->h;
@@ -52,10 +52,10 @@ void	draw_interface (t_main *s)
 		{
 			coord.x = i;
 			coord.y = j++;
-			perx = (int)(percent(coord.x - orig.x, WIDTH - orig.x) * 100);
-			pery = (int)(percent(coord.y - orig.y, HEIGHT - orig.y) * 100);
+			perx = (percent(coord.x - orig.x, WIDTH - orig.x) * 100);
+			pery = (percent(coord.y - orig.y, HEIGHT - orig.y) * 100);
 			// set_pixel(s->sdl->game, s->interface->tex[s->interface->h * s->interface->w - 1 + (s->interface->w) - 1], coord);
-			set_pixel(s->sdl->game, s->interface->tex[(pery * s->interface->h / 100) * s->interface->w - 1 + (perx * s->interface->w / 100) - 1], coord);
+			set_pixel(s->sdl->game, s->interface->tex[(int)(pery * s->interface->h / 100 * s->interface->w) + (int)(perx * s->interface->w / 100)], coord);
 		}
 		i++;
 	}
