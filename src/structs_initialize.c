@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/07 16:03:29 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 17:02:51 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	initialize_sdl(t_main *s, t_sdl *sdl)
 	// a proteger
 	load_images(s);
 	s->door = load_tga("images/door.tga");
+	s->weapon = load_tga("images/gun_0.tga");
 	s->interface = load_tga("images/interface.tga");
 	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))
 		exit(-1);

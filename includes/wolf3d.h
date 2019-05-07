@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 16:45:48 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 17:05:42 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ typedef struct		s_main {
 	// t_image			*paint;
 	t_image			*door;
 	t_image			*interface;
+	t_image			*weapon;
 	t_area			areas[MAX_AREA];
 }					t_main;
 
@@ -173,6 +174,7 @@ void				draw_player(t_main *s, t_sdl *sdl);
 void				draw_rect(t_sdl *sdl, t_texture *text, t_position orig,
 					t_position dest);
 void				draw_interface (t_main *s);
+void				draw_weapon (t_main *s);
 
 void				set_pixel(t_texture *text, Uint32 color, t_position coord);
 void				update_image(t_main *s, t_texture *texture);
