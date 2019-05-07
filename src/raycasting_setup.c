@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 17:12:40 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/07 11:41:43 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 13:49:10 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,27 @@ void	draw_tex_slice(t_main *s, t_ray ray, t_slice sl, double dist)
 		perx = (ray.dpos.y - (int)ray.dpos.y);
 	else
 		return;
-	while (sl.pix.y < sl.ewall)
+	dist *= 12.5;
+	while (sl.pix.y < HEIGHT)
 	{
 		pery = (double)(sl.pix.y - sl.bwall) / (double)(sl.ewall - sl.bwall);
-		if (ray.type == 'p')
-			sl.color = s->door->tex[(int)(pery * s->door->h) * s->door->w
+		sl.color = sl.tex->tex[(int)(pery * s->door->h) * s->door->w
 			+ (int)(perx * s->door->w)];
-		else
-			sl.color = s->wall->tex[(int)(pery * s->wall->h) * s->wall->w
-			+ (int)(perx * s->wall->w)];
-		set_pixel(s->sdl->game, darken_color(sl.color, (dist * 12.5)), sl.pix);
+		set_pixel(s->sdl->game, darken_color(sl.color, dist), sl.pix);
 		sl.pix.y++;
+	}
+}
+
+t_image	*choose_texture(t_main *s, t_ray ray)
+{
+	if (ray.type == 'p')
+		return (s->door);
+	else
+	{
+		if (ray.orientation != 'N')
+			return (s->wall);
+		else
+			return (s->paint);
 	}
 }
 
@@ -66,20 +76,22 @@ void	draw_wall_slice(t_main *s, t_ray ray, double dist, int x)
 	projected_h = ((double)s->proj_distance / dist);
 	sl.bwall = s->viewline - projected_h / 2;
 	sl.ewall = s->viewline + projected_h / 2;
-	// sl.bwall = sl.bwall <= 0 ? 0 : sl.bwall;
 	sl.pix.x = x;
 	sl.pix.y = -1;
 	sl.color = SKY;
-	while (++(sl.pix.y) < sl.bwall)
+	while (++(sl.pix.y) < sl.bwall && sl.pix.y < HEIGHT)
 		set_pixel(s->sdl->game, sl.color, sl.pix);
+	sl.tex = choose_texture(s, ray);
 	draw_tex_slice(s, ray, sl, dist);
 	sl.ewall = sl.ewall > HEIGHT ? HEIGHT : sl.ewall;
+	sl.ewall = sl.ewall < 0 ? 0 : sl.ewall;
 	sl.color = GROUND;
+	dist *= 12.5;
 	while (sl.ewall < HEIGHT)
 	{
 		sl.pix.y = sl.ewall++;
 		dist *= 0.987;
-		set_pixel(s->sdl->game, darken_color(sl.color, (dist * 12.5)), sl.pix);
+		set_pixel(s->sdl->game, darken_color(sl.color, dist), sl.pix);
 	}
 }
 

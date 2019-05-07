@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:43:56 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 11:30:11 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/07 13:32:07 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void	turn_camera(t_main *s, const Uint8 *keys, char command)
 		s->p_angle -= (s->sdl->event.motion.xrel) / 10;
 		s->p_angle = (s->p_angle + 360) % 360;
 		s->viewline -= (s->sdl->event.motion.yrel);
+		s->viewline = (s->viewline < - HEIGHT / 2 ? - HEIGHT / 2 : s->viewline);
+		s->viewline = (s->viewline > HEIGHT * 1.5 ? HEIGHT * 1.5 : s->viewline);
 		s->sdl->event.type = 0;
 	}
 	if (keys[LEFT_AR] || keys[RIGHT_AR])

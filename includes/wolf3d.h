@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 11:42:26 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 13:45:32 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct		s_slice {
 	int				ewall;
 	t_position		pix;
 	Uint32			color;
+	t_image			*tex;
 }					t_slice;
 
 typedef struct		s_sdl {
@@ -150,6 +151,7 @@ typedef struct		s_main {
 	int				proj_distance;
 	int				viewline;
 	t_image			*wall;
+	t_image			*paint;
 	t_image			*door;
 	t_image			*interface;
 }					t_main;

@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/06 19:22:13 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 13:47:37 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	initialize_sdl(t_main *s, t_sdl *sdl)
 		ft_error_sdl("Échec de chargement du renderer");
 	// a proteger
 	s->wall = load_tga("images/wall.tga");
+	s->paint = load_tga("images/paint.tga");
 	s->door = load_tga("images/door.tga");
 	s->interface = load_tga("images/interface.tga");
 	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))
@@ -69,7 +70,6 @@ void	initialize_sdl(t_main *s, t_sdl *sdl)
 	ft_memcpy(sdl->ui->content, s->interface->tex, s->interface->h * s->interface->w);
 	if (!(s->sdl->minimap = (SDL_Surface *)malloc(sizeof(SDL_Surface))))
 		exit(-1);
-
 	sdl->x_o = WIDTH / 2 - ((SPACE * s->width) / 2);
 	sdl->y_o = HEIGHT / 2 - ((SPACE * s->height) / 2);
 	create_sounds(sdl);
