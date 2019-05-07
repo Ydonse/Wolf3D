@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 16:06:00 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:26:14 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	get_case_color(t_main *s, t_position orig, t_position dest, char type)
 		int pery;
 		t_image *wall;
 
+		int		pix_tex;
+
 		orig.x = orig.x < 0 ? 0 : orig.x;
 		orig.y = orig.y < 0 ? 0 : orig.y;
 		dest.x = dest.x > WIDTH ? WIDTH : dest.x;
@@ -38,7 +40,9 @@ void	get_case_color(t_main *s, t_position orig, t_position dest, char type)
 				coord.y = j++;
 				perx = (int)(percent(coord.x - orig.x, dest.x - orig.x) * 100);
 				pery = (int)(percent(coord.y - orig.y, dest.y - orig.y) * 100);
-				set_pixel(s->sdl->map, wall->tex[(pery * wall->h / 100) * wall->w - 1 + (perx * wall->w / 100) - 1], coord);
+				pix_tex = (pery * wall->h / 100) * wall->w + (perx * wall->w / 100);
+				if (pix_tex >= 0 && pix_tex < (wall->h * wall->w))
+					set_pixel(s->sdl->map, wall->tex[pix_tex], coord);
 			}
 			i++;
 		}
