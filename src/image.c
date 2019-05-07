@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 13:52:44 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:08:16 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,47 @@ void	set_pixel(t_texture *text, Uint32 color, t_position coord)
 	{
 		text->content[coord.x + coord.y * WIDTH] = color;
 	}
+}
+
+void	draw_interface (t_main *s)
+{
+	t_position coord;
+	int i;
+	int j;
+	t_position orig;
+	int perx;
+	int pery;
+
+	orig.x = 0;
+	orig.y = HEIGHT - s->interface->h;
+	coord.y = 0;
+	coord.x = 0;
+	i = 0;
+	j = 0;
+	while (i < WIDTH)
+	{
+		j = orig.y;
+		while (j < HEIGHT)
+		{
+			coord.x = i;
+			coord.y = j++;
+			perx = (int)(percent(coord.x - orig.x, WIDTH - orig.x) * 100);
+			pery = (int)(percent(coord.y - orig.y, HEIGHT - orig.y) * 100);
+			// set_pixel(s->sdl->game, s->interface->tex[s->interface->h * s->interface->w - 1 + (s->interface->w) - 1], coord);
+			set_pixel(s->sdl->game, s->interface->tex[(pery * s->interface->h / 100) * s->interface->w - 1 + (perx * s->interface->w / 100) - 1], coord);
+		}
+		i++;
+	}
+	// while (i < WIDTH)
+	// {
+	// 	while (j < HEIGHT)
+	// 	{
+	// 		set_pixel(s->sdl->map, s->interface->tex[i * s->interface->h * (s->interface->w - 1 + s->interface->w - 1)], coord);
+	// 		j++;
+	// 	}
+	// 	i++;
+	// 	j = 0;
+	// }
 }
 
 void	draw_rect(t_sdl *sdl, t_texture *text, t_position orig, t_position dest)
