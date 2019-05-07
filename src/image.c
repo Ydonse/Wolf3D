@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 16:37:28 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 17:18:54 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,6 @@ void	draw_interface (t_main *s)
 		}
 		i++;
 	}
-	// while (i < WIDTH)
-	// {
-	// 	while (j < HEIGHT)
-	// 	{
-	// 		set_pixel(s->sdl->map, s->interface->tex[i * s->interface->h * (s->interface->w - 1 + s->interface->w - 1)], coord);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// 	j = 0;
-	// }
 }
 
 void	draw_rect(t_sdl *sdl, t_texture *text, t_position orig, t_position dest)
