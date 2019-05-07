@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/06 19:21:40 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 10:22:31 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@
 typedef	struct 		s_sounds
 {
 	Mix_Chunk		*shot;
+	Mix_Chunk		*door;
 }					t_sounds;
 
 typedef struct		s_position {
