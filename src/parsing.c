@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 12:58:00 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 13:42:02 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/07 16:07:40 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int		parse_map(t_main *s, char *file)
 		ft_strdel(&(s->parsing_line));
 	}
 	close(fd);
-	if (!check_walls(s, s->start_position.x, s->start_position.y))
-		handle_error(s, WALL_ERROR);
+	// if (!check_walls(s, s->start_position.x, s->start_position.y))
+		// handle_error(s, WALL_ERROR);
 	return (1);
 }

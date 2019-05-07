@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 15:37:06 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/07 16:09:11 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # define WIDTH 800
 # define HEIGHT 600
-# define SPACE 60
+# define SPACE 30
 # define MIN_WIDTH 3
 # define MIN_HEIGHT 3
 
@@ -53,7 +53,7 @@
 # define PROJ_WIDTH 800
 # define PROJ_HEIGHT 600
 
-#define PI 3.14159265
+# define PI 3.14159265
 
 # define LEFT_AR	SDL_SCANCODE_LEFT
 # define RIGHT_AR	SDL_SCANCODE_RIGHT

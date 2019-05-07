@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/07 14:09:05 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:03:29 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_main	*initialize_main(void)
 	s->p_angle = 0;
 	s->proj_distance = (PROJ_WIDTH / 2) / tan((double)(s->fov / 2) * PI / 180.0);
 	s->viewline = HEIGHT / 2;
+	ft_bzero(s->areas, sizeof(s->areas));
 	return (s);
 }
 
