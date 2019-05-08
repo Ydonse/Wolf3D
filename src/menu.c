@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 15:45:55 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/08 16:27:43 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/08 17:38:52 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,38 @@ void	display_menu(t_main *s, int i, int j)
 	double		perx;
 	double		pery;
 	t_position	coord;
-	int			pix_tex;
 
-	s->menu = load_tga("images/menu.tga");
+	s->menu = load_tga("images/menu2.tga");
+	coord.x = 0;
+	coord.y = 0;
+	printf("w =  = %d\n", s->menu->w);
 	while (i < WIDTH)
 	{
 		j = 0;
 		coord.x = i;
-		perx = (int)(percent(coord.x, WIDTH) * 100);
+		perx = (double)coord.x / (double)WIDTH;
+		// printf("perx = %lf\n", perx);
 		while (j < HEIGHT)
 		{
 			coord.y = j++;
-			pery = (int)(percent(coord.y, HEIGHT) * 100);
-			pix_tex = (int)(pery * s->menu->h / 100.0) * s->menu->w + (int)(perx * s->menu->w / 100.0);
-			set_pixel(s->sdl->game,s->menu->tex[pix_tex], coord);
+			pery = (double)coord.y / (double)HEIGHT;
+			set_pixel(s->sdl->game,s->menu->tex[(int)(pery * (double)s->menu->h) * s->menu->w + (int)(perx * (double)s->menu->w)], coord);
 		}
+		i++;
 	}
+	update_image(s, s->sdl->game);
 }
 
 int		handle_menu(t_main *s)
 {
 	display_menu(s, 0, 0);
-	if (SDL_WaitEvent(&s->sdl->event) != 0)
+	while (SDL_WaitEvent(&s->sdl->event) != 0 && s->sdl->event.key.keysym.sym != SDLK_RETURN)
 	{
 		if (s->sdl->event.type == SDL_QUIT)
 			return (0);
 		if (s->sdl->event.type == SDL_KEYDOWN && s->sdl->event.key.keysym.sym == SDLK_RETURN)
 			return (1);
 	}
-	return (0);
+	return (1);
+	// return (0);
 }
