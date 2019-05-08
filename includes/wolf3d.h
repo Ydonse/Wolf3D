@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/08 16:25:49 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/08 17:08:32 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ typedef struct		s_ray {
 	t_dpos			dpos;
 	int				zone;
 	short			res;
+	double			angle;
+
 }					t_ray;
 
 typedef struct		s_case {
@@ -114,8 +116,8 @@ typedef struct		s_image {
 	Uint32			*tex;
 	int				w;
 	int				h;
-}
-					t_image;
+}					t_image;
+
 typedef struct		s_anim {
 	int				current;
 	t_image			*image[3];
@@ -168,6 +170,7 @@ typedef struct		s_main {
 	t_image			*door;
 	t_image			*interface;
 	t_image			*menu;
+	t_image			*skybox;
 	t_anim			weapon;
 	t_area			areas[MAX_AREA];
 }					t_main;

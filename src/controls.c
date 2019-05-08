@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/08 15:10:49 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/08 16:35:42 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int		keyboard_controls(t_main *s, int key)
 		else if (key == SDLK_e)
 			open_door(s);
 		else if (key == SDLK_m)
+		{
 			s->active_map = !s->active_map;
+			draw_interface(s);
+		}
 	return (1);
 }
 

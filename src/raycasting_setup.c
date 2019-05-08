@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 17:12:40 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/07 19:02:00 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/08 17:58:58 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,35 @@ t_image	*choose_texture(t_main *s, t_ray ray)
 	}
 }
 
+void	draw_skybox(t_main *s, t_ray ray, t_slice sl, int x)
+{
+	double angle;
+	double pery;
+	int		px_tex;
+
+	angle = ray.angle;
+	angle = angle > 360.0 ? angle - 360.0 : angle;
+	angle = angle < 0 ? angle + 360.0 : angle;
+	angle = (angle / 360.0);
+	while (sl.pix.y < sl.bwall && sl.pix.y < HEIGHT - s->interface->h)
+	{
+		pery = (double)(sl.pix.y - s->viewline / 8) / (double)(HEIGHT * 1.5) + 0.2;
+		pery = pery > 1.0 ? 1.0 : pery;
+		pery = pery < 0.0 ? 0.0 : pery;
+		// printf("x: %f y:%f\n", angle, pery);
+		px_tex = (int)((angle * s->skybox->w) + s->skybox->w * (int)(s->skybox->h * pery));
+		if (px_tex < s->skybox->w * s->skybox->h && px_tex >= 0)
+			sl.color = s->skybox->tex[px_tex];
+		// else
+		// {
+		// 	printf("x: %f y:%f\n", angle, pery);
+		// 	printf("%d\n", px_tex);
+		// 	}
+		set_pixel(s->sdl->game, sl.color, sl.pix);
+		sl.pix.y++;
+	}
+}
+
 void	draw_wall_slice(t_main *s, t_ray ray, double dist, int x)
 {
 	int			projected_h;
@@ -90,10 +119,12 @@ void	draw_wall_slice(t_main *s, t_ray ray, double dist, int x)
 	sl.bwall = s->viewline - projected_h;
 	sl.ewall = s->viewline + projected_h;
 	sl.pix.x = x;
-	sl.pix.y = -1;
-	sl.color = SKY;
-	while (++(sl.pix.y) < sl.bwall && sl.pix.y < HEIGHT - s->interface->h)
-		set_pixel(s->sdl->game, sl.color, sl.pix);
+	sl.pix.y = 0;
+	// sl.color = SKY;
+	// while (++(sl.pix.y) < sl.bwall && sl.pix.y < HEIGHT - s->interface->h)
+	// 	set_pixel(s->sdl->game, sl.color, sl.pix);
+	draw_skybox(s, ray, sl, x);
+	sl.pix.y = sl.bwall;
 	sl.tex = choose_texture(s, ray);
 	draw_tex_slice(s, ray, sl, dist);
 	if (sl.ewall > HEIGHT - s->interface->h)
@@ -138,6 +169,7 @@ void	raycast_visualization(t_main *s)
 	while (i < PROJ_WIDTH)
 	{
 		ray = raycast(s, angle);
+		ray.angle = angle;
 		dist = ray.dist;
 		dist *= cos(to_rad((double)s->p_angle - angle));
 		if (dist > 0 && s->active_map == 0)
