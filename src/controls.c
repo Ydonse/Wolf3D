@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 18:49:53 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/08 15:10:49 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	event_handler(t_main *s)
 	int			game;
 	time_t		fps;
 
-
 	game = 1;
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	fps = clock();
@@ -60,8 +59,8 @@ void	event_handler(t_main *s)
 		{
 			if (s->sdl->event.type == SDL_QUIT)
 				game = 0;
-			if (s->sdl->event.type == SDL_MOUSEBUTTONDOWN)
-				 Mix_PlayChannel(1, s->sdl->sounds.shot, 0);
+			if (s->sdl->event.type == SDL_MOUSEBUTTONDOWN && s->weapon.current == 0)
+				 shoot(s);
 			if (s->sdl->event.type == SDL_KEYDOWN && keyboard_controls(s, s->sdl->event.key.keysym.sym) == 0)
 					game = 0;
 		}

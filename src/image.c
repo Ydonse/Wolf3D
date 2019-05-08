@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 18:28:22 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/08 12:15:25 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ void	draw_interface (t_main *s)
 	}
 }
 
+// void	animate_weapon(t_main *s)
+// {
+// 	sleep(2);
+//
+// }
+
 void	draw_weapon (t_main *s)
 {
 	t_position coord;
@@ -72,9 +78,9 @@ void	draw_weapon (t_main *s)
 	t_position dest;
 	int		pix_tex;
 
-	orig.x = WIDTH / 2 - (s->weapon->w / 2);
-	orig.y = HEIGHT - s->interface->h - s->weapon->h;
-	dest.x = WIDTH / 2 + (s->weapon->w / 2);
+	orig.x = WIDTH / 2 - (s->weapon.image[s->weapon.current]->w / 2);
+	orig.y = HEIGHT - s->interface->h - s->weapon.image[s->weapon.current]->h;
+	dest.x = WIDTH / 2 + (s->weapon.image[s->weapon.current]->w / 2);
 	dest.y = HEIGHT - s->interface->h;
 	coord.y = 0;
 	coord.x = 0;
@@ -89,10 +95,10 @@ void	draw_weapon (t_main *s)
 		{
 			coord.y = j++;
 			pery = (int)(percent(coord.y - orig.y, dest.y - orig.y) * 100);
-			pix_tex = (int)(pery * s->weapon->h / 100.0) * s->weapon->w + (int)(perx * s->weapon->w / 100.0);
+			pix_tex = (int)(pery * s->weapon.image[s->weapon.current]->h / 100.0) * s->weapon.image[s->weapon.current]->w + (int)(perx * s->weapon.image[s->weapon.current]->w / 100.0);
 			// set_pixel(s->sdl->game, s->interface->tex[s->interface->h * s->interface->w - 1 + (s->interface->w) - 1], coord);
-			if (s->weapon->tex[pix_tex] != 0x97ff8800)
-				set_pixel(s->sdl->game, s->weapon->tex[pix_tex], coord);
+			if (s->weapon.image[s->weapon.current]->tex[pix_tex] != 0x97ff8800)
+				set_pixel(s->sdl->game, s->weapon.image[s->weapon.current]->tex[pix_tex], coord);
 		}
 		i++;
 	}
@@ -135,30 +141,3 @@ void	draw_player(t_main *s, t_sdl *sdl)
 	sdl->map->color_tmp = 0xFF0000FF;
 	draw_rect(sdl, sdl->map, orig, dest);
 }
-
-// void	fill_texture(t_main *s, t_image *image, t_texture *texture)
-// {
-// 	int i;
-// 	int j;
-//
-// 	i = 0;
-// 	j = 0;
-// 	while (i < image->h)
-// 	{
-// 		while (j < image->w)
-// 		{
-// 			texture->te
-// 		}
-// 	}
-// }
-
-// void	draw_interface(t_main *s)
-// {
-// 	t_position	orig;
-// 	t_position	dest;
-// 	int i;
-// 	int j;
-//
-// 	i = 0;
-// 	j = 0;
-// }

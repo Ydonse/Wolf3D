@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:43:56 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 16:07:52 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/08 15:24:07 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ void	move_player(t_main *s, const Uint8 *keys, char sprint)
 	}
 	if (check_collisions(s, target) == 0)
 	{
-		// target.x = s->player_pos.x + (cos(to_rad(s->p_angle)) * s->move_speed / 2);
-		// target.y =  s->player_pos.y + (cos(to_rad(s->p_angle)) * s->move_speed / 2);
-		// if (check_collisions(s, target) == 0)
 			return ;
 	}
 	target.x = target.x < 0 ? 0 : target.x;
@@ -94,6 +91,34 @@ void	open_door(t_main *s)
 	}
 }
 
+void	shoot(t_main *s)
+{
+	time_t		fps;
+
+	fps = clock();
+	Mix_PlayChannel(1, s->sdl->sounds.shot, 0);
+	while (s->weapon.current < 2)
+	{
+		s->weapon.current++;
+		handle_keys(s);
+		while (clock() - fps < 100000)
+		{
+			if ((SDL_PollEvent(&(s->sdl->event))) != 0)
+			{
+				if (s->sdl->event.type == SDL_MOUSEMOTION)
+				{
+					turn_camera(s, 0, 1);
+					raycast_visualization(s);
+					update_image(s, s->sdl->game);
+				}
+			}
+			handle_keys(s);
+		}
+		fps = clock();
+	}
+	s->weapon.current = 0;
+}
+
 void	turn_camera(t_main *s, const Uint8 *keys, char command)
 {
 	if (command)
@@ -105,14 +130,17 @@ void	turn_camera(t_main *s, const Uint8 *keys, char command)
 		s->viewline = (s->viewline > HEIGHT * 1.5 ? HEIGHT * 1.5 : s->viewline);
 		s->sdl->event.type = 0;
 	}
-	if (keys[LEFT_AR] || keys[RIGHT_AR])
-		s->p_angle = (s->p_angle + (keys[LEFT_AR] - keys[RIGHT_AR])
-		* ROTATE_SPEED + 360) % 360;
-	if (keys[UP_AR] || keys[DOWN_AR])
+	else
 	{
-		s->viewline = (s->viewline + (keys[UP_AR] - keys[DOWN_AR])
-		* ROTATE_SPEED * 5);
-		s->viewline = (s->viewline < - HEIGHT / 2 ? - HEIGHT / 2 : s->viewline);
-		s->viewline = (s->viewline > HEIGHT * 1.5 ? HEIGHT * 1.5 : s->viewline);
+		if (keys[LEFT_AR] || keys[RIGHT_AR])
+			s->p_angle = (s->p_angle + (keys[LEFT_AR] - keys[RIGHT_AR])
+			* ROTATE_SPEED + 360) % 360;
+		if (keys[UP_AR] || keys[DOWN_AR])
+		{
+			s->viewline = (s->viewline + (keys[UP_AR] - keys[DOWN_AR])
+			* ROTATE_SPEED * 5);
+			s->viewline = (s->viewline < - HEIGHT / 2 ? - HEIGHT / 2 : s->viewline);
+			s->viewline = (s->viewline > HEIGHT * 1.5 ? HEIGHT * 1.5 : s->viewline);
+		}
 	}
 }

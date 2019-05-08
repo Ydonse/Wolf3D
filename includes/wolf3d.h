@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 17:05:42 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/08 16:25:49 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,12 @@ typedef struct		s_image {
 	Uint32			*tex;
 	int				w;
 	int				h;
-}					t_image;
+}
+					t_image;
+typedef struct		s_anim {
+	int				current;
+	t_image			*image[3];
+}					t_anim;
 
 typedef struct		s_slice {
 	int				bwall;
@@ -162,11 +167,13 @@ typedef struct		s_main {
 	// t_image			*paint;
 	t_image			*door;
 	t_image			*interface;
-	t_image			*weapon;
+	t_image			*menu;
+	t_anim			weapon;
 	t_area			areas[MAX_AREA];
 }					t_main;
 
 void				handle_error(t_main *s, int error_nb);
+void				free_program(t_main *s);
 int					parse_map(t_main *s, char *file);
 int					check_next_case(t_main *s, int x, int y);
 void				draw_minimap(t_main *s);
@@ -188,12 +195,16 @@ void				ft_error_sdl(char *str);
 t_main				*initialize_main(void);
 t_texture			*initialize_texture(t_sdl *sdl, int width, int height);
 void				initialize_sdl(t_main *s, t_sdl *sdl);
+int					handle_menu(t_main *s);
 
 //EVENTS
 
+void				handle_keys(t_main *s);
 void				event_handler(t_main *s);
 void				turn_camera(t_main *s, const Uint8 *keys, char command);
 void				move_player(t_main *s, const Uint8 *keys, char sprint);
+void				open_door(t_main *s);
+void				shoot(t_main *s);
 
 
 

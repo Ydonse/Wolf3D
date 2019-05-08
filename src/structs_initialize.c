@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/07 17:02:51 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/08 11:50:44 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ void	load_images(t_main *s)
 	s->areas[3].wall_s = load_tga("images/zone_3/wall_s.tga");
 	s->areas[3].wall_e = load_tga("images/zone_3/wall_e.tga");
 	s->areas[3].wall_w = load_tga("images/zone_3/wall_w.tga");
+	s->weapon.image[0] = load_tga("images/gun_0.tga");
+	s->weapon.image[1] = load_tga("images/gun_1.tga");
+	s->weapon.image[2] = load_tga("images/gun_2.tga");
+	s->weapon.current = 0;
 }
 
 void	initialize_sdl(t_main *s, t_sdl *sdl)
@@ -80,7 +84,6 @@ void	initialize_sdl(t_main *s, t_sdl *sdl)
 	// a proteger
 	load_images(s);
 	s->door = load_tga("images/door.tga");
-	s->weapon = load_tga("images/gun_0.tga");
 	s->interface = load_tga("images/interface.tga");
 	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))
 		exit(-1);
