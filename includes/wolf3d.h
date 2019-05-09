@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/08 17:08:32 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/09 12:12:59 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ typedef struct		s_sdl {
 	int				x_o;
 	int				y_o;
 	t_sounds		sounds;
+	Mix_Music		*musique;
 }					t_sdl;
 
 typedef struct		s_main {

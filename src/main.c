@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/08 18:11:45 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/09 12:15:12 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	main (int ac, char **av)
 	s->player_pos.y = (double) s->start_position.y + 0.5;
 	if (!handle_menu(s))
 		handle_error(s, 0);
+	s->sdl->musique = Mix_LoadMUS("musics/game.wav");
+	Mix_PlayMusic(s->sdl->musique, -1);
 	event_handler(s);
+	Mix_HaltMusic();
 	Mix_CloseAudio();
 	SDL_Quit();
 	return (1);

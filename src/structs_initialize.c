@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/08 16:40:53 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/09 12:17:42 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	load_images(t_main *s)
 
 void	initialize_sdl(t_main *s, t_sdl *sdl)
 {
-	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 		ft_error_sdl("Échec de l'initialisation de la SDL");
 	if (!(sdl->pwindow = SDL_CreateWindow("Wolf3D", 100,
 		100, WIDTH, HEIGHT, SDL_WINDOW_SHOWN)))
@@ -97,5 +97,6 @@ void	initialize_sdl(t_main *s, t_sdl *sdl)
 		exit(-1);
 	sdl->x_o = WIDTH / 2 - ((SPACE * s->width) / 2);
 	sdl->y_o = HEIGHT / 2 - ((SPACE * s->height) / 2);
+	sdl->musique = NULL;
 	create_sounds(sdl);
 }
