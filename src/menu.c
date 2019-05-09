@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 15:45:55 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 12:19:41 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/09 12:21:48 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	display_menu(t_main *s, int i, int j)
 		j = 0;
 		coord.x = i;
 		perx = (double)coord.x / (double)WIDTH;
-		// printf("perx = %lf\n", perx);
 		while (j < HEIGHT)
 		{
 			coord.y = j++;
