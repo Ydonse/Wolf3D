@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:50:10 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 15:40:53 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/09 18:31:10 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ void	ft_error_sdl(char *str)
 	ft_putstr(str);
 	ft_putchar(' ');
 	ft_putstr(SDL_GetError());
-	exit (-1);
+	exit(-1);
 }
