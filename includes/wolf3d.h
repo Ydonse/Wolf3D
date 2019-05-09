@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/08 17:08:32 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/09 13:49:08 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,12 +213,24 @@ void				shoot(t_main *s);
 
 void				raycast_visualization(t_main *s);
 t_ray				raycast(t_main *s, double r_angle);
+
+t_ray				check_entity_h(t_main *s, t_dpos point, double r_angle,
+					t_ray ray);
+t_ray				check_entity_v(t_main *s, t_dpos point, double r_angle,
+					t_ray ray);
+t_ray				get_raycast_dist_v(t_main *s, t_ray ray, double r_a,
+					t_dpos fp);
+t_ray				get_raycast_dist_h(t_main *s, t_ray ray, double r_angle,
+					t_dpos fp);
+
 void				set_pixel_debug(t_sdl *sdl, t_dpos coord);
 void				draw_debug_rect(t_sdl *sdl, t_texture *text, Uint32 color, t_dpos orig);
+void				draw_wall_slice(t_main *s, t_ray ray, double dist, int x);
 
 double				to_rad(double angle);
 double				norme(t_dpos player, t_dpos point);
 double				percent(double value, double total);
+Uint32				darken_color(Uint32 color, double perc);
 
 //IMAGES
 
