@@ -6,11 +6,29 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:50:10 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 13:37:30 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/09 15:40:53 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+
+void	free_images(t_main *s, int i)
+{
+	while (i < MAX_AREA)
+	{
+		ft_memdel(((void **)&s->areas[i].wall_n));
+		ft_memdel(((void **)&s->areas[i].wall_s));
+		ft_memdel(((void **)&s->areas[i].wall_e));
+		ft_memdel(((void **)&s->areas[i].wall_w));
+		i++;
+	}
+	ft_memdel(((void **)&s->skybox));
+	ft_memdel(((void **)&s->weapon.image[0]));
+	ft_memdel(((void **)&s->weapon.image[1]));
+	ft_memdel(((void **)&s->weapon.image[2]));
+	ft_memdel(((void **)&s->door));
+	ft_memdel(((void **)&s->interface));
+}
 
 void	free_program(t_main *s)
 {
@@ -30,6 +48,7 @@ void	free_program(t_main *s)
 		Mix_FreeMusic(s->sdl->musique);
 		Mix_CloseAudio();
 	}
+	free_images(s, 0);
 	free(s->sdl);
 	free(s);
 }
@@ -60,6 +79,8 @@ void	handle_error(t_main *s, int error_nb)
 
 void	ft_error_sdl(char *str)
 {
-	printf("%s (%s)\n", str, SDL_GetError());
+	ft_putstr(str);
+	ft_putchar(' ');
+	ft_putstr(SDL_GetError());
 	exit (-1);
 }

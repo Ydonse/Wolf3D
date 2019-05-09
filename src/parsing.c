@@ -6,20 +6,11 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 12:58:00 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 18:21:53 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/09 18:05:11 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-
-int		check_walls(t_main *s, int x, int y)
-{
-	s->map[y][x].valid = 1;
-	if (check_next_case(s, x, y))
-		return (1);
-	else
-		return (0);
-}
 
 void	check_player(t_main *s, char *file)
 {
@@ -39,15 +30,12 @@ void	check_player(t_main *s, char *file)
 	close(fd);
 	if (!player)
 		handle_error(s, PLAYER_ERROR);
-
 }
 
-int		fill_map(t_main *s, char **tab, int i)
+int		fill_map(t_main *s, char **tab, int i, int k)
 {
 	static int		player = 0;
-	int				k;
 
-	k = 0;
 	if (!(s->map[i] = (t_case*)malloc(sizeof(t_case) * s->width)))
 	{
 		ft_free_tab_str(tab);
@@ -136,7 +124,7 @@ int		parse_map(t_main *s, char *file)
 		handle_error(s, MALLOC_ERROR);
 	while (get_next_line(fd, &(s->parsing_line)))
 	{
-		i = fill_map(s, ft_strsplit(s->parsing_line, ' '), i);
+		i = fill_map(s, ft_strsplit(s->parsing_line, ' '), i, 0);
 		ft_strdel(&(s->parsing_line));
 	}
 	close(fd);

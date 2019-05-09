@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 16:40:18 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/09 13:52:13 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/09 18:00:38 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_image	*initialize_image(void)
 
 void	print_bit(char c)
 {
-	int i;
+	int		i;
 	char	d;
 
 	i = 7;
@@ -49,19 +49,16 @@ void	get_info_header(t_image *image, char *str)
 	image->w = (image->w << 8) + (unsigned char)str[12];
 	image->h = str[15];
 	image->h = (image->h << 8) + (unsigned char)str[14];
-	if (!(image->tex = (Uint32 *)malloc(sizeof(Uint32) *
-	 (image->w * image->bits_color * image->h))))
+	if (!(image->tex = (Uint32 *)malloc(sizeof(Uint32)
+	* (image->w * image->bits_color * image->h))))
 		exit(-1);
 }
 
-t_image	*load_tga(char *path)
+t_image	*load_tga(char *path, int i, int idx, int ret)
 {
 	char	str[PARSE_BUFF_SIZE];
 	t_image	*image;
 	int		fd;
-	int		ret;
-	int		i;
-	int		idx;
 
 	ft_bzero(str, PARSE_BUFF_SIZE);
 	image = initialize_image();
@@ -71,13 +68,13 @@ t_image	*load_tga(char *path)
 	if ((ret = read(fd, str, 18)) == 0)
 		return (0);
 	get_info_header(image, str);
-	idx = 0;
 	while ((ret = read(fd, str, PARSE_BUFF_SIZE)) != 0)
 	{
 		i = 0;
 		while (i < ret)
 		{
-			image->tex[idx] = (str[i] << 8) + (str[i + 1] << 16) + (str[i + 2] << 24);
+			image->tex[idx] = (str[i] << 8) + (str[i + 1] << 16)
+			+ (str[i + 2] << 24);
 			i += (image->bits_color / 32) * 4;
 			idx += (image->bits_color / 32);
 		}
