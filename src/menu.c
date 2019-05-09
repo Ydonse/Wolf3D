@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 15:45:55 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/08 17:38:52 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/09 11:25:11 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	display_menu(t_main *s, int i, int j)
 	double		pery;
 	t_position	coord;
 
-	s->menu = load_tga("images/menu2.tga");
+	s->menu = load_tga("images/menu.tga");
 	coord.x = 0;
 	coord.y = 0;
 	printf("w =  = %d\n", s->menu->w);
@@ -41,14 +41,21 @@ void	display_menu(t_main *s, int i, int j)
 
 int		handle_menu(t_main *s)
 {
+	Mix_Music *musique;
+
+	musique = Mix_LoadMUS("menu.mp3");
+	Mix_PlayMusic(musique, -1);
 	display_menu(s, 0, 0);
-	while (SDL_WaitEvent(&s->sdl->event) != 0 && s->sdl->event.key.keysym.sym != SDLK_RETURN)
+	while (1)
 	{
-		if (s->sdl->event.type == SDL_QUIT)
-			return (0);
-		if (s->sdl->event.type == SDL_KEYDOWN && s->sdl->event.key.keysym.sym == SDLK_RETURN)
-			return (1);
+		if (SDL_WaitEvent(&s->sdl->event))
+		{
+			if (s->sdl->event.type == SDL_QUIT)
+				return (0);
+			if (s->sdl->event.key.keysym.sym == SDLK_RETURN)
+				break;
+		}
 	}
+	Mix_FreeMusic(musique);
 	return (1);
-	// return (0);
 }
