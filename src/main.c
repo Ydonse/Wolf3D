@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:20:16 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 12:15:12 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/09 13:44:46 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ int	main (int ac, char **av)
 		return (1);
 	s = initialize_main();
 	parse_map(s, av[1]);
-	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
+	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024)
+	== -1)
 		printf("%s", Mix_GetError());
 	initialize_sdl(s, s->sdl);
 	if (!handle_menu(s))
-		free_program(s);
+		handle_error(s, 0);
 	s->player_pos.x = (double) s->start_position.x + 0.5;
 	s->player_pos.y = (double) s->start_position.y + 0.5;
 	if (!handle_menu(s))
