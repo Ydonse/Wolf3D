@@ -6,7 +6,7 @@
 #    By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/23 10:03:18 by ydonse            #+#    #+#              #
-#    Updated: 2019/05/08 17:18:03 by malluin          ###   ########.fr        #
+#    Updated: 2019/05/09 13:48:05 by malluin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,9 @@ SRC_NAME =	main.c \
 			controls.c \
 			image.c \
 			raycasting.c \
+			raycasting_2.c \
 			raycasting_setup.c \
+			raycasting_draw.c \
 			utils_trig.c \
 			collisions.c \
 			parser_tga.c \

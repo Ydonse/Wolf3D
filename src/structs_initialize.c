@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/09 12:17:42 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/09 13:50:25 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	load_images(t_main *s)
 	s->areas[3].wall_s = load_tga("images/zone_3/wall_s.tga");
 	s->areas[3].wall_e = load_tga("images/zone_3/wall_e.tga");
 	s->areas[3].wall_w = load_tga("images/zone_3/wall_w.tga");
-	s->skybox = load_tga("images/skybox.tga");;
+	s->skybox = load_tga("images/skybox_stars.tga");;
 	s->weapon.image[0] = load_tga("images/gun_0.tga");
 	s->weapon.image[1] = load_tga("images/gun_1.tga");
 	s->weapon.image[2] = load_tga("images/gun_2.tga");
