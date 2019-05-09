@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:50:10 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/30 17:11:19 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/09 13:37:30 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ void	free_program(t_main *s)
 		while (i < s->height)
 			free(s->map[i++]);
 		free(s->map);
+	}
+	if (s->sdl->musique != NULL)
+	{
+		Mix_HaltMusic();
+		Mix_FreeMusic(s->sdl->musique);
+		Mix_CloseAudio();
 	}
 	free(s->sdl);
 	free(s);
@@ -46,7 +52,8 @@ void	display_error(int error_nb)
 
 void	handle_error(t_main *s, int error_nb)
 {
-	display_error(error_nb);
+	if (error_nb != 0)
+		display_error(error_nb);
 	free_program(s);
 	exit(0);
 }

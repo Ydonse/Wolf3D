@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 15:45:55 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 11:25:11 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/09 12:21:48 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	display_menu(t_main *s, int i, int j)
 		j = 0;
 		coord.x = i;
 		perx = (double)coord.x / (double)WIDTH;
-		// printf("perx = %lf\n", perx);
 		while (j < HEIGHT)
 		{
 			coord.y = j++;
@@ -41,10 +40,11 @@ void	display_menu(t_main *s, int i, int j)
 
 int		handle_menu(t_main *s)
 {
-	Mix_Music *musique;
-
-	musique = Mix_LoadMUS("menu.mp3");
-	Mix_PlayMusic(musique, -1);
+	s->sdl->musique = Mix_LoadMUS("musics/menu.wav");
+	if (s->sdl->musique == NULL)
+		ft_putstr("Error : music not loaded\n");
+	else
+		Mix_PlayMusic(s->sdl->musique, -1);
 	display_menu(s, 0, 0);
 	while (1)
 	{
@@ -56,6 +56,10 @@ int		handle_menu(t_main *s)
 				break;
 		}
 	}
-	Mix_FreeMusic(musique);
+	if (s->sdl->musique != NULL)
+	{
+		Mix_HaltMusic();
+		Mix_FreeMusic(s->sdl->musique);
+	}
 	return (1);
 }
