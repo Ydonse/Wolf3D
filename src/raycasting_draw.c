@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 13:25:49 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/09 13:43:36 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/10 12:36:29 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	draw_tex_slice(t_main *s, t_ray ray, t_slice sl, double dist)
 	dist = 1 - (dist * 0.125);
 	diff = sl.ewall - sl.bwall;
 	pery = 0;
-	while (++(sl.pix.y) < HEIGHT - s->interface->h)
+	while (sl.pix.y < HEIGHT - s->interface->h && sl.pix.y < sl.ewall)
 	{
 		if (pery == 0 || (int)((sl.pix.y - sl.bwall) / diff
 			* sl.tex->h) > (pery * sl.tex->h))
@@ -35,6 +35,7 @@ void	draw_tex_slice(t_main *s, t_ray ray, t_slice sl, double dist)
 				sl.color = sl.tex->tex[px_tex];
 		}
 		set_pixel(s->sdl->game, darken_color(sl.color, dist), sl.pix);
+		sl.pix.y++;
 	}
 }
 
@@ -92,7 +93,7 @@ void	draw_wall_slice(t_main *s, t_ray ray, double dist, int x)
 	sl.ewall = s->viewline + projected_h;
 	sl.pix.x = x;
 	draw_skybox(s, ray, sl);
-	sl.pix.y = sl.bwall - 1;
+	sl.pix.y = sl.bwall;
 	sl.tex = choose_texture(s, ray);
 	draw_tex_slice(s, ray, sl, dist);
 	if (sl.ewall > HEIGHT - s->interface->h)

@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:50:10 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 18:31:10 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/10 12:13:50 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	free_program(t_main *s)
 	if (s->map != NULL)
 	{
 		while (i < s->height)
-			free(s->map[i++]);
-		free(s->map);
+			ft_memdel((void **)&s->map[i++]);
+		ft_memdel((void **)&s->map);
 	}
 	if (s->sdl->musique != NULL)
 	{
@@ -49,8 +49,10 @@ void	free_program(t_main *s)
 		Mix_CloseAudio();
 	}
 	free_images(s, 0);
-	free(s->sdl);
-	free(s);
+	ft_memdel((void **)&s->sdl->pwindow);
+	ft_memdel((void **)&s->sdl->prenderer);
+	ft_memdel((void **)&s->sdl);
+	ft_memdel((void **)&s);
 }
 
 void	display_error(int error_nb)

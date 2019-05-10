@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:43:56 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/10 11:18:26 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/10 11:25:59 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,8 @@ void	move_player(t_main *s, const Uint8 *keys, char sprint)
 				return ;
 		}
 	}
-	target.x = target.x < 0 ? 0 : target.x;
-	target.x = target.x > s->width ? s->width : target.x;
-	target.y = target.y < 0 ? 0 : target.y;
-	target.y = target.y > s->height ? s->height : target.y;
-	s->player_pos.x = target.x;
-	s->player_pos.y = target.y;
+	s->player_pos.x = target.x > s->width -1 ? s->width - 1 : target.x;
+	s->player_pos.y = target.y > s->height - 1 ? s->height - 1 : target.y;
 }
 
 void	open_door(t_main *s)

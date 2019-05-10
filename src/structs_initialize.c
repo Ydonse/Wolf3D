@@ -6,18 +6,21 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/09 18:19:30 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/10 12:25:41 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-int			check_images(t_main *s, int i)
+int			check_images(t_main *s)
 {
-	while (i < MAX_AREA)
+	int		i;
+
+	i = -1;
+	while (++i < MAX_AREA)
 	{
 		if (!s->areas[i].wall_n || !s->areas[i].wall_s || !s->areas[i].wall_e
-		|| !s->areas[i++].wall_w)
+		|| !s->areas[i].wall_w)
 			return (0);
 	}
 	if (!s->weapon.image[0] || !s->weapon.image[1] || !s->weapon.image[2])
@@ -38,6 +41,7 @@ t_main		*initialize_main(void)
 	s->width = 0;
 	s->height = 0;
 	s->map = NULL;
+	s->parsing_line = NULL;
 	s->move_speed = 0.05;
 	s->active_map = 0;
 	s->fov = DEFAULT_FOV;
@@ -47,6 +51,7 @@ t_main		*initialize_main(void)
 	s->viewline = HEIGHT / 2;
 	ft_bzero(s->areas, sizeof(s->areas));
 	ft_bzero(s->weapon.image, sizeof(s->weapon.image));
+	s->menu = NULL;
 	s->skybox = NULL;
 	s->door = NULL;
 	s->interface = NULL;
@@ -86,12 +91,12 @@ void		load_images(t_main *s)
 	s->areas[3].wall_s = load_tga("images/zone_3/wall_s.tga", 0, 0, 0);
 	s->areas[3].wall_e = load_tga("images/zone_3/wall_e.tga", 0, 0, 0);
 	s->areas[3].wall_w = load_tga("images/zone_3/wall_w.tga", 0, 0, 0);
-	s->skybox = load_tga("images/skybox_stars.tga", 0, 0, 0);
 	s->weapon.image[0] = load_tga("images/gun_0.tga", 0, 0, 0);
 	s->weapon.image[1] = load_tga("images/gun_1.tga", 0, 0, 0);
 	s->weapon.image[2] = load_tga("images/gun_2.tga", 0, 0, 0);
-	s->door = load_tga("images/door.tga", 0, 0, 0);
+	s->skybox = load_tga("images/skybox_stars.tga", 0, 0, 0);
 	s->interface = load_tga("images/interface.tga", 0, 0, 0);
+	s->door = load_tga("images/door.tga", 0, 0, 0);
 	s->weapon.current = 0;
 }
 
@@ -105,7 +110,7 @@ void		initialize_sdl(t_main *s, t_sdl *sdl)
 	if (!(sdl->prenderer = SDL_CreateRenderer(sdl->pwindow, -1, 0)))
 		ft_error_sdl("Échec de chargement du renderer");
 	load_images(s);
-	if (!check_images(s, 0))
+	if (!check_images(s))
 		exit(-1);
 	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))
 		exit(-1);
