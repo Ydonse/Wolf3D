@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/10 14:04:19 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/10 14:05:43 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ void	draw_minimap(t_main *s)
 	int			j;
 
 	i = -1;
-	j = 0;
 	while (++i < s->height)
 	{
+		j = 0;
 		while (j < s->width)
 		{
 			orig.x = SPACE * j + s->sdl->x_o;
@@ -120,7 +120,6 @@ void	draw_minimap(t_main *s)
 			dest.y = orig.y + SPACE;
 			get_case_color(s, orig, dest, s->map[i][j++]);
 		}
-		j = 0;
 	}
 	draw_player(s, s->sdl);
 	raycast_visualization(s);

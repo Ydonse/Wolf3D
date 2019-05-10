@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/10 13:55:16 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/10 14:05:43 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 # define BLOCK_SIZE 64
 # define PLAYER_HEIGHT 32
 # define DEFAULT_FOV 65
-# define ROTATE_SPEED 2
+# define ROTATE_SPEED 20
 
 # define PROJ_WIDTH 800
 # define PROJ_HEIGHT 600
@@ -196,6 +196,7 @@ void				ft_print_map(t_main	*s);
 void				ft_error_sdl(char *str);
 
 t_main				*initialize_main(void);
+void				pre_initialize_sdl(t_main *s);
 t_texture			*initialize_texture(t_sdl *sdl, int width, int height);
 void				initialize_sdl(t_main *s, t_sdl *sdl);
 int					handle_menu(t_main *s);
@@ -218,6 +219,7 @@ t_ray				get_raycast_dist_v(t_main *s, t_ray ray, double r_a,
 					t_dpos fp);
 t_ray				get_raycast_dist_h(t_main *s, t_ray ray, double r_angle,
 					t_dpos fp);
+int					ft_min_one(int a);
 
 void				set_pixel_debug(t_sdl *sdl, t_dpos coord);
 void				draw_debug_rect(t_sdl *sdl, t_texture *text,

@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:43:56 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/10 11:18:26 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/10 13:42:11 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,8 @@ void	move_player(t_main *s, const Uint8 *keys, char sprint)
 				return ;
 		}
 	}
-	target.x = target.x < 0 ? 0 : target.x;
-	target.x = target.x > s->width ? s->width : target.x;
-	target.y = target.y < 0 ? 0 : target.y;
-	target.y = target.y > s->height ? s->height : target.y;
-	s->player_pos.x = target.x;
-	s->player_pos.y = target.y;
+	s->player_pos.x = target.x > s->width - 1 ? s->width - 1 : target.x;
+	s->player_pos.y = target.y > s->height - 1 ? s->height - 1 : target.y;
 }
 
 void	open_door(t_main *s)
@@ -130,9 +126,9 @@ void	turn_camera(t_main *s, const Uint8 *keys, char command)
 {
 	if (command)
 	{
-		s->p_angle -= (s->sdl->event.motion.xrel) / 10;
+		s->p_angle -= ft_min_one(s->sdl->event.motion.xrel);
 		s->p_angle = (s->p_angle + 360) % 360;
-		s->viewline -= (s->sdl->event.motion.yrel);
+		s->viewline -= (s->sdl->event.motion.yrel / 2);
 		s->viewline = (s->viewline < -HEIGHT / 2 ? -HEIGHT / 2 : s->viewline);
 		s->viewline = (s->viewline > HEIGHT * 1.5 ? HEIGHT * 1.5 : s->viewline);
 		s->sdl->event.type = 0;
@@ -141,11 +137,11 @@ void	turn_camera(t_main *s, const Uint8 *keys, char command)
 	{
 		if (keys[LEFT_AR] || keys[RIGHT_AR])
 			s->p_angle = (s->p_angle + (keys[LEFT_AR] - keys[RIGHT_AR])
-			* ROTATE_SPEED + 360) % 360;
+			* ROTATE_SPEED / 10 + 360) % 360;
 		if (keys[UP_AR] || keys[DOWN_AR])
 		{
 			s->viewline = (s->viewline + (keys[UP_AR] - keys[DOWN_AR])
-			* ROTATE_SPEED * 5);
+			* ROTATE_SPEED / 2);
 			s->viewline = (s->viewline < -HEIGHT / 2 ? -HEIGHT / 2
 			: s->viewline);
 			s->viewline = (s->viewline > HEIGHT * 1.5 ? HEIGHT * 1.5

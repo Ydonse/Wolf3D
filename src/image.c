@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 17:16:20 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/10 11:40:36 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	draw_weapon(t_main *s, double perx, short orig_x, short orig_y)
 			pix_tex = (int)(pery * s->weapon.image[s->weapon.current]->h
 			/ 100.0) * s->weapon.image[s->weapon.current]->w
 			+ (int)(perx * s->weapon.image[s->weapon.current]->w / 100.0);
-			if (s->weapon.image[s->weapon.current]->tex[pix_tex] != 0x97ff8800)
+			if (s->weapon.image[s->weapon.current]->tex[pix_tex] != 0x98008800)
 				set_pixel(s->sdl->game, s->weapon.image
 				[s->weapon.current]->tex[pix_tex], coord);
 		}

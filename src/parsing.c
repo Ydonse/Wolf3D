@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 12:58:00 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 18:05:11 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/10 13:56:33 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	check_player(t_main *s, char *file)
 	player = 0;
 	if ((fd = open(file, O_RDONLY)) < 1)
 		handle_error(s, FILE_ERROR);
+	s->parsing_line = NULL;
 	while (get_next_line(fd, &(s->parsing_line)))
 	{
 		if (ft_strchr(s->parsing_line, 'j'))
@@ -85,6 +86,7 @@ void	check_file(t_main *s, int fd, char *file)
 	int		i;
 
 	i = 0;
+	s->parsing_line = NULL;
 	while (get_next_line(fd, &(s->parsing_line)))
 	{
 		i++;
@@ -116,12 +118,15 @@ int		parse_map(t_main *s, char *file)
 	i = 0;
 	if ((fd = open(file, O_RDONLY)) < 1)
 		handle_error(s, FILE_ERROR);
+	if (read(fd, NULL, 0) == -1)
+		handle_error(s, FILE_ERROR);
 	check_file(s, fd, file);
 	check_player(s, file);
 	if ((fd = open(file, O_RDONLY)) < 1)
 		handle_error(s, FILE_ERROR);
 	if (!(s->map = (t_case**)malloc(sizeof(t_case*) * s->height)))
 		handle_error(s, MALLOC_ERROR);
+	s->parsing_line = NULL;
 	while (get_next_line(fd, &(s->parsing_line)))
 	{
 		i = fill_map(s, ft_strsplit(s->parsing_line, ' '), i, 0);
