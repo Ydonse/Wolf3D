@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 18:26:03 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/10 14:04:19 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	draw_square(t_main *s, t_position orig, t_position dest, t_image *wall)
 	int			pery;
 	int			pix_tex;
 
-	orig.x = orig.x < 0 ? 0 : orig.x;
-	orig.y = orig.y < 0 ? 0 : orig.y;
-	dest.x = dest.x > WIDTH ? WIDTH : dest.x;
-	dest.y = dest.y > HEIGHT ? HEIGHT : dest.y;
+	// orig.x = orig.x < 0 ? 0 : orig.x;
+	// orig.y = orig.y < 0 ? 0 : orig.y;
+	// dest.x = dest.x > WIDTH ? WIDTH : dest.x;
+	// dest.y = dest.y > HEIGHT ? HEIGHT : dest.y;
 	coord.x = orig.x;
 	while (coord.x < dest.x)
 	{
@@ -34,7 +34,8 @@ void	draw_square(t_main *s, t_position orig, t_position dest, t_image *wall)
 			pery = (int)(percent(coord.y - orig.y, dest.y - orig.y) * 100);
 			pix_tex = (int)(pery * wall->h / 100.0) * wall->w
 			+ (int)(perx * wall->w / 100.0);
-			if (pix_tex >= 0 && pix_tex < (wall->h * wall->w))
+			if (pix_tex >= 0 && pix_tex < (wall->h * wall->w) && coord.x > 0
+			&& coord.y > 0 && coord.x < WIDTH && coord.y < HEIGHT)
 				set_pixel(s->sdl->map, wall->tex[pix_tex], coord);
 		}
 		coord.x++;

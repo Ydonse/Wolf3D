@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 18:24:38 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/10 13:55:16 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # define WIDTH 800
 # define HEIGHT 600
-# define SPACE 45
+# define SPACE 60
 # define MIN_WIDTH 3
 # define MIN_HEIGHT 3
 
