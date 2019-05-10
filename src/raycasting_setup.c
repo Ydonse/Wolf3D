@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 17:12:40 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/09 13:44:40 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/09 17:06:47 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ void	raycast_visualization(t_main *s)
 		angle -= s->fov / (double)PROJ_WIDTH;
 		i++;
 	}
-	draw_weapon(s);
+	draw_weapon(s, 0, WIDTH / 2 - (s->weapon.image[s->weapon.current]->w / 2),
+	HEIGHT - s->interface->h - s->weapon.image[s->weapon.current]->h);
 }

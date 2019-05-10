@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 15:45:55 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 12:21:48 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/09 17:56:50 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ void	display_menu(t_main *s, int i, int j)
 	double		pery;
 	t_position	coord;
 
-	s->menu = load_tga("images/menu.tga");
+	s->menu = load_tga("images/menu.tga", 0, 0, 0);
 	coord.x = 0;
 	coord.y = 0;
-	printf("w =  = %d\n", s->menu->w);
 	while (i < WIDTH)
 	{
 		j = 0;
@@ -31,7 +30,9 @@ void	display_menu(t_main *s, int i, int j)
 		{
 			coord.y = j++;
 			pery = (double)coord.y / (double)HEIGHT;
-			set_pixel(s->sdl->game,s->menu->tex[(int)(pery * (double)s->menu->h) * s->menu->w + (int)(perx * (double)s->menu->w)], coord);
+			set_pixel(s->sdl->game, s->menu->tex[(int)
+			(pery * (double)s->menu->h) * s->menu->w + (int)
+			(perx * (double)s->menu->w)], coord);
 		}
 		i++;
 	}
@@ -53,7 +54,7 @@ int		handle_menu(t_main *s)
 			if (s->sdl->event.type == SDL_QUIT)
 				return (0);
 			if (s->sdl->event.key.keysym.sym == SDLK_RETURN)
-				break;
+				break ;
 		}
 	}
 	if (s->sdl->musique != NULL)

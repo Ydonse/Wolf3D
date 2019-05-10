@@ -6,95 +6,65 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 16:54:34 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/09 18:26:03 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-void	get_case_color(t_main *s, t_position orig, t_position dest, char type)
+void	draw_square(t_main *s, t_position orig, t_position dest, t_image *wall)
 {
-	if (type == 'm')
+	t_position	coord;
+	int			perx;
+	int			pery;
+	int			pix_tex;
+
+	orig.x = orig.x < 0 ? 0 : orig.x;
+	orig.y = orig.y < 0 ? 0 : orig.y;
+	dest.x = dest.x > WIDTH ? WIDTH : dest.x;
+	dest.y = dest.y > HEIGHT ? HEIGHT : dest.y;
+	coord.x = orig.x;
+	while (coord.x < dest.x)
 	{
-		int i;
-		int j;
-		t_position	coord;
-		int perx;
-		int pery;
-		t_image *wall;
-
-		int		pix_tex;
-
-		orig.x = orig.x < 0 ? 0 : orig.x;
-		orig.y = orig.y < 0 ? 0 : orig.y;
-		dest.x = dest.x > WIDTH ? WIDTH : dest.x;
-		dest.y = dest.y > HEIGHT ? HEIGHT : dest.y;
-		i = orig.x;
-		wall = s->areas[0].wall_n;
-		while (i < dest.x)
+		coord.y = orig.y;
+		perx = (int)(percent(coord.x - orig.x, dest.x - orig.x) * 100);
+		while (coord.y < dest.y)
 		{
-			j = orig.y;
-			coord.x = i;
-			perx = (int)(percent(coord.x - orig.x, dest.x - orig.x) * 100);
-			while (j < dest.y)
-			{
-				coord.y = j++;
-				pery = (int)(percent(coord.y - orig.y, dest.y - orig.y) * 100);
-				pix_tex = (int)(pery * wall->h / 100.0) * wall->w + (int)(perx * wall->w / 100.0);
-				if (pix_tex >= 0 && pix_tex < (wall->h * wall->w))
-					set_pixel(s->sdl->map, wall->tex[pix_tex], coord);
-			}
-			i++;
+			coord.y++;
+			pery = (int)(percent(coord.y - orig.y, dest.y - orig.y) * 100);
+			pix_tex = (int)(pery * wall->h / 100.0) * wall->w
+			+ (int)(perx * wall->w / 100.0);
+			if (pix_tex >= 0 && pix_tex < (wall->h * wall->w))
+				set_pixel(s->sdl->map, wall->tex[pix_tex], coord);
 		}
-	}
-	else if (type == '.')
-	{
-		s->sdl->map->color_tmp = 0xB0B0B0FF;
-		draw_rect(s->sdl, s->sdl->map, orig, dest);
-	}
-	else if (type == 'j')
-	{
-		s->sdl->map->color_tmp = 0xA0A0A0FF;
-		draw_rect(s->sdl, s->sdl->map, orig, dest);
-	}
-	else if (type == 'p')
-	{
-		s->sdl->map->color_tmp = 0xCD7006FF;
-		draw_rect(s->sdl, s->sdl->map, orig, dest);
+		coord.x++;
 	}
 }
-//
-// if (type == 'm')
-// {
-// 	int i;
-// 	int j;
-// 	t_position	coord;
-// 	double perx;
-// 	double pery;
-// 	t_image *wall;
-//
-// 	int		pix_tex;
-//
-// 	orig.x = orig.x < 0 ? 0 : orig.x;
-// 	orig.y = orig.y < 0 ? 0 : orig.y;
-// 	dest.x = dest.x > WIDTH ? WIDTH : dest.x;
-// 	dest.y = dest.y > HEIGHT ? HEIGHT : dest.y;
-// 	i = orig.x;
-// 	wall = s->areas[0].wall_s;
-// 	while (i < dest.x)
-// 	{
-// 		j = orig.y;
-// 		coord.x = i;
-// 		perx = (double)(coord.x - orig.x) / (double)(dest.x - orig.x) * 100.0;
-// 		while (j < dest.y)
-// 		{
-// 			coord.y = j++;
-// 			pery = (double)(coord.y - orig.y) / (double)(dest.y - orig.y) * 100.0;
-// 			pix_tex = (int)(pery * (double)wall->h / 100.0 * (double)wall->w + (perx * (double)wall->w / 100.0));
-// 			if (pix_tex >= 0 && pix_tex < (wall->h * wall->w))
-// 				set_pixel(s->sdl->map, wall->tex[pix_tex], coord);
-// 		}
-// 		i++;
+
+void	get_case_color(t_main *s, t_position orig, t_position dest, t_case pos)
+{
+	if (pos.type == 'm')
+		draw_square(s, orig, dest, s->areas[0].wall_n);
+	else if (pos.type == '.')
+	{
+		s->sdl->map->color_tmp = 0xB0B0B0FF;
+		draw_rect(s->sdl->map, orig, dest);
+	}
+	else if (pos.type == 'j')
+	{
+		s->sdl->map->color_tmp = 0xA0A0A0FF;
+		draw_rect(s->sdl->map, orig, dest);
+	}
+	else if (pos.type == 'p' && pos.block == 1)
+	{
+		draw_square(s, orig, dest, s->door);
+	}
+	else if (pos.type == 'p' && pos.block == 0)
+	{
+		s->sdl->map->color_tmp = 0xB0B0B0FF;
+		draw_rect(s->sdl->map, orig, dest);
+	}
+}
 
 void	draw_black(t_main *s)
 {
@@ -132,10 +102,10 @@ void	draw_black(t_main *s)
 
 void	draw_minimap(t_main *s)
 {
-	t_position orig;
-	t_position dest;
-	int i;
-	int j;
+	t_position	orig;
+	t_position	dest;
+	int			i;
+	int			j;
 
 	i = -1;
 	j = 0;
@@ -147,7 +117,7 @@ void	draw_minimap(t_main *s)
 			orig.y = SPACE * i + s->sdl->y_o;
 			dest.x = orig.x + SPACE;
 			dest.y = orig.y + SPACE;
-			get_case_color(s, orig, dest, s->map[i][j++].type);
+			get_case_color(s, orig, dest, s->map[i][j++]);
 		}
 		j = 0;
 	}

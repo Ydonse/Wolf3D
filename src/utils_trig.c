@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 13:45:53 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/02 16:14:06 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/09 18:21:59 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,5 @@ double	norme(t_dpos player, t_dpos point)
 
 double	percent(double value, double total)
 {
-	double result;
-
-	result = value / total;
-
-	return (result);
+	return (value / total);
 }

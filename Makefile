@@ -6,7 +6,7 @@
 #    By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/23 10:03:18 by ydonse            #+#    #+#              #
-#    Updated: 2019/05/09 14:11:44 by malluin          ###   ########.fr        #
+#    Updated: 2019/05/10 11:05:01 by malluin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ CPPFLAGS = -I libft/includes/ -I /usr/local/include/ -MMD
 LDFLAGS = -L libft/ -lft  -L /usr/local/include/ -lpthread
 LDLIBS = -framework OpenGL -framework AppKit
 
-CC = gcc -O2 -fsanitize=address
+CC = gcc -O2 #-fsanitize=address
 
 CFLAGS = -g -Wall -Wextra #-Werror
 
