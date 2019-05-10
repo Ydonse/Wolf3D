@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/10 12:25:41 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/10 13:26:44 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ t_main		*initialize_main(void)
 
 	if (!(s = (t_main *)malloc(sizeof(t_main))))
 		exit(-1);
-	if (!(s->sdl = (t_sdl *)malloc(sizeof(t_sdl))))
-		exit(-1);
+	pre_initialize_sdl(s);
 	s->width = 0;
 	s->height = 0;
 	s->map = NULL;

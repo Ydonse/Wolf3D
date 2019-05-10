@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 13:25:49 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/10 12:36:29 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/10 13:28:57 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	draw_wall_slice(t_main *s, t_ray ray, double dist, int x)
 	sl.ewall = s->viewline + projected_h;
 	sl.pix.x = x;
 	draw_skybox(s, ray, sl);
-	sl.pix.y = sl.bwall;
+	sl.pix.y = sl.bwall < 0 ? 0 : sl.bwall;
 	sl.tex = choose_texture(s, ray);
 	draw_tex_slice(s, ray, sl, dist);
 	if (sl.ewall > HEIGHT - s->interface->h)
