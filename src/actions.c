@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:43:56 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 16:14:25 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/10 11:18:26 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	move_player(t_main *s, const Uint8 *keys, char sprint)
 {
 	t_dpos	target;
 	double	speed;
+	double	tmp;
 
 	speed = s->move_speed + sprint * s->move_speed * 0.5;
 	if ((keys[UP] || keys[DOWN]) && (keys[LEFT] || keys[RIGHT]))
@@ -50,7 +51,15 @@ void	move_player(t_main *s, const Uint8 *keys, char sprint)
 	target = get_direction(s, keys, speed, target);
 	if (check_collisions(s, target) == 0)
 	{
-		return ;
+		tmp = target.x;
+		target.x = s->player_pos.x;
+		if (check_collisions(s, target) == 0)
+		{
+			target.x = tmp;
+			target.y = s->player_pos.y;
+			if (check_collisions(s, target) == 0)
+				return ;
+		}
 	}
 	target.x = target.x < 0 ? 0 : target.x;
 	target.x = target.x > s->width ? s->width : target.x;
