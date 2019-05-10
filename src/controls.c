@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/10 12:29:33 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/10 14:40:13 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	event_handler(t_main *s)
 				game = 0;
 		}
 		handle_keys(s);
-		printf("FPS: %f\n", 1.0 / ((clock() - fps) / 1000000.0));
+		// printf("FPS: %f\n", 1.0 / ((clock() - fps) / 1000000.0));
 		fps = clock();
 	}
 }

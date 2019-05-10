@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/10 11:40:36 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/10 17:48:26 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	draw_interface(t_main *s)
 {
 	t_position	coord;
 	int			j;
-	t_position	orig;
+	t_dpos orig;
 	double		perx;
 	double		pery;
 
@@ -53,7 +53,7 @@ void	draw_weapon(t_main *s, double perx, short orig_x, short orig_y)
 {
 	t_position	coord;
 	double		pery;
-	t_position	dest;
+	t_dpos dest;
 	int			pix_tex;
 
 	dest.x = WIDTH / 2 + (s->weapon.image[s->weapon.current]->w / 2);
@@ -78,7 +78,7 @@ void	draw_weapon(t_main *s, double perx, short orig_x, short orig_y)
 	}
 }
 
-void	draw_rect(t_texture *text, t_position orig, t_position dest)
+void	draw_rect(t_texture *text, t_dpos orig, t_dpos dest)
 {
 	int			i;
 	int			j;
@@ -102,15 +102,17 @@ void	draw_rect(t_texture *text, t_position orig, t_position dest)
 	}
 }
 
-void	draw_player(t_main *s, t_sdl *sdl)
+void	draw_player(t_main *s, t_sdl *sdl, double bloc_x, double bloc_y)
 {
-	t_position	orig;
-	t_position	dest;
+	t_dpos orig;
+	t_dpos dest;
 
-	orig.x = (s->player_pos.x - PLAYER_SIZE / 2) * SPACE + sdl->x_o;
-	dest.x = (s->player_pos.x + PLAYER_SIZE / 2) * SPACE + sdl->x_o;
-	orig.y = (s->player_pos.y - PLAYER_SIZE / 2) * SPACE + sdl->y_o;
-	dest.y = (s->player_pos.y + PLAYER_SIZE / 2) * SPACE + sdl->y_o;
+	orig.x = (bloc_x - PLAYER_SIZE / 2) * SPACE;
+	dest.x = (bloc_x + PLAYER_SIZE / 2) * SPACE;
+	orig.y = (bloc_y - PLAYER_SIZE / 2) * SPACE;
+	dest.y = (bloc_y + PLAYER_SIZE / 2) * SPACE;
+	printf("ori x = %f, ori y = %f, position player x = %f\n", orig.x, orig.y, s->player_pos.x);
+	printf("bloc x = %f, bloc y = %f, position player x = %f\n", bloc_x, bloc_y, s->player_pos.x);
 	sdl->map->color_tmp = 0xFF0000FF;
 	draw_rect(sdl->map, orig, dest);
 }
