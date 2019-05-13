@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:58:12 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/09 16:29:27 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/10 16:03:07 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	draw_debug_rect(t_sdl *sdl, t_texture *text, Uint32 color, t_dpos orig)
 	t_position	coord;
 	t_dpos		dest;
 
-	orig.x = sdl->x_o + orig.x * SPACE;
-	orig.y = sdl->y_o + orig.y * SPACE;
+	orig.x = orig.x * SPACE;
+	orig.y = orig.y * SPACE;
 	orig.x -= 3;
 	orig.y -= 3;
 	dest.x = orig.x + 6;

@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/13 11:55:28 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/13 14:12:23 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # define WIDTH 800
 # define HEIGHT 600
-# define SPACE 45
+# define SPACE 60
 # define MIN_WIDTH 3
 # define MIN_HEIGHT 3
 
@@ -178,9 +178,9 @@ void				free_program(t_main *s);
 int					parse_map(t_main *s, char *file);
 int					check_next_case(t_main *s, int x, int y);
 void				draw_minimap(t_main *s);
-void				draw_player(t_main *s, t_sdl *sdl);
-void				draw_rect(t_texture *text, t_position orig,
-					t_position dest);
+void				draw_player(t_main *s, t_sdl *sdl, double bloc_x, double bloc_y);
+void				draw_rect(t_texture *text, t_dpos orig,
+					t_dpos dest);
 void				draw_interface (t_main *s);
 void				draw_weapon (t_main *s, double perx,
 					short orig_x, short orig_y);

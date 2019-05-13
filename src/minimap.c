@@ -6,23 +6,19 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/10 13:47:37 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/13 09:14:59 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-void	draw_square(t_main *s, t_position orig, t_position dest, t_image *wall)
+void	draw_square(t_main *s, t_dpos orig, t_dpos dest, t_image *wall)
 {
 	t_position	coord;
 	int			perx;
 	int			pery;
 	int			pix_tex;
 
-	orig.x = orig.x < 0 ? 0 : orig.x;
-	orig.y = orig.y < 0 ? 0 : orig.y;
-	dest.x = dest.x > WIDTH ? WIDTH : dest.x;
-	dest.y = dest.y > HEIGHT ? HEIGHT : dest.y;
 	coord.x = orig.x;
 	while (coord.x < dest.x)
 	{
@@ -41,7 +37,7 @@ void	draw_square(t_main *s, t_position orig, t_position dest, t_image *wall)
 	}
 }
 
-void	get_case_color(t_main *s, t_position orig, t_position dest, t_case pos)
+void	get_case_color(t_main *s, t_dpos orig, t_dpos dest, t_case pos)
 {
 	if (pos.type == 'm')
 		draw_square(s, orig, dest, s->areas[0].wall_n);
@@ -102,25 +98,69 @@ void	draw_black(t_main *s)
 
 void	draw_minimap(t_main *s)
 {
-	t_position	orig;
-	t_position	dest;
+	t_dpos orig;
+	t_dpos dest;
 	int			i;
 	int			j;
+	double			debut_x;
+	double			debut_y;
+	int			bloc_x;
+	int			bloc_y;
+	double		per_pos_x;
+	double		per_pos_y;
 
-	i = -1;
-	while (++i < s->height)
+	debut_x = (WIDTH / SPACE) / 2;
+	debut_y = (HEIGHT / SPACE) / 2;
+
+	bloc_y = s->player_pos.y < debut_y ? 0 : (int)(s->player_pos.y - debut_y);
+	bloc_x = s->player_pos.x < debut_x ? 0 : (int)(s->player_pos.x - debut_x);
+	per_pos_x =  s->player_pos.x - (int)s->player_pos.x;
+	per_pos_y =  s->player_pos.y - (int)s->player_pos.y;
+	i = 0;
+	j = 0;
+	// printf("debut_x = %d, debut_y = %d, position player y = %f\n", debut_x, debut_y, s->player_pos.y);
+	while (bloc_y < s->height)
 	{
-		j = 0;
-		while (j < s->width)
+		while (bloc_x < s->width)
 		{
-			orig.x = SPACE * j + s->sdl->x_o;
-			orig.y = SPACE * i + s->sdl->y_o;
-			dest.x = orig.x + SPACE;
-			dest.y = orig.y + SPACE;
-			get_case_color(s, orig, dest, s->map[i][j++]);
+			if (bloc_x != 0 && j != 0)
+			{
+				orig.x = SPACE * j - (per_pos_x * SPACE);
+				dest.x = orig.x + SPACE;
+			}
+			else
+			{
+				// orig.x = SPACE * j;
+				orig.x = j - SPACE + ((1 - per_pos_x) * SPACE);
+				dest.x = (orig.x + SPACE);
+				printf("orig.x = %f, dest.x = %f\n", orig.x, dest.x);
+			}
+
+			if (bloc_y != 0 && i != 0)
+			{
+				orig.y = SPACE * i - (per_pos_y * SPACE);
+				dest.y = orig.y + SPACE;
+			}
+			else
+			{
+				// orig.y = SPACE * i;
+				orig.y = i - SPACE + ((1 - per_pos_y) * SPACE);
+				dest.y = (orig.y + SPACE);
+			}
+
+			// orig.y = bloc_y == 0 ? SPACE * i : SPACE * i + per_pos_y;
+
+
+
+			get_case_color(s, orig, dest, s->map[bloc_y][bloc_x++]);
+			j++;
 		}
+		j = 0;
+		bloc_x = s->player_pos.x < debut_x ? 0 : (int)(s->player_pos.x - debut_x);
+		bloc_y++;
+		i++;
 	}
-	draw_player(s, s->sdl);
+	draw_player(s, s->sdl, s->player_pos.x < debut_x ? s->player_pos.x : s->player_pos.x - (s->player_pos.x - debut_x), s->player_pos.y < debut_y ? s->player_pos.y : s->player_pos.y - (s->player_pos.y - debut_y));
 	raycast_visualization(s);
 	draw_black(s);
 	update_image(s, s->sdl->map);
