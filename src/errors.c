@@ -6,54 +6,11 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:50:10 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/10 13:55:44 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/13 13:11:02 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-
-void	free_images(t_main *s, int i)
-{
-	while (i < MAX_AREA)
-	{
-		ft_memdel(((void **)&s->areas[i].wall_n));
-		ft_memdel(((void **)&s->areas[i].wall_s));
-		ft_memdel(((void **)&s->areas[i].wall_e));
-		ft_memdel(((void **)&s->areas[i].wall_w));
-		i++;
-	}
-	ft_memdel(((void **)&s->skybox));
-	ft_memdel(((void **)&s->weapon.image[0]));
-	ft_memdel(((void **)&s->weapon.image[1]));
-	ft_memdel(((void **)&s->weapon.image[2]));
-	ft_memdel(((void **)&s->door));
-	ft_memdel(((void **)&s->interface));
-}
-
-void	free_program(t_main *s)
-{
-	int i;
-
-	i = 0;
-	ft_strdel(&(s->parsing_line));
-	if (s->map != NULL)
-	{
-		while (i < s->height)
-			ft_memdel((void **)&s->map[i++]);
-		ft_memdel((void **)&s->map);
-	}
-	if (s->sdl->musique != NULL)
-	{
-		Mix_HaltMusic();
-		Mix_FreeMusic(s->sdl->musique);
-		Mix_CloseAudio();
-	}
-	free_images(s, 0);
-	ft_memdel((void **)&s->sdl->pwindow);
-	ft_memdel((void **)&s->sdl->prenderer);
-	ft_memdel((void **)&s->sdl);
-	ft_memdel((void **)&s);
-}
 
 void	display_error(int error_nb)
 {

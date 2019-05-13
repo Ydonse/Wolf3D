@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/10 13:57:53 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/13 11:55:28 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,8 @@ typedef struct		s_sdl {
 	SDL_Window		*pwindow;
 	SDL_Renderer	*prenderer;
 	SDL_Event		event;
-	SDL_Surface		*minimap;
 	t_texture		*map;
 	t_texture		*game;
-	t_texture		*ui;
 	int				x_o;
 	int				y_o;
 	t_sounds		sounds;
@@ -167,6 +165,7 @@ typedef struct		s_main {
 	int				proj_distance;
 	int				viewline;
 	t_image			*door;
+	t_image			*win;
 	t_image			*interface;
 	t_image			*menu;
 	t_image			*skybox;

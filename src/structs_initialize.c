@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/10 13:26:44 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/13 14:08:51 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int			check_images(t_main *s)
 	}
 	if (!s->weapon.image[0] || !s->weapon.image[1] || !s->weapon.image[2])
 		return (0);
-	if (!s->door || !s->interface || !s->skybox)
+	if (!s->door || !s->interface || !s->skybox || !s->win || !s->menu)
 		return (0);
 	return (1);
 }
@@ -54,6 +54,7 @@ t_main		*initialize_main(void)
 	s->skybox = NULL;
 	s->door = NULL;
 	s->interface = NULL;
+	s->win = NULL;
 	return (s);
 }
 
@@ -96,6 +97,8 @@ void		load_images(t_main *s)
 	s->skybox = load_tga("images/skybox_stars.tga", 0, 0, 0);
 	s->interface = load_tga("images/interface.tga", 0, 0, 0);
 	s->door = load_tga("images/door.tga", 0, 0, 0);
+	s->win = load_tga("images/win.tga", 0, 0, 0);
+	s->menu = load_tga("images/menu.tga", 0, 0, 0);
 	s->weapon.current = 0;
 }
 
@@ -109,20 +112,18 @@ void		initialize_sdl(t_main *s, t_sdl *sdl)
 	if (!(sdl->prenderer = SDL_CreateRenderer(sdl->pwindow, -1, 0)))
 		ft_error_sdl("Échec de chargement du renderer");
 	load_images(s);
-	if (!check_images(s))
+	if (check_images(s) == 0)
 		exit(-1);
 	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))
 		exit(-1);
 	if (!(sdl->game = initialize_texture(sdl, WIDTH, HEIGHT)))
 		exit(-1);
-	if (!(sdl->ui = initialize_texture(sdl, s->interface->w, s->interface->h)))
-		exit(-1);
-	ft_memcpy(sdl->ui->content, s->interface->tex, s->interface->h
-	* s->interface->w);
-	if (!(s->sdl->minimap = (SDL_Surface *)malloc(sizeof(SDL_Surface))))
-		exit(-1);
 	sdl->x_o = WIDTH / 2 - ((SPACE * s->width) / 2);
 	sdl->y_o = HEIGHT / 2 - ((SPACE * s->height) / 2);
 	sdl->musique = NULL;
 	create_sounds(sdl);
+	if (s->interface->h > HEIGHT * 0.3)
+		s->interface->h = HEIGHT * 0.3;
+	if (s->interface->h > WIDTH)
+		s->interface->w = WIDTH;
 }

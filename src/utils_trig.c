@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 13:45:53 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/10 13:46:32 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/13 11:55:26 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ void	pre_initialize_sdl(t_main *s)
 		exit(-1);
 	s->sdl->pwindow = NULL;
 	s->sdl->prenderer = NULL;
-	s->sdl->minimap = NULL;
 	s->sdl->map = NULL;
 	s->sdl->game = NULL;
-	s->sdl->ui = NULL;
 	s->sdl->musique = NULL;
 }
 

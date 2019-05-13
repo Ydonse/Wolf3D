@@ -6,9 +6,9 @@ m,0 m,0 m,0 m,0 m,0 m,0 m,0 m,0
 m mur
 p porte
 . espace
-t tonneau
+t victoire
 j joueur
 
 ,
 
-0-0 zone number
+0-3 zone number

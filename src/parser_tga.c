@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 16:40:18 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/10 12:26:47 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/13 14:10:38 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_bit(char c)
 	write(1, "\n", 1);
 }
 
-void	get_info_header(t_image *image, unsigned char *str)
+int		get_info_header(t_image *image, unsigned char *str)
 {
 	image->bits_alpha = str[17] << 4 >> 4;
 	image->bits_color = str[16];
@@ -49,10 +49,19 @@ void	get_info_header(t_image *image, unsigned char *str)
 	image->w = (image->w << 8) + str[12];
 	image->h = str[15];
 	image->h = (image->h << 8) + str[14];
+	if (image->h <= 1 || image->w <= 1 || image->h >= 4096 || image->w >= 4096)
+	{
+		ft_memdel((void **)&image);
+		return (0);
+	}
 	if (!(image->tex = (Uint32 *)malloc(sizeof(Uint32)
-	* (image->w * image->bits_color * image->h))))
-		exit(-1);
+	* (image->w * image->h + 1))))
+	{
+		ft_memdel((void **)&image);
+		return (0);
+	}
 	ft_bzero(image->tex, sizeof(image->tex));
+	return (1);
 }
 
 t_image	*load_tga(char *path, int i, int idx, int ret)
@@ -69,16 +78,16 @@ t_image	*load_tga(char *path, int i, int idx, int ret)
 		ft_memdel((void **)&image);
 		return (0);
 	}
-	get_info_header(image, str);
+	if (get_info_header(image, str) == 0)
+		return (0);
 	while ((ret = read(fd, str, PARSE_BUFF_SIZE)) != 0)
 	{
 		i = 0;
-		while (i < ret)
+		while (i < ret && idx < image->h * image->w)
 		{
-			image->tex[idx] = ((str[i]) << 8) + (str[i + 1] << 16)
+			image->tex[idx++] = ((str[i]) << 8) + (str[i + 1] << 16)
 			+ (str[i + 2] << 24);
 			i += 4;
-			idx += 1;
 		}
 	}
 	return (image);
