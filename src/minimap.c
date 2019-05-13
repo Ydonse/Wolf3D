@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/10 18:13:42 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/13 09:14:59 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,16 @@ void	draw_minimap(t_main *s)
 	double			debut_y;
 	int			bloc_x;
 	int			bloc_y;
+	double		per_pos_x;
+	double		per_pos_y;
 
 	debut_x = (WIDTH / SPACE) / 2;
 	debut_y = (HEIGHT / SPACE) / 2;
 
 	bloc_y = s->player_pos.y < debut_y ? 0 : (int)(s->player_pos.y - debut_y);
 	bloc_x = s->player_pos.x < debut_x ? 0 : (int)(s->player_pos.x - debut_x);
+	per_pos_x =  s->player_pos.x - (int)s->player_pos.x;
+	per_pos_y =  s->player_pos.y - (int)s->player_pos.y;
 	i = 0;
 	j = 0;
 	// printf("debut_x = %d, debut_y = %d, position player y = %f\n", debut_x, debut_y, s->player_pos.y);
@@ -119,10 +123,34 @@ void	draw_minimap(t_main *s)
 	{
 		while (bloc_x < s->width)
 		{
-			orig.x = SPACE * j;
-			orig.y = SPACE * i;
-			dest.x = orig.x + SPACE;
-			dest.y = orig.y + SPACE;
+			if (bloc_x != 0 && j != 0)
+			{
+				orig.x = SPACE * j - (per_pos_x * SPACE);
+				dest.x = orig.x + SPACE;
+			}
+			else
+			{
+				// orig.x = SPACE * j;
+				orig.x = j - SPACE + ((1 - per_pos_x) * SPACE);
+				dest.x = (orig.x + SPACE);
+				printf("orig.x = %f, dest.x = %f\n", orig.x, dest.x);
+			}
+
+			if (bloc_y != 0 && i != 0)
+			{
+				orig.y = SPACE * i - (per_pos_y * SPACE);
+				dest.y = orig.y + SPACE;
+			}
+			else
+			{
+				// orig.y = SPACE * i;
+				orig.y = i - SPACE + ((1 - per_pos_y) * SPACE);
+				dest.y = (orig.y + SPACE);
+			}
+
+			// orig.y = bloc_y == 0 ? SPACE * i : SPACE * i + per_pos_y;
+
+
 
 			get_case_color(s, orig, dest, s->map[bloc_y][bloc_x++]);
 			j++;
