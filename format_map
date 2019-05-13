@@ -1,14 +1,18 @@
+Map must be between 3x3 and 50x50 and surrounded by walls.
+
 m,0 m,0 m,0 m,0 m,0 m,0 m,0 m,0
 m,0 .,0 .,0 .,0 m,0 m,0 .,0 m,0
 m,0 .,0 .,0 .,0 .,0 .,0 .,0 m,0
 m,0 m,0 m,0 m,0 m,0 m,0 m,0 m,0
 
-m mur
-p porte
-. espace
-t victoire
-j joueur
+Syntax for each case:
+type,zone
 
-,
-
-0-3 zone number
+Legend:
+types:
+-m mur
+-p porte
+-. espace
+-t victoire
+-j joueur
+0-3: zone number

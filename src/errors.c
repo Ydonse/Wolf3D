@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:50:10 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/13 13:11:02 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/13 15:16:40 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	display_error(int error_nb)
 	if (error_nb == FILE_ERROR)
 		ft_putstr("Error : The file cannot be opened\n");
 	else if (error_nb == SIZE_ERROR)
-		ft_putstr("Error : Map too small\n");
+		ft_putstr("Error : Map of incorrect size (Must be 3x3 to 50x50)\n");
 	else if (error_nb == SYNTAX_ERROR)
 		ft_putstr("Error : Syntax error\n");
 	else if (error_nb == MALLOC_ERROR)

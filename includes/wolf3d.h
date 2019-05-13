@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/13 14:12:23 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/13 15:05:41 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ t_ray				get_raycast_dist_h(t_main *s, t_ray ray, double r_angle,
 int					ft_min_one(int a);
 
 void				set_pixel_debug(t_sdl *sdl, t_dpos coord);
-void				draw_debug_rect(t_sdl *sdl, t_texture *text,
+void				draw_debug_rect(t_texture *text,
 					Uint32 color, t_dpos orig);
 void				draw_wall_slice(t_main *s, t_ray ray, double dist, int x);
 
