@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/13 15:05:41 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/14 11:46:25 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ int					parse_map(t_main *s, char *file);
 int					check_next_case(t_main *s, int x, int y);
 void				draw_minimap(t_main *s);
 void				draw_player(t_main *s, t_sdl *sdl, double bloc_x, double bloc_y);
+
 void				draw_rect(t_texture *text, t_dpos orig,
 					t_dpos dest);
 void				draw_interface (t_main *s);
