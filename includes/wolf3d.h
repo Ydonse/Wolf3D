@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/14 11:46:25 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/14 18:59:16 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define SPACE 60
 # define MIN_WIDTH 3
 # define MIN_HEIGHT 3
+# define HALF_X (WIDTH / SPACE) / 2
+# define HALF_Y (HEIGHT / SPACE) / 2
 
 # define FILE_ERROR 1
 # define SIZE_ERROR 2
@@ -94,8 +96,17 @@ typedef struct		s_ray {
 	int				zone;
 	short			res;
 	double			angle;
-
 }					t_ray;
+
+typedef struct		s_minimap {
+	t_dpos			orig;
+	t_dpos			dest;
+	int				bloc_x;
+	int				bloc_y;
+	int				bloc_y_cp;
+	double			per_pos_x;
+	double			per_pos_y;
+}					t_minimap;
 
 typedef struct		s_case {
 	char			type;
@@ -171,20 +182,26 @@ typedef struct		s_main {
 	t_image			*skybox;
 	t_anim			weapon;
 	t_area			areas[MAX_AREA];
+	t_minimap		min;
 }					t_main;
 
 void				handle_error(t_main *s, int error_nb);
 void				free_program(t_main *s);
 int					parse_map(t_main *s, char *file);
 int					check_next_case(t_main *s, int x, int y);
-void				draw_minimap(t_main *s);
-void				draw_player(t_main *s, t_sdl *sdl, double bloc_x, double bloc_y);
-
+void				draw_minimap(t_main *s, int i, int j);
+void				draw_player(t_main *s, t_sdl *sdl, double bloc_x,
+					double bloc_y);
 void				draw_rect(t_texture *text, t_dpos orig,
 					t_dpos dest);
 void				draw_interface (t_main *s);
 void				draw_weapon (t_main *s, double perx,
 					short orig_x, short orig_y);
+void				draw_black(t_main *s);
+void				draw_square(t_main *s, t_dpos orig, t_dpos dest,
+					t_image *wall);
+void				get_case_color(t_main *s, t_dpos orig, t_dpos dest,
+					t_case pos);
 
 void				set_pixel(t_texture *text, Uint32 color, t_position coord);
 void				update_image(t_main *s, t_texture *texture);

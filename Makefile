@@ -6,7 +6,7 @@
 #    By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/23 10:03:18 by ydonse            #+#    #+#              #
-#    Updated: 2019/05/14 15:21:39 by ydonse           ###   ########.fr        #
+#    Updated: 2019/05/14 18:55:09 by ydonse           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC_NAME =	main.c \
 			errors.c \
 			walls_checking.c \
 			minimap.c \
+			minimap_2.c \
 			debug.c \
 			structs_initialize.c \
 			actions.c \

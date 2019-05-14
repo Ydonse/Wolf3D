@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/14 11:46:11 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/14 18:58:23 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ void	draw_player(t_main *s, t_sdl *sdl, double bloc_x, double bloc_y)
 	dest.x = (bloc_x + PLAYER_SIZE / 2) * SPACE;
 	orig.y = (bloc_y - PLAYER_SIZE / 2) * SPACE;
 	dest.y = (bloc_y + PLAYER_SIZE / 2) * SPACE;
-	// printf("ori x = %f, ori y = %f, position player x = %f\n", orig.x, orig.y, s->player_pos.x);
-	// printf("bloc x = %f, bloc y = %f, position player x = %f\n", bloc_x, bloc_y, s->player_pos.x);
 	sdl->map->color_tmp = 0xFF0000FF;
 	draw_rect(sdl->map, orig, dest);
 }

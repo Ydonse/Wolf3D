@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/13 14:12:30 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/14 18:24:46 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	handle_keys(t_main *s)
 	if (s->sdl->event.type == SDL_MOUSEMOTION)
 		turn_camera(s, keys, 1);
 	if (s->active_map)
-		draw_minimap(s);
+		draw_minimap(s, 0, 0);
 	else
 	{
 		raycast_visualization(s);
