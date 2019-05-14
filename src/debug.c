@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:58:12 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/10 16:03:07 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/13 15:05:20 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	set_pixel_debug(t_sdl *sdl, t_dpos coord)
 	}
 }
 
-void	draw_debug_rect(t_sdl *sdl, t_texture *text, Uint32 color, t_dpos orig)
+void	draw_debug_rect(t_texture *text, Uint32 color, t_dpos orig)
 {
 	int			i;
 	int			j;

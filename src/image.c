@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/13 13:44:05 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/14 11:24:24 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,26 @@ void	set_pixel(t_texture *text, Uint32 color, t_position coord)
 void	draw_interface(t_main *s)
 {
 	t_position	coord;
-	int			j;
-	t_dpos orig;
+	t_position	orig;
 	double		perx;
 	double		pery;
+	int			px;
 
 	orig.x = 0;
-	orig.y = HEIGHT - s->interface->h;
-	coord.y = 0;
+	orig.y = HEIGHT - s->interface->h < HEIGHT * 0.8 ? HEIGHT * 0.8
+		: HEIGHT - s->interface->h;
 	coord.x = 0;
-	j = 0;
 	while (coord.x < WIDTH)
 	{
-		j = orig.y;
+		coord.y = orig.y - 1;
 		perx = (double)coord.x / (double)WIDTH;
-		while (j < HEIGHT)
+		while (++coord.y < HEIGHT)
 		{
-			coord.y = j++;
-			pery = (percent(coord.y - orig.y, HEIGHT - orig.y));
-			set_pixel(s->sdl->game, s->interface->tex
-			[(int)(pery * (double)s->interface->h * s->interface->w
-			+ (perx * (double)s->interface->w))], coord);
+			pery = percent(coord.y - orig.y, HEIGHT - orig.y);
+			px = pery * (double)s->interface->h * s->interface->w
+			+ (perx * (double)s->interface->w);
+			if (px >= 0 && px < s->interface->w * s->interface->h)
+				set_pixel(s->sdl->game, s->interface->tex[px], coord);
 		}
 		coord.x++;
 	}
@@ -52,27 +51,26 @@ void	draw_interface(t_main *s)
 void	draw_weapon(t_main *s, double perx, short orig_x, short orig_y)
 {
 	t_position	coord;
+	t_position	dest;
 	double		pery;
-	t_dpos dest;
 	int			pix_tex;
+	t_image		*wp;
 
-	dest.x = WIDTH / 2 + (s->weapon.image[s->weapon.current]->w / 2);
+	wp = s->weapon.image[s->weapon.current];
+	dest.x = WIDTH / 2 + (wp->w / 2);
 	dest.y = HEIGHT - s->interface->h;
 	coord.x = orig_x;
 	while (coord.x < dest.x)
 	{
 		coord.y = orig_y;
-		perx = (int)(percent(coord.x - orig_x, dest.x - orig_x) * 100);
+		perx = percent(coord.x - orig_x, dest.x - orig_x);
 		while (coord.y < dest.y)
 		{
 			coord.y++;
-			pery = (int)(percent(coord.y - orig_y, dest.y - orig_y) * 100);
-			pix_tex = (int)(pery * s->weapon.image[s->weapon.current]->h
-			/ 100.0) * s->weapon.image[s->weapon.current]->w
-			+ (int)(perx * s->weapon.image[s->weapon.current]->w / 100.0);
-			if (s->weapon.image[s->weapon.current]->tex[pix_tex] != 0x98008800)
-				set_pixel(s->sdl->game, s->weapon.image
-				[s->weapon.current]->tex[pix_tex], coord);
+			pery = percent(coord.y - orig_y, dest.y - orig_y);
+			pix_tex = (int)(pery * wp->h) * wp->w + (int)(perx * wp->w);
+			if (pix_tex <= wp->h * wp->w && wp->tex[pix_tex] != 0x98008800)
+				set_pixel(s->sdl->game, wp->tex[pix_tex], coord);
 		}
 		coord.x++;
 	}

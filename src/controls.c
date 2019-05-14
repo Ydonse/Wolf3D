@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/10 14:40:13 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/13 14:12:30 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,35 @@ int		keyboard_controls(t_main *s, int key)
 		s->active_map = !s->active_map;
 		draw_interface(s);
 	}
+	return (1);
+}
+
+int		check_win(t_main *s)
+{
+	t_position	coord;
+	double		px;
+	double		py;
+	int			pl;
+
+	if (!(s->player_pos.x >= 0 && s->player_pos.x <= s->width - 1.0
+		&& s->player_pos.y >= 0 && s->player_pos.y <= s->height - 1.0))
+		return (0);
+	if (s->map[(int)s->player_pos.y][(int)s->player_pos.x].type != 't')
+		return (0);
+	coord.x = -1;
+	while (++(coord.x) < WIDTH)
+	{
+		coord.y = 0;
+		px = (double)coord.x / (double)WIDTH;
+		while (coord.y < HEIGHT)
+		{
+			py = (percent(coord.y++, HEIGHT));
+			pl = (int)(py * s->win->h) * s->win->w + (int)(px * s->win->w);
+			if (pl >= 0 && pl < s->win->h * s->win->w)
+				set_pixel(s->sdl->game, s->win->tex[pl], coord);
+		}
+	}
+	update_image(s, s->sdl->game);
 	return (1);
 }
 
@@ -49,11 +78,9 @@ void	handle_keys(t_main *s)
 void	event_handler(t_main *s)
 {
 	int			game;
-	time_t		fps;
 
 	game = 1;
 	SDL_SetRelativeMouseMode(SDL_TRUE);
-	fps = clock();
 	draw_interface(s);
 	while (game)
 	{
@@ -69,7 +96,10 @@ void	event_handler(t_main *s)
 				game = 0;
 		}
 		handle_keys(s);
-		// printf("FPS: %f\n", 1.0 / ((clock() - fps) / 1000000.0));
-		fps = clock();
+		if (check_win(s))
+		{
+			sleep(3);
+			break ;
+		}
 	}
 }

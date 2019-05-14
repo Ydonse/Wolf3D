@@ -6,22 +6,16 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 17:58:15 by ydonse            #+#    #+#             */
-/*   Updated: 2019/04/23 14:00:36 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/13 15:03:06 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LIBFT_H
 # define FT_LIBFT_H
-# define BUFF_SIZE 30
 
 # include <string.h>
-
-typedef struct		s_gnlist
-{
-	char			*save;
-	int				fd;
-	struct s_gnlist	*next;
-}					t_gnlist;
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct		s_list
 {

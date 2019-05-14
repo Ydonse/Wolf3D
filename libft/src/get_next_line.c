@@ -3,117 +3,124 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmerding <fmerding@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 18:30:35 by fmerding          #+#    #+#             */
-/*   Updated: 2018/12/20 13:40:55 by fmerding         ###   ########.fr       */
+/*   Created: 2018/11/12 17:55:59 by malluin           #+#    #+#             */
+/*   Updated: 2019/03/20 14:56:55 by fnussbau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
 #include "libft.h"
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
 
-t_gnlist	*ft_gnlistnew(int fd)
+int		findeol(char *buff, int sens)
 {
-	t_gnlist	*new;
-	int			i;
+	int j;
 
-	if (!(new = (t_gnlist *)malloc(sizeof(t_gnlist))))
-		return (NULL);
-	if (!(new->save = ft_strnew(BUFF_SIZE)))
-		return (NULL);
-	new->fd = fd;
-	new->next = NULL;
-	i = read(fd, new->save, BUFF_SIZE);
-	if (i == -1)
-		return (NULL);
-	return (new);
-}
-
-void		ft_save(t_gnlist *node, char **line, char *needle)
-{
-	char	*before;
-	char	*after;
-	char	*tmp;
-
-	before = ft_strsub(node->save, 0, needle - node->save);
-	after = ft_strsub(node->save, (needle - node->save) + 1,
-	ft_strlen(node->save));
-	tmp = *line;
-	*line = ft_strjoin(*line, before);
-	ft_memdel((void **)&(node->save));
-	node->save = after;
-	ft_memdel((void **)&tmp);
-	ft_memdel((void **)&before);
-}
-
-int			ft_read(int fd, t_gnlist *node, char **line)
-{
-	char	*needle;
-	char	*tmp;
-	int		i;
-	int		len;
-
-	i = 1;
-	while (i > 0)
+	j = 0;
+	if (sens == 0)
 	{
-		if ((needle = ft_strchr(node->save, '\n')))
-		{
-			ft_save(node, line, needle);
-			return (1);
-		}
-		tmp = *line;
-		*line = ft_strjoin(*line, node->save);
-		ft_memdel((void **)&tmp);
-		len = ft_strlen(node->save);
-		ft_memdel((void **)&(node->save));
-		if (!(node->save = ft_strnew(BUFF_SIZE)))
-			return (-1);
-		i = read(fd, node->save, BUFF_SIZE);
-		if (!len && !i)
-			return (0);
+		while (buff[j] == '\0' && j < BUFF_SIZE_GNL)
+			j++;
+		return (j);
 	}
-	return (1);
-}
-
-t_gnlist	*ft_findfd(t_gnlist *save, int fd)
-{
-	t_gnlist	*node;
-
-	while (save)
+	else if (sens == 1)
 	{
-		if (save->fd == fd)
-			return (save);
-		if (!(save->next))
-			break ;
-		save = save->next;
+		while (j < BUFF_SIZE_GNL)
+			if (buff[j++] == '\n')
+				return (j - 1);
+		return (BUFF_SIZE_GNL);
 	}
-	if (!(node = ft_gnlistnew(fd)))
-		return (NULL);
-	save->next = node;
-	return (node);
-}
-
-int			get_next_line(const int fd, char **line)
-{
-	int					i;
-	static t_gnlist		*save;
-	t_gnlist			*node;
-
-	if (!line || fd < 0 || BUFF_SIZE < 1)
-		return (-1);
-	if (!save)
-		if (!(save = ft_gnlistnew(fd)))
-			return (-1);
-	*line = ft_strdup("");
-	if (!(node = ft_findfd(save, fd)))
-		return (-1);
-	if ((i = ft_read(fd, node, line) > 0))
-		return (1);
-	if (i == 0)
+	else if (sens == 2)
+	{
+		while (j < BUFF_SIZE_GNL)
+			if (buff[j++] != '\0')
+				return (1);
 		return (0);
+	}
 	return (-1);
+}
+
+char	*allocate(char *buff, char *tmp2, int b, int e)
+{
+	char	*tmp;
+
+	if (!(tmp = (char *)malloc(sizeof(char) * (e - b + 1 + ft_strlen(tmp2)))))
+		return (0);
+	ft_memmove(tmp, tmp2, ft_strlen(tmp2));
+	ft_memmove((tmp + ft_strlen(tmp2)), buff + b, (e - b));
+	(tmp + ft_strlen(tmp2))[e - b] = '\0';
+	free(tmp2);
+	tmp2 = ft_strdup(tmp);
+	free(tmp);
+	return (tmp2);
+}
+
+int		read_next(const int fd, char **line, t_blist *lst, int out)
+{
+	int				b;
+	int				e;
+	char			*tmp2;
+
+	tmp2 = ft_strdup("");
+	while (out == 0)
+	{
+		if (findeol(lst->buff, 2) == 0)
+			if (((lst->ret = read(fd, lst->buff, BUFF_SIZE_GNL)) == -1)
+				|| lst->buff[0] == '\0')
+				return (ft_del_return(&tmp2));
+		b = findeol(lst->buff, 0);
+		e = findeol(lst->buff, 1) > lst->ret ? lst->ret : findeol(lst->buff, 1);
+		if (lst->ret == 0)
+			break ;
+		if (lst->buff[e] == '\n' || (lst->ret == e && lst->ret < BUFF_SIZE_GNL))
+			out = 1;
+		tmp2 = allocate(lst->buff, tmp2, b, e);
+		ft_bzero(lst->buff + b, e - b + (lst->buff[e] == '\n'));
+	}
+	*line = ft_strdup(tmp2);
+	ft_memdel((void **)&tmp2);
+	return (lst->ret);
+}
+
+t_blist	*new_node(const int fd)
+{
+	t_blist	*lst;
+
+	if (!(lst = (t_blist *)malloc(sizeof(t_blist))))
+		return (0);
+	lst->fd = fd;
+	ft_bzero(lst->buff, BUFF_SIZE_GNL);
+	lst->next = NULL;
+	return (lst);
+}
+
+int		get_next_line(const int fd, char **line)
+{
+	static	t_blist	*blst;
+	t_blist			*lst;
+	t_blist			*tmp;
+	int				res;
+
+	if (fd == -1 || BUFF_SIZE_GNL <= 0)
+		return (-1);
+	if (!blst)
+		blst = new_node(fd);
+	lst = blst;
+	while (lst->fd != fd)
+	{
+		tmp = lst;
+		lst = lst->next;
+		if (!lst)
+		{
+			lst = new_node(fd);
+			tmp->next = lst;
+		}
+	}
+	res = read_next(fd, line, lst, 0);
+	if (res > 0 || (res == 0 && **line))
+		return (1);
+	res = (res == -1) ? res : 0;
+	return (res);
 }

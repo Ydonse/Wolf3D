@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/10 17:12:59 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/13 15:05:41 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,8 @@ typedef struct		s_sdl {
 	SDL_Window		*pwindow;
 	SDL_Renderer	*prenderer;
 	SDL_Event		event;
-	SDL_Surface		*minimap;
 	t_texture		*map;
 	t_texture		*game;
-	t_texture		*ui;
 	int				x_o;
 	int				y_o;
 	t_sounds		sounds;
@@ -167,6 +165,7 @@ typedef struct		s_main {
 	int				proj_distance;
 	int				viewline;
 	t_image			*door;
+	t_image			*win;
 	t_image			*interface;
 	t_image			*menu;
 	t_image			*skybox;
@@ -222,7 +221,7 @@ t_ray				get_raycast_dist_h(t_main *s, t_ray ray, double r_angle,
 int					ft_min_one(int a);
 
 void				set_pixel_debug(t_sdl *sdl, t_dpos coord);
-void				draw_debug_rect(t_sdl *sdl, t_texture *text,
+void				draw_debug_rect(t_texture *text,
 					Uint32 color, t_dpos orig);
 void				draw_wall_slice(t_main *s, t_ray ray, double dist, int x);
 
