@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 16:40:18 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/07 16:09:13 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/13 14:10:38 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,9 @@ t_image	*initialize_image(void)
 	return (image);
 }
 
-void	print_header(t_image *image, char *str)
-{
-	printf("ID_LENGTH:%d\nCOLOR_MAP_TYPE:%d\nIMAGE_TYPE:%d\n",
-		str[0], str[1], str[2]);
-	printf("IMAGE_SPECS:\nX-origin:%d\nY-origin:%d\n", str[8] + str[9],
-		str[10] + str[11]);
-	printf("width:%d\nheight:%d\n", image->w, image->h);
-	printf("pixel depth:%d\n", image->bits_color);
-	printf("alpha depth:%d\n\n", image->bits_alpha);
-}
-
 void	print_bit(char c)
 {
-	int i;
+	int		i;
 	char	d;
 
 	i = 7;
@@ -52,46 +41,53 @@ void	print_bit(char c)
 	write(1, "\n", 1);
 }
 
-void	get_info_header(t_image *image, char *str)
+int		get_info_header(t_image *image, unsigned char *str)
 {
 	image->bits_alpha = str[17] << 4 >> 4;
 	image->bits_color = str[16];
 	image->w = str[13];
-	image->w = (image->w << 8) + (unsigned char)str[12];
+	image->w = (image->w << 8) + str[12];
 	image->h = str[15];
-	image->h = (image->h << 8) + (unsigned char)str[14];
-	if (!(image->tex = (Uint32 *)malloc(sizeof(Uint32) *
-	 (image->w * image->bits_color * image->h))))
-		exit(-1);
+	image->h = (image->h << 8) + str[14];
+	if (image->h <= 1 || image->w <= 1 || image->h >= 4096 || image->w >= 4096)
+	{
+		ft_memdel((void **)&image);
+		return (0);
+	}
+	if (!(image->tex = (Uint32 *)malloc(sizeof(Uint32)
+	* (image->w * image->h + 1))))
+	{
+		ft_memdel((void **)&image);
+		return (0);
+	}
+	ft_bzero(image->tex, sizeof(image->tex));
+	return (1);
 }
 
-t_image	*load_tga(char *path)
+t_image	*load_tga(char *path, int i, int idx, int ret)
 {
-	char	str[PARSE_BUFF_SIZE];
-	t_image	*image;
-	int		fd;
-	int		ret;
-	int		i;
-	int		idx;
+	unsigned char	str[PARSE_BUFF_SIZE];
+	t_image			*image;
+	int				fd;
 
 	ft_bzero(str, PARSE_BUFF_SIZE);
 	image = initialize_image();
 	fd = open(path, O_RDONLY);
-	if (fd == -1)
+	if (fd == -1 || (ret = read(fd, str, 18)) < 18)
+	{
+		ft_memdel((void **)&image);
 		return (0);
-	if ((ret = read(fd, str, 18)) == 0)
+	}
+	if (get_info_header(image, str) == 0)
 		return (0);
-	get_info_header(image, str);
-	print_header(image, str);
-	idx = 0;
 	while ((ret = read(fd, str, PARSE_BUFF_SIZE)) != 0)
 	{
 		i = 0;
-		while (i < ret)
+		while (i < ret && idx < image->h * image->w)
 		{
-			image->tex[idx] = (str[i] << 8) + (str[i + 1] << 16) + (str[i + 2] << 24);
-			i += (image->bits_color / 32) * 4;
-			idx += (image->bits_color / 32);
+			image->tex[idx++] = ((str[i]) << 8) + (str[i + 1] << 16)
+			+ (str[i + 2] << 24);
+			i += 4;
 		}
 	}
 	return (image);

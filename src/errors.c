@@ -6,40 +6,18 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:50:10 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 13:37:30 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/13 15:16:40 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-
-void	free_program(t_main *s)
-{
-	int i;
-
-	i = 0;
-	ft_strdel(&(s->parsing_line));
-	if (s->map != NULL)
-	{
-		while (i < s->height)
-			free(s->map[i++]);
-		free(s->map);
-	}
-	if (s->sdl->musique != NULL)
-	{
-		Mix_HaltMusic();
-		Mix_FreeMusic(s->sdl->musique);
-		Mix_CloseAudio();
-	}
-	free(s->sdl);
-	free(s);
-}
 
 void	display_error(int error_nb)
 {
 	if (error_nb == FILE_ERROR)
 		ft_putstr("Error : The file cannot be opened\n");
 	else if (error_nb == SIZE_ERROR)
-		ft_putstr("Error : Map too small\n");
+		ft_putstr("Error : Map of incorrect size (Must be 3x3 to 50x50)\n");
 	else if (error_nb == SYNTAX_ERROR)
 		ft_putstr("Error : Syntax error\n");
 	else if (error_nb == MALLOC_ERROR)
@@ -60,6 +38,8 @@ void	handle_error(t_main *s, int error_nb)
 
 void	ft_error_sdl(char *str)
 {
-	printf("%s (%s)\n", str, SDL_GetError());
-	exit (-1);
+	ft_putstr(str);
+	ft_putchar(' ');
+	ft_putstr(SDL_GetError());
+	exit(-1);
 }

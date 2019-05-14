@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sounds.c                                           :+:      :+:    :+:   */
+/*   ft_gnl_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
+/*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/06 11:33:44 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 18:06:38 by ydonse           ###   ########.fr       */
+/*   Created: 2019/03/20 12:18:14 by malluin           #+#    #+#             */
+/*   Updated: 2019/03/20 12:20:04 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include "libft.h"
 
-void	create_sounds(t_sdl *sdl)
+int		ft_del_return(char **str)
 {
-	Mix_AllocateChannels(10);
-	Mix_Volume(1, MIX_MAX_VOLUME / 2);
-	sdl->sounds.shot = Mix_LoadWAV("sounds/Pistol.wav");
-	sdl->sounds.door = Mix_LoadWAV("sounds/Door.wav");
+	ft_memdel((void **)str);
+	return (-1);
 }

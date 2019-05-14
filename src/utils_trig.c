@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 13:45:53 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/02 16:14:06 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/13 11:55:26 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,26 @@ double	norme(t_dpos player, t_dpos point)
 
 double	percent(double value, double total)
 {
-	double result;
+	return (value / total);
+}
 
-	result = value / total;
+void	pre_initialize_sdl(t_main *s)
+{
+	if (!(s->sdl = (t_sdl *)malloc(sizeof(t_sdl))))
+		exit(-1);
+	s->sdl->pwindow = NULL;
+	s->sdl->prenderer = NULL;
+	s->sdl->map = NULL;
+	s->sdl->game = NULL;
+	s->sdl->musique = NULL;
+}
 
-	return (result);
+int		ft_min_one(int a)
+{
+	if (a < 0 && a / 10 == 0 && a < -2)
+		return (-1);
+	else if (a > 0 && a / 10 == 0 && a > 2)
+		return (1);
+	else
+		return (a / 20);
 }

@@ -6,20 +6,11 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 12:58:00 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/07 18:21:53 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/13 15:19:02 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-
-int		check_walls(t_main *s, int x, int y)
-{
-	s->map[y][x].valid = 1;
-	if (check_next_case(s, x, y))
-		return (1);
-	else
-		return (0);
-}
 
 void	check_player(t_main *s, char *file)
 {
@@ -29,7 +20,8 @@ void	check_player(t_main *s, char *file)
 	player = 0;
 	if ((fd = open(file, O_RDONLY)) < 1)
 		handle_error(s, FILE_ERROR);
-	while (get_next_line(fd, &(s->parsing_line)))
+	s->parsing_line = NULL;
+	while (get_next_line(fd, &(s->parsing_line)) > 0)
 	{
 		if (ft_strchr(s->parsing_line, 'j'))
 			player = 1;
@@ -39,15 +31,12 @@ void	check_player(t_main *s, char *file)
 	close(fd);
 	if (!player)
 		handle_error(s, PLAYER_ERROR);
-
 }
 
-int		fill_map(t_main *s, char **tab, int i)
+int		fill_map(t_main *s, char **tab, int i, int k)
 {
 	static int		player = 0;
-	int				k;
 
-	k = 0;
 	if (!(s->map[i] = (t_case*)malloc(sizeof(t_case) * s->width)))
 	{
 		ft_free_tab_str(tab);
@@ -56,7 +45,8 @@ int		fill_map(t_main *s, char **tab, int i)
 	while (tab[k])
 	{
 		s->map[i][k].type = tab[k][0];
-		s->map[i][k].block = tab[k][0] == 'j' || tab[k][0] == '.' ? 0 : 1;
+		s->map[i][k].block = tab[k][0] == 'j' || tab[k][0] == '.'
+			|| tab[k][0] == 't' ? 0 : 1;
 		if (s->map[i][k].type == 'j')
 		{
 			s->start_position.x = k;
@@ -80,14 +70,14 @@ void	check_valid_line(t_main *s, char **tab)
 	while (tab[i])
 	{
 		if (!ft_strchr(OBJ, tab[i][0]) || tab[i][1] != ',' || tab[i][2] < '0'
-		|| tab[i++][2] > MAX_AREA + '0')
+		|| tab[i++][2] >= MAX_AREA + '0')
 		{
 			ft_free_tab_str(tab);
 			handle_error(s, SYNTAX_ERROR);
 		}
 	}
 	ft_free_tab_str(tab);
-	if (i != s->width && s->width != 0)
+	if (i >= 50 || (i != s->width && s->width != 0))
 		handle_error(s, SYNTAX_ERROR);
 	s->width = i;
 }
@@ -97,7 +87,8 @@ void	check_file(t_main *s, int fd, char *file)
 	int		i;
 
 	i = 0;
-	while (get_next_line(fd, &(s->parsing_line)))
+	s->parsing_line = NULL;
+	while (get_next_line(fd, &(s->parsing_line)) > 0)
 	{
 		i++;
 		if (!ft_isalpha(s->parsing_line[0]))
@@ -105,13 +96,13 @@ void	check_file(t_main *s, int fd, char *file)
 		ft_strdel(&(s->parsing_line));
 	}
 	ft_strdel(&(s->parsing_line));
-	if (i < MIN_HEIGHT)
+	if (i < MIN_HEIGHT || i > 50)
 		handle_error(s, SIZE_ERROR);
 	s->height = i;
 	close(fd);
 	if ((fd = open(file, O_RDONLY)) < 1)
 		handle_error(s, FILE_ERROR);
-	while (get_next_line(fd, &(s->parsing_line)))
+	while (get_next_line(fd, &(s->parsing_line)) > 0)
 	{
 		check_valid_line(s, ft_strsplit(s->parsing_line, ' '));
 		ft_strdel(&(s->parsing_line));
@@ -128,15 +119,18 @@ int		parse_map(t_main *s, char *file)
 	i = 0;
 	if ((fd = open(file, O_RDONLY)) < 1)
 		handle_error(s, FILE_ERROR);
+	if (read(fd, NULL, 0) == -1)
+		handle_error(s, FILE_ERROR);
 	check_file(s, fd, file);
 	check_player(s, file);
 	if ((fd = open(file, O_RDONLY)) < 1)
 		handle_error(s, FILE_ERROR);
 	if (!(s->map = (t_case**)malloc(sizeof(t_case*) * s->height)))
 		handle_error(s, MALLOC_ERROR);
-	while (get_next_line(fd, &(s->parsing_line)))
+	s->parsing_line = NULL;
+	while (get_next_line(fd, &(s->parsing_line)) > 0)
 	{
-		i = fill_map(s, ft_strsplit(s->parsing_line, ' '), i);
+		i = fill_map(s, ft_strsplit(s->parsing_line, ' '), i, 0);
 		ft_strdel(&(s->parsing_line));
 	}
 	close(fd);

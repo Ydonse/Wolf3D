@@ -6,7 +6,7 @@
 #    By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 16:39:25 by ydonse            #+#    #+#              #
-#    Updated: 2019/04/15 10:54:11 by ydonse           ###   ########.fr        #
+#    Updated: 2019/05/13 15:02:58 by malluin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ ft_lstiter.c	ft_lstmap.c		ft_swap.c		ft_sort_integer_table.c\
 ft_print_words_tables.c		ft_recursive_power.c	ft_sqrt.c\
 ft_strsub_free.c	ft_strdup_free.c	ft_strjoin_free.c get_next_line.c\
 ft_sqrt_high.c ft_get_nbr.c ft_free_tab_str.c ft_llitoa.c ft_lutoa.c\
-ft_longlen.c ft_abs.c switch_bool.c
+ft_longlen.c ft_abs.c switch_bool.c ft_gnl_utils.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
@@ -44,14 +44,14 @@ OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
 HEADER_PATH = includes/
 
-HEADER_NAME = libft.h
+HEADER_NAME = libft.h get_next_line.h
 
 HEADER = $(addprefix $(HEADER_PATH)/,$(HEADER_NAME))
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@ar rcs $@ $^
+	ar rcs $@ $^
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(HEADER)
 	@mkdir $(OBJ_PATH) 2> /dev/null || true

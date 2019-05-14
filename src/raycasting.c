@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 11:55:41 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/09 13:49:21 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/13 15:06:10 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ t_ray	raycast(t_main *s, double r_angle)
 	if ((!(horiz.dist <= 0) && horiz.dist < vertical.dist)
 		|| vertical.dist <= 0)
 	{
-		draw_debug_rect(s->sdl, s->sdl->map, 0xf47742FF, horiz.dpos);
+		draw_debug_rect(s->sdl->map, 0xf47742FF, horiz.dpos);
 		return (horiz);
 	}
 	else
 	{
-		draw_debug_rect(s->sdl, s->sdl->map, 0xFF0000FF, vertical.dpos);
+		draw_debug_rect(s->sdl->map, 0xFF0000FF, vertical.dpos);
 		return (vertical);
 	}
 }

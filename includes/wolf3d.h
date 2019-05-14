@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/09 13:50:23 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/13 15:05:41 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # define WIDTH 800
 # define HEIGHT 600
-# define SPACE 45
+# define SPACE 60
 # define MIN_WIDTH 3
 # define MIN_HEIGHT 3
 
@@ -48,7 +48,7 @@
 # define BLOCK_SIZE 64
 # define PLAYER_HEIGHT 32
 # define DEFAULT_FOV 65
-# define ROTATE_SPEED 2
+# define ROTATE_SPEED 20
 
 # define PROJ_WIDTH 800
 # define PROJ_HEIGHT 600
@@ -69,7 +69,7 @@
 
 # define PARSE_BUFF_SIZE 64
 
-typedef	struct 		s_sounds
+typedef	struct		s_sounds
 {
 	Mix_Chunk		*shot;
 	Mix_Chunk		*door;
@@ -142,10 +142,8 @@ typedef struct		s_sdl {
 	SDL_Window		*pwindow;
 	SDL_Renderer	*prenderer;
 	SDL_Event		event;
-	SDL_Surface 	*minimap;
 	t_texture		*map;
 	t_texture		*game;
-	t_texture		*ui;
 	int				x_o;
 	int				y_o;
 	t_sounds		sounds;
@@ -166,9 +164,8 @@ typedef struct		s_main {
 	short			fov;
 	int				proj_distance;
 	int				viewline;
-	// t_image			*wall;
-	// t_image			*paint;
 	t_image			*door;
+	t_image			*win;
 	t_image			*interface;
 	t_image			*menu;
 	t_image			*skybox;
@@ -181,37 +178,35 @@ void				free_program(t_main *s);
 int					parse_map(t_main *s, char *file);
 int					check_next_case(t_main *s, int x, int y);
 void				draw_minimap(t_main *s);
-void				draw_player(t_main *s, t_sdl *sdl);
-void				draw_rect(t_sdl *sdl, t_texture *text, t_position orig,
-					t_position dest);
+void				draw_player(t_main *s, t_sdl *sdl, double bloc_x, double bloc_y);
+void				draw_rect(t_texture *text, t_dpos orig,
+					t_dpos dest);
 void				draw_interface (t_main *s);
-void				draw_weapon (t_main *s);
+void				draw_weapon (t_main *s, double perx,
+					short orig_x, short orig_y);
 
 void				set_pixel(t_texture *text, Uint32 color, t_position coord);
 void				update_image(t_main *s, t_texture *texture);
 int					check_collisions(t_main *s, t_dpos target);
+int					check_walls(t_main *s, int x, int y);
 
 void				ft_print_map(t_main	*s);
 
 void				ft_error_sdl(char *str);
 
-//INITIALIZE
 t_main				*initialize_main(void);
+void				pre_initialize_sdl(t_main *s);
 t_texture			*initialize_texture(t_sdl *sdl, int width, int height);
 void				initialize_sdl(t_main *s, t_sdl *sdl);
 int					handle_menu(t_main *s);
-
-//EVENTS
 
 void				handle_keys(t_main *s);
 void				event_handler(t_main *s);
 void				turn_camera(t_main *s, const Uint8 *keys, char command);
 void				move_player(t_main *s, const Uint8 *keys, char sprint);
+int					check_door(t_case **map, int x, int y);
 void				open_door(t_main *s);
 void				shoot(t_main *s);
-
-
-
 void				raycast_visualization(t_main *s);
 t_ray				raycast(t_main *s, double r_angle);
 
@@ -223,9 +218,11 @@ t_ray				get_raycast_dist_v(t_main *s, t_ray ray, double r_a,
 					t_dpos fp);
 t_ray				get_raycast_dist_h(t_main *s, t_ray ray, double r_angle,
 					t_dpos fp);
+int					ft_min_one(int a);
 
 void				set_pixel_debug(t_sdl *sdl, t_dpos coord);
-void				draw_debug_rect(t_sdl *sdl, t_texture *text, Uint32 color, t_dpos orig);
+void				draw_debug_rect(t_texture *text,
+					Uint32 color, t_dpos orig);
 void				draw_wall_slice(t_main *s, t_ray ray, double dist, int x);
 
 double				to_rad(double angle);
@@ -233,15 +230,8 @@ double				norme(t_dpos player, t_dpos point);
 double				percent(double value, double total);
 Uint32				darken_color(Uint32 color, double perc);
 
-//IMAGES
-
-t_image				*load_tga(char *path);
+t_image				*load_tga(char *path, int i, int idx, int ret);
 void				load_images(t_main *s);
 
-//SOUNDS
 void				create_sounds(t_sdl *sdl);
-
-
-
-
 #endif
