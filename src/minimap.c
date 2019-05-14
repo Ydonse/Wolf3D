@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/13 09:14:59 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/14 11:14:50 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,65 +102,95 @@ void	draw_minimap(t_main *s)
 	t_dpos dest;
 	int			i;
 	int			j;
-	double			debut_x;
-	double			debut_y;
+	double			half_s_x;
+	double			half_s_y;
 	int			bloc_x;
 	int			bloc_y;
 	double		per_pos_x;
 	double		per_pos_y;
 
-	debut_x = (WIDTH / SPACE) / 2;
-	debut_y = (HEIGHT / SPACE) / 2;
+	SDL_RenderClear(s->sdl->prenderer);
+	half_s_x = (WIDTH / SPACE) / 2;
+	half_s_y = (HEIGHT / SPACE) / 2;
 
-	bloc_y = s->player_pos.y < debut_y ? 0 : (int)(s->player_pos.y - debut_y);
-	bloc_x = s->player_pos.x < debut_x ? 0 : (int)(s->player_pos.x - debut_x);
+	bloc_y = s->player_pos.y < half_s_y ? 0 : (int)(s->player_pos.y - half_s_y);
+	bloc_x = s->player_pos.x < half_s_x ? 0 : (int)(s->player_pos.x - half_s_x);
+	bloc_x = s->player_pos.x > s->width - half_s_x ? s->width - WIDTH / SPACE : bloc_x;
+	// bloc_y = s->player_pos.y > s->height - half_s_y ? s->height - HEIGHT / SPACE : (int)(s->player_pos.y - half_s_y);
 	per_pos_x =  s->player_pos.x - (int)s->player_pos.x;
 	per_pos_y =  s->player_pos.y - (int)s->player_pos.y;
 	i = 0;
 	j = 0;
-	// printf("debut_x = %d, debut_y = %d, position player y = %f\n", debut_x, debut_y, s->player_pos.y);
 	while (bloc_y < s->height)
 	{
 		while (bloc_x < s->width)
 		{
-			if (bloc_x != 0 && j != 0)
+			if (s->player_pos.x < half_s_x) //Si le joueur est placé dans la 1ere moitié du debut de la map
 			{
-				orig.x = SPACE * j - (per_pos_x * SPACE);
+				orig.x = SPACE * j;
 				dest.x = orig.x + SPACE;
 			}
-			else
+			else if (s->player_pos.x >= half_s_x)
 			{
-				// orig.x = SPACE * j;
-				orig.x = j - SPACE + ((1 - per_pos_x) * SPACE);
-				dest.x = (orig.x + SPACE);
-				printf("orig.x = %f, dest.x = %f\n", orig.x, dest.x);
-			}
+				if (j == 0) // Je dessine partiellement la premiere case
+				{
 
-			if (bloc_y != 0 && i != 0)
+					orig.x = j - SPACE + ((1 - per_pos_x) * SPACE);
+					dest.x = (orig.x + SPACE);
+					// printf("orig.x = %f, dest.x = %f\n", orig.x, dest.x);
+				}
+				else if (j != 0) //Je dessine normalement le reste des cases par rapport a la premiere
+				{
+					orig.x = SPACE * j - (per_pos_x * SPACE);
+					dest.x = orig.x + SPACE;
+				}
+			}
+			if (s->player_pos.y < half_s_y)
 			{
-				orig.y = SPACE * i - (per_pos_y * SPACE);
+				orig.y = SPACE * i;
 				dest.y = orig.y + SPACE;
 			}
-			else
+			else if (s->player_pos.y >= half_s_y)
 			{
-				// orig.y = SPACE * i;
-				orig.y = i - SPACE + ((1 - per_pos_y) * SPACE);
-				dest.y = (orig.y + SPACE);
+				if (i == 0)
+				{
+					orig.y = i - SPACE + ((1 - per_pos_y) * SPACE);
+					dest.y = (orig.y + SPACE);
+				}
+				else if (i != 0)
+				{
+					orig.y = SPACE * i - (per_pos_y * SPACE);
+					dest.y = orig.y + SPACE;
+				}
 			}
-
-			// orig.y = bloc_y == 0 ? SPACE * i : SPACE * i + per_pos_y;
-
-
-
 			get_case_color(s, orig, dest, s->map[bloc_y][bloc_x++]);
+			// printf("x %d\n", bloc_x - 1);
 			j++;
 		}
-		j = 0;
-		bloc_x = s->player_pos.x < debut_x ? 0 : (int)(s->player_pos.x - debut_x);
+			j = 0;
+		// if (s->player_pos.x - half_s_x < 0)
+		// 	bloc_x = half_s_x - s->player_pos.x;
+		// else
+		bloc_x = s->player_pos.x < half_s_x ? 0 : (int)(s->player_pos.x - half_s_x);
+		// bloc_x = s->player_pos.x > s->width - half_s_x - 1 ? s->width - WIDTH / SPACE - 1 : bloc_x;
 		bloc_y++;
 		i++;
 	}
-	draw_player(s, s->sdl, s->player_pos.x < debut_x ? s->player_pos.x : s->player_pos.x - (s->player_pos.x - debut_x), s->player_pos.y < debut_y ? s->player_pos.y : s->player_pos.y - (s->player_pos.y - debut_y));
+
+
+	// if (s->player_pos.x < half_s_x)
+		// printf("%f\n", s->player_pos.x - half_s_x);
+	double test1 = s->player_pos.x - half_s_x <= 0 ? s->player_pos.x : s->player_pos.x - (s->player_pos.x - half_s_x);
+	double test2 = s->player_pos.y - half_s_y <= 0 ? s->player_pos.y : s->player_pos.y - (s->player_pos.y - half_s_y);
+	// if (s->player_pos.x > s->width - half_s_x)
+	// {
+	// 	test1 = WIDTH / SPACE - (s->width - s->player_pos.x);
+	// }
+
+	// if (s->player_pos.y >= half_s_x && s->player_pos.x >= s->width - half_s_x)
+	draw_player(s, s->sdl, test1, test2);
+	// draw_end_screen(s, 0x000000FF, orig);
+	// draw_rect(s->sdl->map, orig, dest);
 	raycast_visualization(s);
 	draw_black(s);
 	update_image(s, s->sdl->map);
