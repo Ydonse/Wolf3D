@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 15:45:55 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/13 14:06:27 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/15 16:44:53 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,33 @@ void	display_menu(t_main *s, int i, int j)
 	update_image(s, s->sdl->game);
 }
 
-int		handle_menu(t_main *s)
+void	play_music(t_main *s)
 {
 	s->sdl->musique = Mix_LoadMUS("musics/menu.wav");
 	if (s->sdl->musique == NULL)
 		ft_putstr("Error : music not loaded\n");
 	else
 		Mix_PlayMusic(s->sdl->musique, -1);
+}
+
+int		handle_menu(t_main *s)
+{
+	play_music(s);
 	display_menu(s, 0, 0);
 	while (1)
 	{
-		if (SDL_WaitEvent(&s->sdl->event))
+		SDL_WaitEvent(&s->sdl->event);
+		if (s->sdl->event.type == SDL_QUIT)
+			return (0);
+		else if (s->sdl->event.type == SDL_KEYDOWN)
 		{
-			if (s->sdl->event.type == SDL_QUIT || s->sdl->event.key.keysym.sym
-				== SDLK_ESCAPE)
-				return (0);
 			if (s->sdl->event.key.keysym.sym == SDLK_RETURN)
 				break ;
+			else if (s->sdl->event.key.keysym.sym == SDLK_ESCAPE)
+				return (0);
 		}
+		else
+			continue ;
 	}
 	if (s->sdl->musique != NULL)
 	{
