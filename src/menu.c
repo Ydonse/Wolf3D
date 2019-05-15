@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 15:45:55 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/15 16:44:53 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/15 16:51:38 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,12 @@ void	play_music(t_main *s)
 
 int		handle_menu(t_main *s)
 {
+	int	continuer;
+
+	continuer = 1;
 	play_music(s);
 	display_menu(s, 0, 0);
-	while (1)
+	while (continuer)
 	{
 		SDL_WaitEvent(&s->sdl->event);
 		if (s->sdl->event.type == SDL_QUIT)
@@ -61,7 +64,7 @@ int		handle_menu(t_main *s)
 		else if (s->sdl->event.type == SDL_KEYDOWN)
 		{
 			if (s->sdl->event.key.keysym.sym == SDLK_RETURN)
-				break ;
+				continuer = 0 ;
 			else if (s->sdl->event.key.keysym.sym == SDLK_ESCAPE)
 				return (0);
 		}
