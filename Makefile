@@ -6,7 +6,7 @@
 #    By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/23 10:03:18 by ydonse            #+#    #+#              #
-#    Updated: 2019/05/14 18:55:09 by ydonse           ###   ########.fr        #
+#    Updated: 2019/05/15 12:28:55 by ydonse           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,9 +41,9 @@ CPPFLAGS = -I libft/includes/ -I /usr/local/include/ -MMD
 LDFLAGS = -L libft/ -lft  -L /usr/local/include/ -lpthread
 LDLIBS = -framework OpenGL -framework AppKit
 
-CC = gcc -O2 #-fsanitize=address
+CC = gcc #-O2
 
-CFLAGS = -g -Wall -Wextra #-Werror
+CFLAGS = -Wall -Wextra -Werror
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 OBJ_PATH = obj

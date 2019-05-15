@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 10:19:27 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/14 18:58:23 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/15 12:22:36 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	draw_rect(t_texture *text, t_dpos orig, t_dpos dest)
 	}
 }
 
-void	draw_player(t_main *s, t_sdl *sdl, double bloc_x, double bloc_y)
+void	draw_player(t_sdl *sdl, double bloc_x, double bloc_y)
 {
 	t_dpos orig;
 	t_dpos dest;

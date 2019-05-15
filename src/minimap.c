@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/15 10:16:32 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/15 13:43:47 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,13 @@ void	get_y_coord(t_main *s, int i)
 
 void	draw_background(t_main *s, int i, int j)
 {
-	while (s->min.bloc_y_cp < s->height)
+	s->min.limit_y = s->min.bloc_y_cp + HEIGHT / SPACE < s->height
+	? s->min.bloc_y_cp + HEIGHT / SPACE + 1 : s->height;
+	while (s->min.bloc_y_cp < s->min.limit_y)
 	{
-		while (s->min.bloc_x < s->width)
+		s->min.limit_x = s->min.bloc_x + WIDTH / SPACE < s->width
+		? s->min.bloc_x + WIDTH / SPACE + 1 : s->width;
+		while (s->min.bloc_x < s->min.limit_x)
 		{
 			get_x_coord(s, j);
 			get_y_coord(s, i);
@@ -119,7 +123,7 @@ void	draw_minimap(t_main *s, int i, int j)
 		new_player_pos_x = WIDTH / SPACE - (s->width - s->player_pos.x);
 	if (s->player_pos.y > s->height - HALF_Y - 1)
 		new_player_pos_y = HEIGHT / SPACE - (s->height - s->player_pos.y);
-	draw_player(s, s->sdl, new_player_pos_x, new_player_pos_y);
+	draw_player(s->sdl, new_player_pos_x, new_player_pos_y);
 	raycast_visualization(s);
 	update_image(s, s->sdl->map);
 }

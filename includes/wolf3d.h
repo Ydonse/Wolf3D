@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/15 10:53:49 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/15 13:40:54 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ typedef struct		s_minimap {
 	int				bloc_y_cp;
 	double			per_pos_x;
 	double			per_pos_y;
+	int				limit_x;
+	int				limit_y;
 }					t_minimap;
 
 typedef struct		s_case {
@@ -191,7 +193,7 @@ void				free_program(t_main *s);
 int					parse_map(t_main *s, char *file);
 int					check_next_case(t_main *s, int x, int y);
 void				draw_minimap(t_main *s, int i, int j);
-void				draw_player(t_main *s, t_sdl *sdl, double bloc_x,
+void				draw_player(t_sdl *sdl, double bloc_x,
 					double bloc_y);
 void				draw_rect(t_texture *text, t_dpos orig,
 					t_dpos dest);
