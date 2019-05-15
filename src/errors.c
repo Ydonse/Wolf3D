@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:50:10 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/13 15:16:40 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/15 14:35:43 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ void	handle_error(t_main *s, int error_nb)
 {
 	if (error_nb != 0)
 		display_error(error_nb);
+	Mix_HaltMusic();
+	Mix_CloseAudio();
+	SDL_Quit();
 	free_program(s);
-	exit(0);
+	exit(-1);
 }
 
 void	ft_error_sdl(char *str)

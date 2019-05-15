@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/15 13:40:54 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/15 14:39:49 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define DOOR  0xBBBBBBFF
 
 # define MAX_AREA 4
-# define OBJ "mp.tj"
+# define OBJ ".mpjt"
 
 # define PLAYER_SIZE 0.25
 # define BLOCK_SIZE 64

@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/15 10:22:48 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/15 14:27:25 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ void	event_handler(t_main *s)
 			if (s->sdl->event.type == SDL_QUIT)
 				game = 0;
 			if (s->sdl->event.type == SDL_MOUSEBUTTONDOWN
-			&& s->weapon.current == 0)
+				&& s->weapon.current == 0)
 				shoot(s);
-			if (s->sdl->event.type == SDL_KEYDOWN &&
-			keyboard_controls(s, s->sdl->event.key.keysym.sym) == 0)
+			if (s->sdl->event.type == SDL_KEYDOWN
+				&& keyboard_controls(s, s->sdl->event.key.keysym.sym) == 0)
 				game = 0;
 		}
 		handle_keys(s);

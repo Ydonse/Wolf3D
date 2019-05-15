@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 13:45:34 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/09 13:47:58 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/15 15:20:30 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 t_ray	fill_ray(t_main *s, t_dpos pos, t_position bpos, t_ray ray)
 {
 	if (pos.x < 0 || pos.x >= (double)s->width || pos.y < 0
-		|| pos.y >= (double)s->height)
+		|| pos.y >= (double)s->height || bpos.x < 0 || bpos.y < 0
+		|| bpos.y > s->height || bpos.x > s->width)
 	{
 		ray.res = -1;
 		return (ray);

@@ -3,120 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ydonse <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/14 16:04:55 by ydonse            #+#    #+#             */
-/*   Updated: 2018/11/21 11:28:44 by ydonse           ###   ########.fr       */
+/*   Created: 2018/11/07 11:50:31 by malluin           #+#    #+#             */
+/*   Updated: 2019/05/15 15:08:25 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft.h"
 
-static char	**nullvalue(void)
+static int	count_w(char const *s, char c)
 {
-	char **str;
+	int l;
 
-	if (!(str = malloc(sizeof(char*) * (0))))
-		return (NULL);
-	str[0] = NULL;
-	return (str);
-}
-
-static int	countwords(char const *s, char c)
-{
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	if (s[i] != c && s[i])
-		count++;
-	while (s[i])
+	l = 1;
+	while (*s)
 	{
-		if (s[i] == c && s[i + 1] != c && s[i + 1] != '\0')
-		{
-			count++;
-		}
-		i++;
+		while (*s == c)
+			s++;
+		if (!*s)
+			break ;
+		l++;
+		while (*s && *s != c)
+			s++;
 	}
-	return (count);
+	l = l == 0 ? 1 : l;
+	return (l);
 }
 
-static int	lenwords(char const *s, char c, int nb)
+static	int	count_let(int i, char c, char const *s)
 {
-	int i;
-	int j;
 	int len;
 
-	i = 0;
-	j = 0;
 	len = 0;
-	while (j < nb)
+	while (s[i] && s[i] != c)
 	{
-		if (s[i] == c && s[i + 1] != c && s[i + 1] != '\0')
-			j++;
 		i++;
-	}
-	while (s[i] != c && s[i])
-	{
 		len++;
-		i++;
 	}
 	return (len);
 }
 
-static void	cpy(char const *s, char c, char *str, int nb)
-{
-	int i;
-	int j;
-	int len;
-
-	i = 0;
-	j = -1;
-	len = 0;
-	if (s[i] != c)
-		j++;
-	while (s[i] && j < nb)
-	{
-		if (s[i] == c && s[i + 1] != c && s[i + 1] != '\0')
-			j++;
-		i++;
-	}
-	j = 0;
-	while (s[i] != c && s[i])
-	{
-		str[j] = s[i];
-		j++;
-		i++;
-	}
-	str[j] = '\0';
-}
-
 char		**ft_strsplit(char const *s, char c)
 {
-	char	**str;
-	int		count;
-	int		len;
-	int		word;
+	char	**tab;
+	int		i;
+	int		w;
+	int		j;
 
-	if (!s)
-		return (NULL);
-	count = countwords(s, c);
-	len = 0;
-	word = 0;
-	if (count == 0)
-		return (str = nullvalue());
-	if (!(str = malloc(sizeof(char*) * (count + 1))))
-		return (NULL);
-	str[count] = NULL;
-	while (word < count)
+	i = 0;
+	w = 0;
+	if (!s || !(tab = (char **)malloc(sizeof(char *) * ((count_w(s, c) + 1)))))
+		return (0);
+	while (s[i])
 	{
-		len = lenwords(s, c, word);
-		if (!(str[word] = malloc(sizeof(char) * (len + 1))))
-			return (NULL);
-		cpy(s, c, str[word], word);
-		word++;
+		j = 0;
+		while (s[i] && s[i] == c)
+			i++;
+		if (!(tab[w] = (char *)malloc(sizeof(char) * (count_let(i, c, s) + 1))))
+			return (0);
+		while (s[i] && s[i] != c)
+			tab[w][j++] = s[i++];
+		tab[w++][j] = '\0';
+		tab[w - 1] = j == 0 ? 0 : tab[w - 1];
+		while (s[i] && s[i] == c)
+			i++;
 	}
-	return (str);
+	tab[w] = 0;
+	return (tab);
 }

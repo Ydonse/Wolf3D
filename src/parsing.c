@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 12:58:00 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/13 15:19:02 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/15 15:24:49 by malluin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,12 @@ void	check_valid_line(t_main *s, char **tab)
 	while (tab[i])
 	{
 		if (!ft_strchr(OBJ, tab[i][0]) || tab[i][1] != ',' || tab[i][2] < '0'
-		|| tab[i++][2] >= MAX_AREA + '0')
+			|| tab[i][2] >= MAX_AREA + '0' || tab[i][3] != '\0')
 		{
 			ft_free_tab_str(tab);
 			handle_error(s, SYNTAX_ERROR);
 		}
+		i++;
 	}
 	ft_free_tab_str(tab);
 	if (i >= 50 || (i != s->width && s->width != 0))
@@ -91,7 +92,7 @@ void	check_file(t_main *s, int fd, char *file)
 	while (get_next_line(fd, &(s->parsing_line)) > 0)
 	{
 		i++;
-		if (!ft_isalpha(s->parsing_line[0]))
+		if (!ft_strchr(OBJ, s->parsing_line[0]))
 			handle_error(s, SYNTAX_ERROR);
 		ft_strdel(&(s->parsing_line));
 	}
