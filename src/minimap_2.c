@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/14 18:56:07 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/15 11:04:30 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	get_case_color(t_main *s, t_dpos orig, t_dpos dest, t_case pos)
 {
 	if (pos.type == 'm')
 		draw_square(s, orig, dest, s->areas[0].wall_n);
-	else if (pos.type == '.')
+	else if (pos.type == '.' || (pos.type == 'p' && pos.block == 0))
 	{
 		s->sdl->map->color_tmp = 0xB0B0B0FF;
 		draw_rect(s->sdl->map, orig, dest);
@@ -55,10 +55,11 @@ void	get_case_color(t_main *s, t_dpos orig, t_dpos dest, t_case pos)
 	{
 		draw_square(s, orig, dest, s->door);
 	}
-	else if (pos.type == 'p' && pos.block == 0)
+	else if (pos.type == 't')
 	{
 		s->sdl->map->color_tmp = 0xB0B0B0FF;
 		draw_rect(s->sdl->map, orig, dest);
+		draw_square(s, orig, dest, s->coupe);
 	}
 }
 

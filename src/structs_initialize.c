@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 18:07:03 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/13 14:08:51 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/15 11:05:11 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int			check_images(t_main *s)
 	}
 	if (!s->weapon.image[0] || !s->weapon.image[1] || !s->weapon.image[2])
 		return (0);
-	if (!s->door || !s->interface || !s->skybox || !s->win || !s->menu)
+	if (!s->door || !s->interface || !s->skybox || !s->win || !s->menu
+		|| !s->coupe)
 		return (0);
 	return (1);
 }
@@ -55,6 +56,7 @@ t_main		*initialize_main(void)
 	s->door = NULL;
 	s->interface = NULL;
 	s->win = NULL;
+	s->coupe = NULL;
 	return (s);
 }
 
@@ -99,7 +101,7 @@ void		load_images(t_main *s)
 	s->door = load_tga("images/door.tga", 0, 0, 0);
 	s->win = load_tga("images/win.tga", 0, 0, 0);
 	s->menu = load_tga("images/menu.tga", 0, 0, 0);
-	s->weapon.current = 0;
+	s->coupe = load_tga("images/coupe.tga", 0, 0, 0);
 }
 
 void		initialize_sdl(t_main *s, t_sdl *sdl)
@@ -112,6 +114,7 @@ void		initialize_sdl(t_main *s, t_sdl *sdl)
 	if (!(sdl->prenderer = SDL_CreateRenderer(sdl->pwindow, -1, 0)))
 		ft_error_sdl("Échec de chargement du renderer");
 	load_images(s);
+	s->weapon.current = 0;
 	if (check_images(s) == 0)
 		exit(-1);
 	if (!(sdl->map = initialize_texture(sdl, WIDTH, HEIGHT)))

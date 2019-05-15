@@ -6,7 +6,7 @@
 /*   By: malluin <malluin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:10:47 by malluin           #+#    #+#             */
-/*   Updated: 2019/05/13 14:09:03 by malluin          ###   ########.fr       */
+/*   Updated: 2019/05/15 10:58:25 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	free_images(t_main *s)
 	free_image(s->interface);
 	free_image(s->win);
 	free_image(s->menu);
+	free_image(s->coupe);
 }
 
 void	free_texture(t_texture *tex)

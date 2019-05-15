@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 10:04:29 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/14 18:59:16 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/15 10:53:49 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ typedef struct		s_main {
 	int				viewline;
 	t_image			*door;
 	t_image			*win;
+	t_image			*coupe;
 	t_image			*interface;
 	t_image			*menu;
 	t_image			*skybox;

@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 09:44:06 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/14 18:24:46 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/15 10:22:48 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int		keyboard_controls(t_main *s, int key)
 		return (0);
 	else if (key == SDLK_e)
 		open_door(s);
-	else if (key == SDLK_m)
+	else if (key == SDLK_m && HEIGHT / SPACE <= s->height && WIDTH / SPACE
+		<= s->width)
 	{
 		s->active_map = !s->active_map;
 		draw_interface(s);
@@ -66,7 +67,8 @@ void	handle_keys(t_main *s)
 		turn_camera(s, keys, 0);
 	if (s->sdl->event.type == SDL_MOUSEMOTION)
 		turn_camera(s, keys, 1);
-	if (s->active_map)
+	if (s->active_map && HEIGHT / SPACE <= s->height && WIDTH / SPACE
+		<= s->width)
 		draw_minimap(s, 0, 0);
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: ydonse <ydonse@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 16:20:14 by ydonse            #+#    #+#             */
-/*   Updated: 2019/05/14 18:55:39 by ydonse           ###   ########.fr       */
+/*   Updated: 2019/05/15 10:16:32 by ydonse           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ void	initialize_minimap(t_main *s)
 	s->min.bloc_y = s->min.bloc_y >= s->height - (HEIGHT / SPACE)
 	&& s->player_pos.y > s->height - HALF_Y - 1 ? s->height
 	- (HEIGHT / SPACE) : s->min.bloc_y;
+	s->min.bloc_y = s->min.bloc_y < 0 ? 0 : s->min.bloc_y;
 	s->min.bloc_y_cp = s->min.bloc_y;
 	s->min.bloc_x = s->player_pos.x < HALF_X ? 0 : (int)(s->player_pos.x
 	- HALF_X);
 	s->min.bloc_x = s->min.bloc_x >= s->width - (WIDTH / SPACE)
 	&& s->player_pos.x > s->width - HALF_X - 1 ? s->width
 	- (WIDTH / SPACE) : s->min.bloc_x;
+	s->min.bloc_x = s->min.bloc_x < 0 ? 0 : s->min.bloc_x;
 	s->min.per_pos_x = s->player_pos.x - (int)s->player_pos.x;
 	s->min.per_pos_y = s->player_pos.y - (int)s->player_pos.y;
 }
@@ -115,7 +117,7 @@ void	draw_minimap(t_main *s, int i, int j)
 	: s->player_pos.y - (s->player_pos.y - HALF_Y);
 	if (s->player_pos.x > s->width - HALF_X - 1)
 		new_player_pos_x = WIDTH / SPACE - (s->width - s->player_pos.x);
-	if (s->player_pos.y > s->height - HALF_Y)
+	if (s->player_pos.y > s->height - HALF_Y - 1)
 		new_player_pos_y = HEIGHT / SPACE - (s->height - s->player_pos.y);
 	draw_player(s, s->sdl, new_player_pos_x, new_player_pos_y);
 	raycast_visualization(s);
